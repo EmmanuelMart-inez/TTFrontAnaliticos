@@ -1,0 +1,48 @@
+{
+  "name": "bubbletowngestion",
+  "version": "1.0.0",
+  "description": "Finished version of the Formik  v2 Tutorial",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "@date-io/date-fns": "1.3.13",
+    "@emotion/core": "10.0.17",
+    "@emotion/styled": "10.0.17",
+    "@material-ui/core": "4.9.1",
+    "@material-ui/icons": "4.9.1",
+    "@material-ui/lab": "3.0.0-alpha.30",
+    "@material-ui/pickers": "3.2.10",
+    "@types/date-fns": "2.6.0",
+    "axios": "0.19.2",
+    "date": "1.0.2",
+    "date-fns": "2.9.0",
+    "formik": "2.0.6",
+    "formik-material-ui": "2.0.0-alpha.3",
+    "get-orientation": "1.1.2",
+    "material-table": "^1.57.2",
+    "react": "16.13.0",
+    "react-async": "10.0.0",
+    "react-cropper": "1.3.0",
+    "react-dom": "16.8.6",
+    "react-easy-crop": "2.1.0",
+    "react-image-crop": "8.5.0",
+    "react-router-dom": "5.1.2",
+    "react-scripts": "3.0.1",
+    "yup": "0.27.0"
+  },
+  "devDependencies": {
+    "typescript": "3.3.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
