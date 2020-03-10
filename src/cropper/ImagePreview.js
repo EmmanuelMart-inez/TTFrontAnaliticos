@@ -150,6 +150,30 @@ export default function CircularIntegration(props) {
     console.log(`${props.iconoFormikname}.fileUrl`);
   };
 
+  // const getImageFromURlServer = async filename => {
+  //   await axios
+  //     .get("https://bubbletown.me/download/monocara.png")
+  //     .then(res => {
+  //       console.log(res);
+  //       return res.blob();
+  //       // console.log(res.data);
+  //       // props.setFieldValue(`${props.iconoFormikname}.data`, res.data);
+  //       // props.setFieldValue(`${props.iconoFormikname}.status`, res.status);
+  //       // setSuccess(true);
+  //       // setLoading(false);
+  //     })
+  //     // .then(function(response) {
+  //     //   return response.blob();
+  //     // })
+  //     .then(miBlob => {
+  //       var objectURL = URL.createObjectURL(miBlob);
+  //       miImagen.src = objectURL;
+  //       console.log(miImagen);
+  //       return miImagen;
+  //     });
+  //     return "<h1>Loaded</h1>";
+  // };
+
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>

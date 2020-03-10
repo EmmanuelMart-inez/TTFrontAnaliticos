@@ -22,6 +22,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificacionForm from "../forms/NotificacionWithMaterialUI";
 import TableRemote from "../home/TableRemote";
 import EditRow from "../forms/EditarNotificacionForm";
+import Gallery from "../forms/GalleryImages";
 
 import { Box, withStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
@@ -189,7 +190,7 @@ export default function MiniDrawer() {
           <Route path="/home">
             <TableRemote />
           </Route>
-          <Route path="/demos">{/* <EditRow /> */}</Route>
+          <Route path="/demos"><Gallery /></Route>
           <Route path="/" />
         </Switch>
       </main>

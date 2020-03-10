@@ -20,7 +20,7 @@ export default function CircularIntegration(props) {
         id="contained-button-file"
         name={`icono`}
         type="file"
-        onChange={props.handleButtonInputImage}
+        // onChange={props.handleButtonInputImage}
       />
       <label htmlFor="contained-button-file">{props.children}</label>{" "}
     </>

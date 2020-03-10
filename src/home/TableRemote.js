@@ -79,7 +79,7 @@ export default class RemoteData extends React.Component {
           titulo="Editar notificación"
           // body="{<EditRow/>}"
           agree="Confirmar"
-          disagree={"Cancelar"}
+          disagree={"Cerrar ventana de edición"}
           // disagree={this.state.id}
           setFieldValue={() => {
             this.setState({ edit: false });

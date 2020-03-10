@@ -17,6 +17,8 @@ import Icon from "@material-ui/core/Icon";
 import Thumb from "../cropper/Thumb";
 import ImageInput from "../cropper/ImageInput";
 import CropperIconButton from "../cropper/AlertDialogSlider";
+import Alert from "./GalleryAlert";
+import GalleryImagesFromServer from "./GalleryImages";
 
 import { useFormikContext } from "formik";
 import axios from "axios";
@@ -71,6 +73,18 @@ const useStyles = makeStyles(theme => ({
     position: "relative",
     width: "18px",
     height: "18px"
+  },
+  cardButton: {
+    display: "inline",
+    textAlign: "center"
+  },
+  cardButtonColor: {
+    color: "#5B9595",
+    backgroundColor: "#FFFFFE",
+    borderStyle: "solid",
+    borderWidth: "4px",
+    borderColor: "#56DBC9",
+    marginBottom: "20px"
   }
 }));
 
@@ -80,6 +94,7 @@ export default function CircularIntegration(props) {
   const [success, setSuccess] = React.useState(false);
   const [upload, setUpload] = React.useState(false);
   const [select, setSelect] = React.useState(false);
+  const [alertGallery, setAlertGallery] = React.useState(false);
   const timer = React.useRef();
 
   const buttonClassname = clsx({
@@ -132,6 +147,7 @@ export default function CircularIntegration(props) {
   };
 
   const handleButtonInputImage = async event => {
+    setAlertGallery(true);
     setSelect(true);
     props.setFieldValue(
       `${props.iconoFormikname}.file`,
@@ -151,6 +167,44 @@ export default function CircularIntegration(props) {
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
+        <Alert
+          titulo="Escoja una opción"
+          body=""
+          agree="Aceptar"
+          disagree="Cancelar"
+          switch={alertGallery}
+          // action={}
+          close={() => setAlertGallery(false)}
+          selectFromGalleryComponent={
+            <ImageInput
+              handleButtonInputImage={handleButtonInputImage}
+              
+            >
+              <Button
+                className={classes.cardButtonColor}
+                onClick={() => setAlertGallery(true)}
+                variant="contained"
+                // color="primary"
+                component="span"
+              >
+                <div className={classes.cardButton}>
+                  <div>
+                    <img
+                      src="assets/gallery.png"
+                      alt="Galería imagen"
+                      height="100"
+                    />
+                  </div>
+                  <div>
+                    Escoger imagen desde la galería{" "}
+                    <Icon>add_photo_alternate</Icon>
+                  </div>
+                </div>
+              </Button>
+            </ImageInput>
+          }
+          selectFromServer={<GalleryImagesFromServer />}
+        />
         <Box p={0}>
           <div>
             <Fab
@@ -162,6 +216,8 @@ export default function CircularIntegration(props) {
               {success || props.icono.status === "200" ? (
                 <CheckIcon />
               ) : select || props.icono.status === "loaded" ? (
+                <Avatar alt={props.icono.fileUrl} src={props.icono.fileUrl} />
+              ) : props.icono.status === "fetched" ? (
                 <Avatar alt={props.icono.fileUrl} src={props.icono.fileUrl} />
               ) : (
                 // <Thumb file={props.icono.file} status="" />
@@ -195,10 +251,10 @@ export default function CircularIntegration(props) {
                 setFieldValue={props.setFieldValue}
                 title="Herramienta de recorte"
                 contentText="Deslice la barra inferior para recortar la imagen hasta obtener el
-               tamaÃ±o de imagen deseada dentro de cuadro sin sombrear. Puede
+               tamaño de imagen deseada dentro de cuadro sin sombrear. Puede
                utilizar el la rueda de desplazamiento del mouse para cambiar la
-               regiÃ³n de corte y con el cursor arrastrar la imagen para cambiar
-               la ubicaciÃ³n de la imagen dentro de la secciÃ³n a recortar"
+               región de corte y con el cursor arrastrar la imagen para cambiar
+               la ubicación de la imagen dentro de la sección a recortar"
                 agree="Recortar"
                 disagree="Cancelar"
               />
@@ -221,12 +277,20 @@ export default function CircularIntegration(props) {
             {success || props.icono.status === "200" ? "Listo" : "Subir ícono"}
           </Button>
         ) : (
-          <ImageInput handleButtonInputImage={handleButtonInputImage}>
-            <Button variant="contained" color="primary" component="span">
-              {props.subirIconoButtonTag} <Icon>add_photo_alternate</Icon>
-            </Button>
-          </ImageInput>
+          <Button
+            onClick={() => setAlertGallery(true)}
+            variant="contained"
+            color="primary"
+            component="span"
+          >
+            {props.subirIconoButtonTag} <Icon>add_photo_alternate</Icon>
+          </Button>
         )}
+        {/* <ImageInput handleButtonInputImage={handleButtonInputImage}>
+              <Button onClick={() =>setAlertGallery(true)} variant="contained" color="primary" component="span">
+                {props.subirIconoButtonTag} <Icon>add_photo_alternate</Icon>
+              </Button>
+            </ImageInput> */}
 
         {loading && (
           <CircularProgress size={24} className={classes.buttonProgress} />

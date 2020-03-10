@@ -250,7 +250,7 @@ const Basic = props => {
                 fileUrlCropped: null,
                 fileCropped: null,
                 downloadUrl: response.notificacion.imagenIcon,
-                status: "",
+                status: "fetched",
                 isCroppedCompleted: false
               },
               iconoMiniatura: {
