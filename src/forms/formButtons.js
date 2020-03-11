@@ -118,8 +118,10 @@ export default function FormButtons(props) {
           {
             nombre: values.premio.titulo,
             // fecha: "2019-12-19T05:28:40.247",
-            imagen_icon: `https://bubbletown.me/download/${values.iconoMiniatura.downloadUrl}`,
-            imagen_display: `https://bubbletown.me/download/${values.iconoDetalles.downloadUrl}`,
+            imagen_icon: `${values.iconoMiniatura.downloadUrl}`,
+            imagen_display: `${values.iconoDetalles.downloadUrl}`,
+            // imagen_icon: `https://bubbletown.me/download/${values.iconoMiniatura.downloadUrl}`,
+            // imagen_display: `https://bubbletown.me/download/${values.iconoDetalles.downloadUrl}`,
             puntos: parseInt(values.puntos, 1) || 0 //opcional
 
             // link: "5e3540ffdb5584c6403a6332",
@@ -140,7 +142,8 @@ export default function FormButtons(props) {
                   titulo: values.premio.titulo,
                   mensaje: values.premio.contenido,
                   // fecha: "2019-12-19T05:28:40.247",
-                  imagenIcon: `https://bubbletown.me/download/${values.icono.downloadUrl}`,
+                  imagenIcon: `${values.icono.downloadUrl}`,
+                  // imagenIcon: `https://bubbletown.me/download/${values.icono.downloadUrl}`,
                   bar_text: values.textoAccionador,
                   textoAccionador: values.notificaciones.textoAccionador,
                   tipo_notificacion: values.notificaciones.value
@@ -211,8 +214,8 @@ export default function FormButtons(props) {
     if (!props.editar) {
       values.encuesta.paginas.map((pag, index) => {
         pag.opciones.map(ops => {
-          ops.icon =
-            "https://www.bubbletown.me/download/" + ops.icon.downloadUrl;
+          ops.icon = ops.icon.downloadUrl;
+          // "https://www.bubbletown.me/download/" + ops.icon.downloadUrl;
           // ops.icon.downloadUrl ||
           // "https://www.bubbletown.me/download/defaultencuesta.png";
         });
@@ -255,7 +258,7 @@ export default function FormButtons(props) {
                 titulo: values.titulo,
                 mensaje: values.contenido,
                 // fecha: "2019-12-19T05:28:40.247",
-                imagenIcon: `https://bubbletown.me/download/${values.icono.downloadUrl}`,
+                imagenIcon: `${values.icono.downloadUrl}`,
                 bar_text: values.textoAccionador,
                 textoAccionador: values.notificaciones.textoAccionador,
                 tipo_notificacion: values.notificaciones.value,
@@ -285,12 +288,20 @@ export default function FormButtons(props) {
         });
     } else {
       values.encuesta.paginas.map((pag, index) => {
-        pag.opciones.map(ops => {
-          // ops.icon =
-          //   "https://www.bubbletown.me/download/" + ops.icon.downloadUrl;
-          // ops.icon.downloadUrl ||
-          // "https://www.bubbletown.me/download/defaultencuesta.png";
-        });
+        if (pag.tipo == "emoji"){
+          pag.opciones.map(ops => {
+            ops.icon = ops.icon.downloadUrl;
+            // !ops.icon.downloadUrl;
+            // ops.icon.downloadUrl =
+            //   "https://www.bubbletown.me/download/defaultencuesta.png";
+          });}
+        if (pag.tipo == "multiple"){
+          pag.opciones.map(ops => {
+            ops.icon = "https://www.bubbletown.me/download/null.png";
+            // !ops.icon.downloadUrl;
+            // ops.icon.downloadUrl =
+            //   "https://www.bubbletown.me/download/defaultencuesta.png";
+          });}
       });
       url = `https://bubbletown.me/admin/notificaciones/${values.id}/acciones/${values.notificaciones.value}`;
       axios

@@ -20,7 +20,13 @@ export default function CircularIntegration(props) {
         id="contained-button-file"
         name={`icono`}
         type="file"
-        // onChange={props.handleButtonInputImage}
+        onChange={(event) => {
+          props.setToogleGalleryLocalToCloud(false);
+
+          props.handleButtonInputImage(event);
+          
+          props.setgalleryInputIsSelected(true);
+        }}
       />
       <label htmlFor="contained-button-file">{props.children}</label>{" "}
     </>

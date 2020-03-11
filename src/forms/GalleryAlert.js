@@ -25,6 +25,8 @@ export default function AlertDialog(props) {
     props.close();
   };
 
+
+
   return (
     <div>
       {/* {handleOpenClose} */}
@@ -47,14 +49,14 @@ export default function AlertDialog(props) {
             {props.body}
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        {/* <DialogActions>
           <Button onClick={handleClose} color="primary">
             {props.disagree}
           </Button>
           <Button onClick={handleAgree} color="primary" autoFocus>
             {props.agree}
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </div>
   );

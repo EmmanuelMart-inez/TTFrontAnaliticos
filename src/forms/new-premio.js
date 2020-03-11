@@ -2,7 +2,8 @@ import React from "react";
 import { useFormikContext, Formik, Form, Field } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 
-import ImagePreview from "../cropper/ImagePreview";
+// import ImagePreview from "../cropper/ImagePreview";
+import ImagePreview from "./ImagePreviewFormik";
 import { DisplayFormikState } from "./formik-helper";
 import AlertDialog from "../shared/AlertDialog";
 

@@ -246,7 +246,7 @@ const Basic = props => {
               icono: {
                 file: null,
                 fileUrl: response.notificacion.imagenIcon,
-                filename: "image_cropped",
+                filename: "image_cropped.png",
                 fileUrlCropped: null,
                 fileCropped: null,
                 downloadUrl: response.notificacion.imagenIcon,
@@ -256,7 +256,7 @@ const Basic = props => {
               iconoMiniatura: {
                 file: null,
                 fileUrl: null,
-                filename: "image_cropped",
+                filename: "image_cropped.png",
                 fileUrlCropped: null,
                 fileCropped: null,
                 downloadUrl: response.premio.imagen_icon,
@@ -266,7 +266,7 @@ const Basic = props => {
               iconoDetalles: {
                 file: null,
                 fileUrl: null,
-                filename: "image_cropped",
+                filename: "image_cropped.png",
                 fileUrlCropped: null,
                 fileCropped: null,
                 downloadUrl: response.premio.imagen_display,

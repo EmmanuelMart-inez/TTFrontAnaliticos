@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 
-export default function GalleryImages() {
+export default function GalleryImages(props) {
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState([1, 2, 3, 4, 1, 2, 3, 4]);
   const [imageSelected, setImageSelected] = React.useState("");
@@ -60,17 +60,17 @@ export default function GalleryImages() {
               </a>
             ))
           : data.map(imagen => {
-              if (imageSelected == imagen)
+              if (imageSelected == imagen && props.toogleGalleryLocalToCloud)
                 return (
                   <a
                     class="blue card"
-                    onClick={() => setImageSelected(imagen)}
+                    onClick={() => {
+                      setImageSelected(imagen);
+                    }}
                   >
-                    <div class="content" style={{backgroundColor: "#98d6ea"}}>
+                    <div class="content" style={{ backgroundColor: "#98d6ea" }}>
                       <div class="right floated meta">Imagen Seleccionada</div>
-                      <i
-                        class="big check circle icon"
-                      ></i>
+                      <i class="big check circle icon"></i>
                     </div>
                     <div class="small image">
                       <img src={`https://bubbletown.me/download/${imagen}`} />
@@ -79,7 +79,20 @@ export default function GalleryImages() {
                 );
               else
                 return (
-                  <a class="green card" onClick={() => setImageSelected(imagen)}>
+                  <a
+                    class="green card"
+                    onClick={() =>{
+                      props.setToogleGalleryLocalToCloud(true);
+                      setImageSelected(imagen);
+                      props.setFieldValue(`${props.iconoFormikname}.downloadUrl`,`https://bubbletown.me/download/${imagen}`);
+                      console.log("selected");
+                      props.setFieldValue(`${props.iconoFormikname}.fileUrl`, `https://bubbletown.me/download/${imagen}`);
+                      props.setFieldValue(`${props.iconoFormikname}.filename`, `${imagen}`);
+                      // props.setFieldValue("icono.file.name", `${imagen}`);
+                      props.setFieldValue(`${props.iconoFormikname}.status`, "fetched");
+                      props.setAlertGallery(false);
+                    }}
+                  >
                     <div class="small image">
                       <img src={`https://bubbletown.me/download/${imagen}`} />
                     </div>

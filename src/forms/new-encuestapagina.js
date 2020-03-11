@@ -7,7 +7,9 @@ import {
 } from "@material-ui/core/styles";
 import { green, purple } from "@material-ui/core/colors";
 
-import ImagePreview from "../cropper/ImagePreview";
+
+import ImagePreview from "./ImagePreviewFormik";
+// import ImagePreview from "../cropper/ImagePreview";
 import { DisplayFormikState } from "./formik-helper";
 import AlertDialog from "../shared/AlertDialog";
 

@@ -85,16 +85,35 @@ const useStyles = makeStyles(theme => ({
     borderWidth: "4px",
     borderColor: "#56DBC9",
     marginBottom: "20px"
+  },
+  cardButtonColorSelected: {
+    color: "#5B9595",
+    backgroundColor: "#FFFFFE",
+    borderStyle: "solid",
+    borderWidth: "4px",
+    borderColor: "#56DBC9",
+    marginBottom: "20px"
+  },
+  circleButtons: {
+    display: "flex"
+  },
+  green: {
+    color: green[500],
+    backgroundColor: green[500]
   }
 }));
 
 export default function CircularIntegration(props) {
   const classes = useStyles();
+  const [galleryInputIsSelected, setgalleryInputIsSelected] = React.useState(
+    false
+  );
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const [upload, setUpload] = React.useState(false);
   const [select, setSelect] = React.useState(false);
   const [alertGallery, setAlertGallery] = React.useState(false);
+  const [toogleGalleryLocalToCloud, setToogleGalleryLocalToCloud] = React.useState(false);
   const timer = React.useRef();
 
   const buttonClassname = clsx({
@@ -121,15 +140,33 @@ export default function CircularIntegration(props) {
 
     var formData = new FormData();
     // console.log("name:",props.icono.file.name);
-    if (
-      props.icono.fileUrlCropped != null &&
-      props.icono.fileCropped != null &&
-      props.icono.file.name != null
-    ) {
-      console.log("prop", props.icono.fileUrlCropped);
-      // TODO: Agregar validaciÃ³n mandar error si alguno es null
-      formData.append("photo", props.icono.fileCropped, props.icono.file.name);
-    } else formData.append("photo", props.icono.file);
+    if (props.icono.fileUrlCropped != null && props.icono.fileCropped != null) {
+      if (props.icono.file != null) {
+        if (props.icono.file.name != null)
+          formData.append(
+            "photo",
+            props.icono.fileCropped,
+            props.icono.filename
+          );
+      } else {
+        if (props.icono.filename != null)
+          formData.append(
+            "photo",
+            props.icono.fileCropped,
+            props.icono.filename
+          );
+        else
+          formData.append(
+            "photo",
+            props.icono.fileCropped,
+            "image_cropper.png"
+          );
+        console.log("prop", props.icono.fileUrlCropped);
+        // TODO: Agregar validaciÃ³n mandar error si alguno es null
+      }
+    } else {
+      formData.append("photo", props.icono.file);
+    }
     axios
       .post(`https://bubbletown.me/upload`, formData, {
         headers: {
@@ -141,6 +178,11 @@ export default function CircularIntegration(props) {
         console.log(res.data);
         props.setFieldValue(`${props.iconoFormikname}.data`, res.data);
         props.setFieldValue(`${props.iconoFormikname}.status`, res.status);
+        props.setFieldValue(
+          `${props.iconoFormikname}.downloadUrl`,
+          `https://bubbletown.me/download/${res.data}`
+        );
+        props.setFieldValue(`${props.iconoFormikname}.filename`, res.data);
         setSuccess(true);
         setLoading(false);
       });
@@ -162,32 +204,42 @@ export default function CircularIntegration(props) {
     // TODO: ELiminar el URL si es el caso de sobreescribir
     props.setFieldValue(`${props.iconoFormikname}.fileUrl`, imageDataUrl);
     console.log(`${props.iconoFormikname}.fileUrl`);
+    setAlertGallery(false);
   };
 
   return (
     <div className={classes.root}>
       <div className={classes.wrapper}>
         <Alert
-          titulo="Escoja una opción"
+          titulo="Escoja una imágen"
           body=""
           agree="Aceptar"
           disagree="Cancelar"
           switch={alertGallery}
+          setFieldValue={props.setFieldValue}
           // action={}
           close={() => setAlertGallery(false)}
+          toogleGalleryLocalToCloud={toogleGalleryLocalToCloud}
           selectFromGalleryComponent={
-            <ImageInput
-              handleButtonInputImage={handleButtonInputImage}
-              
-            >
+            <ImageInput handleButtonInputImage={handleButtonInputImage} setgalleryInputIsSelected={setgalleryInputIsSelected} toogleGalleryLocalToCloud={toogleGalleryLocalToCloud} setToogleGalleryLocalToCloud={setToogleGalleryLocalToCloud}>
               <Button
-                className={classes.cardButtonColor}
+                className={
+                  galleryInputIsSelected
+                    ? classes.cardButtonColorSelected
+                    : classes.cardButtonColor
+                }
                 onClick={() => setAlertGallery(true)}
                 variant="contained"
                 // color="primary"
                 component="span"
               >
                 <div className={classes.cardButton}>
+                  {(galleryInputIsSelected && (!toogleGalleryLocalToCloud)) && (
+                    <div class="content" style={{ backgroundColor: "#BBDEF9" }}>
+                      <div class="right floated meta">Imagen Seleccionada</div>
+                      <i class="big check circle icon"></i>
+                    </div>
+                  )}
                   <div>
                     <img
                       src="assets/gallery.png"
@@ -203,14 +255,20 @@ export default function CircularIntegration(props) {
               </Button>
             </ImageInput>
           }
-          selectFromServer={<GalleryImagesFromServer />}
+          selectFromServer={
+            <GalleryImagesFromServer icono={props.icono} iconoFormikname={props.iconoFormikname} setAlertGallery={setAlertGallery} setFieldValue={props.setFieldValue} toogleGalleryLocalToCloud={toogleGalleryLocalToCloud} setToogleGalleryLocalToCloud={setToogleGalleryLocalToCloud} />
+          }
         />
         <Box p={0}>
           <div>
             <Fab
               aria-label="save"
               color="primary"
-              className={buttonClassname}
+              className={
+                props.icono.status === "fetched"
+                  ? classes.green
+                  : buttonClassname
+              }
               disableTouchRipple="true"
             >
               {success || props.icono.status === "200" ? (
@@ -227,6 +285,41 @@ export default function CircularIntegration(props) {
           </div>
           {(select || props.icono.status === "loaded") && (
             <Box>
+              {/* Icon to unselect or cancel the uploaded image */}
+              <Fab
+                className={classes.closeFab}
+                color="secondary"
+                aria-label="delete"
+                onClick={() => {
+                  props.setFieldValue(`${props.iconoFormikname}.status`, "");
+                  setSelect(false);
+                  setSuccess(false);
+                  setLoading(false);
+                }}
+                //eliminar del servidor si fue subida
+                //eliminar del estado de formik
+              >
+                <CloseIcon className={classes.closeIcon} />
+              </Fab>
+              {/* Icon to open Modal to Crop Image */}
+              <CropperIconButton
+                icono={props.icono}
+                iconoFormikname={props.iconoFormikname}
+                values={props.values}
+                setFieldValue={props.setFieldValue}
+                title="Herramienta de recorte"
+                contentText="Deslice la barra inferior para recortar la imagen hasta obtener el
+               tamaño de imagen deseada dentro de cuadro sin sombrear. Puede
+               utilizar el la rueda de desplazamiento del mouse para cambiar la
+               región de corte y con el cursor arrastrar la imagen para cambiar
+               la ubicación de la imagen dentro de la sección a recortar"
+                agree="Recortar"
+                disagree="Cancelar"
+              />
+            </Box>
+          )}
+          {props.icono.status === "fetched" && (
+            <Box className={classes.circleButtons}>
               {/* Icon to unselect or cancel the uploaded image */}
               <Fab
                 className={classes.closeFab}

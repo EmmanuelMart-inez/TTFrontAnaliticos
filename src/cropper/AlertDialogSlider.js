@@ -67,6 +67,10 @@ export default function AlertDialogSlide(props) {
         `${props.iconoFormikname}.fileUrlCropped`,
         croppedImage
       );
+      props.setFieldValue(
+        `${props.iconoFormikname}.status`,
+        "loaded"
+      );
       setOpen(false);
       console.log("done", `${props.iconoFormikname}.fileUrlCropped`, {
         croppedImage
