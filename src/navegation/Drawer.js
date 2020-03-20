@@ -22,7 +22,9 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificacionForm from "../forms/NotificacionWithMaterialUI";
 import TableRemote from "../home/TableRemote";
 import EditRow from "../forms/EditarNotificacionForm";
-import Gallery from "../forms/GalleryImages";
+
+import Date from "../forms/filters/DateRange";
+import Rango from "../forms/filters/RangoPicker";
 
 import { Box, withStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
@@ -190,7 +192,12 @@ export default function MiniDrawer() {
           <Route path="/home">
             <TableRemote />
           </Route>
-          <Route path="/demos"><Gallery /></Route>
+          <Route path="/demos">
+            <>
+              {/* <Date /> */}
+              <Rango />
+            </>
+          </Route>
           <Route path="/" />
         </Switch>
       </main>

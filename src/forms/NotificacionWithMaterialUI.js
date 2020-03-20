@@ -221,6 +221,35 @@ const Basic = () => {
           contenido: "",
           // fechaLanzamiento: "",
           segmentacion: "todos",
+          indexFiltro: 0,
+          indexCollection: 0,
+          indexField: 0,
+          indexTipo: 0,
+          indexScale: 0,
+          filtros: [
+            {
+              label: "",
+              field: "",
+              tipo: "",
+              scale: "",
+              scaleValue: "",
+              date_start: new Date(),
+            }
+          ],
+          idMetrica: 1,
+          per_tiempo: 0,
+          escala_tiempo: 0,
+          number_blockSelect: 15,
+          blockSelect: "Días",
+          callendar: "",
+          //
+          rangoNumeros: 0,
+          rangoNumeros_num1: "",
+          rangoNumeros_num2: "",
+          //
+          rangoString: 0,
+          rangoNumeros_str1: "",
+          //
           // link: "",
           puntos: "",
           notificaciones: {

@@ -11,6 +11,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import CheckBox from "./filters/CheckBox";
+import SelectArrayChips from "./filters/SelectArrayChips";
 
 const notificaciones = [
   {
@@ -27,24 +29,6 @@ const notificaciones = [
   }
 ];
 
-const segmentacion = [
-  {
-    value: "todos",
-    label: "Ninguna"
-  },
-  {
-    value: "metrica",
-    label: "Por métrica"
-  },
-  {
-    value: "montocompra",
-    label: "Monto de compra"
-  },
-  {
-    value: "productocompra",
-    label: "Al comprar determinado un producto"
-  }
-];
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -56,6 +40,7 @@ export default function NotificacionForm(props) {
   const classes = useStyles();
   const { values, setFieldValue, handleSubmit } = useFormikContext();
   const [showAlert, setShowAlert] = React.useState(false);
+  const [metrica, setMetrica] = React.useState(0);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -121,6 +106,7 @@ export default function NotificacionForm(props) {
         <Grid item xs={6}>
           <TextField
             id="outlined-multiline-static"
+            className={classes.title}
             label="Contenido"
             multiline
             rowsMax="4"
@@ -132,22 +118,7 @@ export default function NotificacionForm(props) {
           />
         </Grid>
         <Grid item xs={6}>
-          <TextField
-            id="standard-select-currency"
-            select
-            label="Segmentar destinatarios"
-            value={values.segmentacion}
-            onChange={event => {
-              setFieldValue("segmentacion", event.target.value);
-            }}
-            helperText="Si desea segmentar los destinatarios a quienes va dirigida esta notificación"
-          >
-            {segmentacion.map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
+          <SelectArrayChips />
         </Grid>
         <Grid item xs={6}>
           <TextField

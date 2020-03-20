@@ -6,6 +6,7 @@ import {
   TimePicker,
   DateTimePicker,
   KeyboardDatePicker,
+  KeyboardDateTimePicker,
   MuiPickersUtilsProvider
 } from "@material-ui/pickers";
 
@@ -26,13 +27,12 @@ export default function CalendarTimePicker(props) {
         InputAdornmentProps={{ position: "start" }}
         onChange={date => handleDateChange(date)}
       /> */}
-      <KeyboardDatePicker
-        label="Fecha de expiraciÃ³n"
-        value={selectedDate}
+      <KeyboardDateTimePicker
+        // label="Fecha de expiraciÃ³n"
+        value={props.value}
         onChange={date => {
-          handleDateChange();
-          console.log(date);
-          props.setFieldValue("premio.fechaExpiracion", date);
+          handleDateChange(date);
+          props.setFieldValue(`${props.field}`, date);
         }}
       />
     </MuiPickersUtilsProvider>
