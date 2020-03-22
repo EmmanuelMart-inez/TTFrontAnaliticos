@@ -32,9 +32,9 @@ import Badge from "@material-ui/core/Badge";
 import DoneIcon from "@material-ui/icons/Done";
 import FaceIcon from "@material-ui/icons/Face";
 import Tooltip from "@material-ui/core/Tooltip";
-import Snackbar from '@material-ui/core/Snackbar';
+import Snackbar from "@material-ui/core/Snackbar";
 import { green, orange } from "@material-ui/core/colors";
-import Zoom from '@material-ui/core/Zoom';
+import Zoom from "@material-ui/core/Zoom";
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -171,6 +171,51 @@ export default function SelectArrayChips() {
     // getAllParticipantesFiltered(filtros, filtros[0].res.participantes);
   };
 
+  const queryAllParticipantes = function() {
+    const url = "http://127.0.0.1:5001/filtrado";
+    axios
+      .post(
+        url,
+        [
+          {
+            document: "participante_model",
+            method: "filter_by_date",
+            date_start: "2028-12-21T23:28:40.247Z",
+            scale: "años",
+            scale_value: 20,
+            tipo: "anterior",
+            field: "fecha_antiguedad"
+          }
+        ],
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      .then(res => {
+        if (res.status == 200) {
+          setFieldValue("participantesFor", res.data[0].total);
+          setFieldValue(
+            `filtros.${indexFiltro}.res.participantes`,
+            res.data[0].participantes
+          );
+          setFieldValue(
+            `filtros.${indexFiltro}.res.matchTotal`,
+            res.data[0].total
+          );
+        } else {
+        }
+        console.log(res);
+        console.log(res.data);
+        // setFieldValue("sendProgress", 2);
+      })
+      .catch(e => {
+        console.log(e);
+        // setFieldValue("sendProgress", 3);
+      });
+  };
+
   return (
     <>
       <FieldArray
@@ -180,46 +225,58 @@ export default function SelectArrayChips() {
             {values.filtros && values.filtros.length > 0
               ? values.filtros.map((filtro, index) => (
                   <div key={index}>
-                    <Tooltip title={filtro ? JSON.stringify(Object.values(filtro.req || "")) : ""} classes={classes} TransitionComponent={Zoom}  placement="top" arrow>
+                    <Tooltip
+                      title={
+                        filtro
+                          ? JSON.stringify(Object.values(filtro.req || ""))
+                          : ""
+                      }
+                      classes={classes}
+                      TransitionComponent={Zoom}
+                      placement="top"
+                      arrow
+                    >
                       <div>
-                      <BadgedChip
-                        key={index}
-                        badgetContent={filtro.res.matchTotal || ""}
-                        label={filtro.res.label || ""}
-                        onClick={
-                          () => {
-                            setIndexFiltro(index);
-                            console.log(index);
+                        <BadgedChip
+                          key={index}
+                          badgetContent={filtro.res.matchTotal || ""}
+                          label={filtro.res.label || ""}
+                          onClick={
+                            () => {
+                              setIndexFiltro(index);
+                              console.log(index);
+                            }
+                            //       setFieldValue(
+                            //   `filtros.${indexFiltro}.req.document`,
+                            //   segmentacion[event.target.value].value
+                            // );
                           }
-                          //       setFieldValue(
-                          //   `filtros.${indexFiltro}.req.document`,
-                          //   segmentacion[event.target.value].value
-                          // );
-                        }
-                        onDelete={async () => {
-                          await arrayHelpers.remove(index);
-                          // handleDelete(index, values.filtros, arrayHelpers);
-                        }}
-                        className={classesChip.chip}
-                      />
+                          onDelete={async () => {
+                            await arrayHelpers.remove(index);
+                            // handleDelete(index, values.filtros, arrayHelpers);
+                          }}
+                          className={classesChip.chip}
+                        />
                       </div>
                     </Tooltip>
                   </div>
                 ))
               : ""}
             <>
-             {values.filtros.length > 0 && <StyledBadge
-                badgeContent={values.participantesFor.length || 0}
-                showZero
-              >
-                <Chip
-                  key={"3643"}
-                  icon={<FaceIcon />}
-                  label={"Total"}
-                  deleteIcon={<DoneIcon />}
-                  color="default"
-                />
-              </StyledBadge>}
+              {values.filtros.length > 0 && (
+                <StyledBadge
+                  badgeContent={values.participantesFor.length || 0}
+                  showZero
+                >
+                  <Chip
+                    key={"3643"}
+                    icon={<FaceIcon />}
+                    label={"Total"}
+                    deleteIcon={<DoneIcon />}
+                    color="default"
+                  />
+                </StyledBadge>
+              )}
             </>
 
             <div>
@@ -242,6 +299,9 @@ export default function SelectArrayChips() {
                     segmentacion[event.target.value].label
                   );
                   seteCollection(event.target.value);
+                  if (event.target.value === 0 && values.filtros.length === 0 ) {
+                    queryAllParticipantes();
+                  }
                 }}
                 helperText="Si desea segmentar los destinatarios a quienes va dirigida esta notificación"
               >

@@ -227,80 +227,80 @@ const Basic = () => {
           indexTipo: 0,
           indexScale: 0,
           filtros: [
-            {
-              req: {
-                document: "participante_model",
-                field: "fecha_antiguedad",
-                tipo: "actual",
-                method: "filter_by_date",
-                scale: "años",
-                scale_value: 0,
-                date_start: "2020-03-22T05:29:13.324Z"
-              },
-              res: {
-                label: "Por datos del Participante",
-                matchTotal: 21,
-                participantes: [
-                  "5e2ebdc0f9c441ad287a064a",
-                  "5e2ed9e0003caf06257cf6ec",
-                  "5e2ed9e6003caf06257cf6ed",
-                  "5e2ed9eb003caf06257cf6ee",
-                  "5e43d0d0b7097366d17f56ab",
-                  "5e43d2328fc98907c9417fc3",
-                  "5e43d2398fc98907c9417fc4",
-                  "5e43d2ae366c11d9a92a7a46",
-                  "5e43d31daec9e7fc1bd04414",
-                  "5e43f412ac081c0915b66b43",
-                  "5e44b756f3a5cd209779d791",
-                  "5e44b7ca2607e7b16583cda8",
-                  "5e4580bfc0e44d96ad23b7bd",
-                  "5e4587069095295048d32a0d",
-                  "5e4587dc1e9cec20d8d052a9",
-                  "5e4587f01e9cec20d8d052aa",
-                  "5e4589c4aa0ebd38ab7b9310",
-                  "5e458af1a68ecb3ca541361c",
-                  "5e458b5897704b00e3c7d438",
-                  "5e598a2ff18ccabdd2cc3822",
-                  "5e598a38f18ccabdd2cc3823"
-                ]
-              }
-            },
-            {
-              req: {
-                document: "venta_model",
-                field: "total",
-                tipo: "=",
-                inputType: "1",
-                method: "filter_by_float",
-                float1: 80
-              },
-              res: {
-                label: "Por datos del ticket de venta",
-                matchTotal: 2,
-                participantes: [
-                  "5e462b2f174d02be8e6fabb0",
-                  "5e6f6e1a210261e9f3c2b15d"
-                ]
-              }
-            },
-            {
-              req: {
-                document: "venta_model",
-                field: "total",
-                tipo: "=",
-                inputType: "1",
-                method: "filter_by_float",
-                float1: 80
-              },
-              res: {
-                label: "Por datos del ticket de venta",
-                matchTotal: 2,
-                participantes: [
-                  "5e462b2f174d02be8e6fabb0",
-                  "5e6f6e1a210261e9f3c2b15d"
-                ]
-              }
-            }
+            // {
+            //   req: {
+            //     document: "participante_model",
+            //     field: "fecha_antiguedad",
+            //     tipo: "actual",
+            //     method: "filter_by_date",
+            //     scale: "años",
+            //     scale_value: 0,
+            //     date_start: "2020-03-22T05:29:13.324Z"
+            //   },
+            //   res: {
+            //     label: "Por datos del Participante",
+            //     matchTotal: 21,
+            //     participantes: [
+            //       "5e2ebdc0f9c441ad287a064a",
+            //       "5e2ed9e0003caf06257cf6ec",
+            //       "5e2ed9e6003caf06257cf6ed",
+            //       "5e2ed9eb003caf06257cf6ee",
+            //       "5e43d0d0b7097366d17f56ab",
+            //       "5e43d2328fc98907c9417fc3",
+            //       "5e43d2398fc98907c9417fc4",
+            //       "5e43d2ae366c11d9a92a7a46",
+            //       "5e43d31daec9e7fc1bd04414",
+            //       "5e43f412ac081c0915b66b43",
+            //       "5e44b756f3a5cd209779d791",
+            //       "5e44b7ca2607e7b16583cda8",
+            //       "5e4580bfc0e44d96ad23b7bd",
+            //       "5e4587069095295048d32a0d",
+            //       "5e4587dc1e9cec20d8d052a9",
+            //       "5e4587f01e9cec20d8d052aa",
+            //       "5e4589c4aa0ebd38ab7b9310",
+            //       "5e458af1a68ecb3ca541361c",
+            //       "5e458b5897704b00e3c7d438",
+            //       "5e598a2ff18ccabdd2cc3822",
+            //       "5e598a38f18ccabdd2cc3823"
+            //     ]
+            //   }
+            // },
+            // {
+            //   req: {
+            //     document: "venta_model",
+            //     field: "total",
+            //     tipo: "=",
+            //     inputType: "1",
+            //     method: "filter_by_float",
+            //     float1: 80
+            //   },
+            //   res: {
+            //     label: "Por datos del ticket de venta",
+            //     matchTotal: 2,
+            //     participantes: [
+            //       "5e462b2f174d02be8e6fabb0",
+            //       "5e6f6e1a210261e9f3c2b15d"
+            //     ]
+            //   }
+            // },
+            // {
+            //   req: {
+            //     document: "venta_model",
+            //     field: "total",
+            //     tipo: "=",
+            //     inputType: "1",
+            //     method: "filter_by_float",
+            //     float1: 80
+            //   },
+            //   res: {
+            //     label: "Por datos del ticket de venta",
+            //     matchTotal: 2,
+            //     participantes: [
+            //       "5e462b2f174d02be8e6fabb0",
+            //       "5e6f6e1a210261e9f3c2b15d"
+            //     ]
+            //   }
+            // }
           ],
           participantesFor: [],
           // link: "",
