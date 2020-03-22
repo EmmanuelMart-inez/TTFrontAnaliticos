@@ -31,7 +31,10 @@ import Chip from "@material-ui/core/Chip";
 import Badge from "@material-ui/core/Badge";
 import DoneIcon from "@material-ui/icons/Done";
 import FaceIcon from "@material-ui/icons/Face";
+import Tooltip from "@material-ui/core/Tooltip";
+import Snackbar from '@material-ui/core/Snackbar';
 import { green, orange } from "@material-ui/core/colors";
+import Zoom from '@material-ui/core/Zoom';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -39,6 +42,9 @@ const useStyles = makeStyles(theme => ({
   },
   extendedIcon: {
     marginRight: theme.spacing(1)
+  },
+  tooltip: {
+    fontSize: 12
   }
 }));
 
@@ -91,7 +97,7 @@ export default function SelectArrayChips() {
 
   useEffect(() => {
     getAllParticipantesFiltered(values.filtros);
-    document.title = `You Updated ${values.filtros.length} times`;
+    // document.title = `You Updated ${values.filtros.length} times`;
   }, [values.filtros]); // Solo se vuelve a ejecutar si count cambia
 
   // Siempre existe el indice correspondiente
@@ -118,8 +124,9 @@ export default function SelectArrayChips() {
     )
       return;
     var array_intersection = filtrosArray[0].res.participantes;
-    for (var p in filtrosArray) {
-      console.log("hay for");
+    for (let p of filtrosArray) {
+      console.log(filtrosArray[0].res.participantes);
+      console.log("hay for", p.res);
       if (p.res !== undefined && p.res.participantes !== undefined) {
         console.log("hay parti");
         array_intersection = array_intersection.filter(function(x) {
@@ -130,12 +137,7 @@ export default function SelectArrayChips() {
     setFieldValue("participantesFor", array_intersection);
   };
 
-  const handleSendFilter = function(
-    jsonFilter,
-    setFieldValue,
-    indexFiltro,
-    values
-  ) {
+  const handleSendFilter = function(jsonFilter, setFieldValue, indexFiltro) {
     const url = "http://127.0.0.1:5001/filtrado";
     axios
       .post(url, [jsonFilter], {
@@ -178,21 +180,35 @@ export default function SelectArrayChips() {
             {values.filtros && values.filtros.length > 0
               ? values.filtros.map((filtro, index) => (
                   <div key={index}>
-                    <BadgedChip
-                      key={index}
-                      badgetContent={filtro.res.matchTotal || ""}
-                      label={filtro.res.label || ""}
-                      onDelete={async () => {
-                        await arrayHelpers.remove(index);
-                        // handleDelete(index, values.filtros, arrayHelpers);
-                      }}
-                      className={classesChip.chip}
-                    />
+                    <Tooltip title={filtro ? JSON.stringify(Object.values(filtro.req || "")) : ""} classes={classes} TransitionComponent={Zoom}  placement="top" arrow>
+                      <div>
+                      <BadgedChip
+                        key={index}
+                        badgetContent={filtro.res.matchTotal || ""}
+                        label={filtro.res.label || ""}
+                        onClick={
+                          () => {
+                            setIndexFiltro(index);
+                            console.log(index);
+                          }
+                          //       setFieldValue(
+                          //   `filtros.${indexFiltro}.req.document`,
+                          //   segmentacion[event.target.value].value
+                          // );
+                        }
+                        onDelete={async () => {
+                          await arrayHelpers.remove(index);
+                          // handleDelete(index, values.filtros, arrayHelpers);
+                        }}
+                        className={classesChip.chip}
+                      />
+                      </div>
+                    </Tooltip>
                   </div>
                 ))
               : ""}
             <>
-              <StyledBadge
+             {values.filtros.length > 0 && <StyledBadge
                 badgeContent={values.participantesFor.length || 0}
                 showZero
               >
@@ -203,7 +219,7 @@ export default function SelectArrayChips() {
                   deleteIcon={<DoneIcon />}
                   color="default"
                 />
-              </StyledBadge>
+              </StyledBadge>}
             </>
 
             <div>
@@ -534,8 +550,7 @@ export default function SelectArrayChips() {
                   handleSendFilter(
                     values.filtros[indexFiltro].req,
                     setFieldValue,
-                    indexFiltro,
-                    values
+                    indexFiltro
                   );
                   setIndexFiltro(indexFiltro + 1);
                 }}

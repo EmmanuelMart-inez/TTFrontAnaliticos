@@ -282,6 +282,24 @@ const Basic = () => {
                   "5e6f6e1a210261e9f3c2b15d"
                 ]
               }
+            },
+            {
+              req: {
+                document: "venta_model",
+                field: "total",
+                tipo: "=",
+                inputType: "1",
+                method: "filter_by_float",
+                float1: 80
+              },
+              res: {
+                label: "Por datos del ticket de venta",
+                matchTotal: 2,
+                participantes: [
+                  "5e462b2f174d02be8e6fabb0",
+                  "5e6f6e1a210261e9f3c2b15d"
+                ]
+              }
             }
           ],
           participantesFor: [],

@@ -25,6 +25,7 @@ export default function BadgetChip(props) {
       onDelete={props.onDelete}
       color="primary"
       className={classes.chip}
+      onClick={props.onClick}
     />
   </Badge>);
 }
