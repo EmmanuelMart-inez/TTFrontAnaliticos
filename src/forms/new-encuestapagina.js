@@ -1,22 +1,14 @@
 import React from "react";
-import { useFormikContext, Formik, Form, Field, FieldArray } from "formik";
+import { useFormikContext } from "formik";
 import {
   makeStyles,
   createMuiTheme,
-  ThemeProvider
 } from "@material-ui/core/styles";
 import { green, purple } from "@material-ui/core/colors";
-
-
-import ImagePreview from "./ImagePreviewFormik";
-// import ImagePreview from "../cropper/ImagePreview";
-import { DisplayFormikState } from "./formik-helper";
-import AlertDialog from "../shared/AlertDialog";
 
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 import EncuestaOpcionMultiple from "./EncuestaOpcionMultiple";

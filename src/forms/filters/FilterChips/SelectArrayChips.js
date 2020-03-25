@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import {apiUrl} from "../../../shared/constants"; 
+
 import {
   segmentacion,
   segmentacion_metrica,
@@ -20,19 +22,14 @@ import { useFormikContext, Formik, Form, Field, FieldArray } from "formik";
 
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import CheckBox from "../CheckBox";
 import DateRange from "../DateRange";
-import RangoPicker from "../RangoPicker";
 import Callendar from "../../calendarField";
 import Chip from "@material-ui/core/Chip";
 import Badge from "@material-ui/core/Badge";
 import DoneIcon from "@material-ui/icons/Done";
 import FaceIcon from "@material-ui/icons/Face";
 import Tooltip from "@material-ui/core/Tooltip";
-import Snackbar from "@material-ui/core/Snackbar";
 import { green, orange } from "@material-ui/core/colors";
 import Zoom from "@material-ui/core/Zoom";
 
@@ -78,7 +75,7 @@ const matchBadgetTheme = createMuiTheme({
   }
 });
 
-export default function SelectArrayChips() {
+export default function SelectArrayChips(props) {
   const classes = useStyles();
   const classesChip = useStyles1();
   const [indexFiltro, setIndexFiltro] = React.useState(0);
@@ -138,7 +135,7 @@ export default function SelectArrayChips() {
   };
 
   const handleSendFilter = function(jsonFilter, setFieldValue, indexFiltro) {
-    const url = "http://127.0.0.1:5001/filtrado";
+    const url = `${apiUrl}/filtrado`;
     axios
       .post(url, [jsonFilter], {
         headers: {
@@ -172,7 +169,7 @@ export default function SelectArrayChips() {
   };
 
   const queryAllParticipantes = function() {
-    const url = "http://127.0.0.1:5001/filtrado";
+    const url = `${apiUrl}/filtrado`;
     axios
       .post(
         url,
@@ -222,7 +219,7 @@ export default function SelectArrayChips() {
         name="filtros"
         render={arrayHelpers => (
           <div>
-            {values.filtros && values.filtros.length > 0
+            {!props.disabled && values.filtros && values.filtros.length > 0
               ? values.filtros.map((filtro, index) => (
                   <div key={index}>
                     <Tooltip
@@ -286,6 +283,7 @@ export default function SelectArrayChips() {
                 id="standard-select-tabla"
                 select
                 label="Segmentar destinatarios"
+                disabled={props.disabled}
                 value={eCollection || ""}
                 // value={segmentacion[values.indexCollection].value}
                 onChange={event => {

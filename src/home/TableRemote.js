@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import {apiUrl} from "../shared/constants"; 
 
 import MaterialTable from "material-table";
 import Icon from "@material-ui/core/Icon";
@@ -100,7 +101,7 @@ export default class RemoteData extends React.Component {
             action={async () =>
               await axios
                 .post(
-                  `https://bubbletown.me/admin/notificaciones/${this.state.id}/acciones/${this.state.tipo}`
+                  `${apiUrl}/admin/notificaciones/${this.state.id}/acciones/${this.state.tipo}`
                 )
                 .then(res => {
                   if (res.status === 200) return 2;
@@ -167,13 +168,17 @@ export default class RemoteData extends React.Component {
             header: {
               actions: "Acciones"
             }
-          }}
+           
+          }} 
+          options={{
+              pageSizeOptions: [10, 100, 500]
+            }}
           editable={{
             onRowDelete: oldData =>
               new Promise((resolve, reject) => {
                 axios
                   .delete(
-                    `https://bubbletown.me/admin/notificaciones/${oldData._id}/acciones/${oldData.tipo_notificacion}`
+                    `${apiUrl}/admin/notificaciones/${oldData._id}/acciones/${oldData.tipo_notificacion}`
                   )
                   .then(res => {
                     // if (res.status === 200) setFieldValue("sendProgress", 2);
@@ -219,7 +224,7 @@ export default class RemoteData extends React.Component {
           // data={this.state.data}
           data={query =>
             new Promise((resolve, reject) => {
-              let url = "https://bubbletown.me/notificaciones";
+              let url = `${apiUrl}/notificaciones`;
               // url += "per_page=" + query.pageSize;
               // url += "&page=" + (query.page + 1);
               fetch(url)
@@ -229,7 +234,7 @@ export default class RemoteData extends React.Component {
                   resolve({
                     data: result,
                     page: 0,
-                    totalCount: 0
+                    totalCount: 100
                   });
                 });
             })

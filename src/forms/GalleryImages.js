@@ -1,36 +1,37 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
+import {apiUrl} from "../shared/constants"; 
 
 export default function GalleryImages(props) {
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState([1, 2, 3, 4, 1, 2, 3, 4]);
   const [imageSelected, setImageSelected] = React.useState("");
 
-  const handleLoading = () => {
-    // setLoading(true);
-    axios
-      .get(`https://bubbletown.me/images`)
-      .then(res => {
-        if (res.status === 200) {
-          console.log(res.data);
-          setData(res.data.images);
-          setLoading(false);
-        }
-        //   else return 3;
-        // else Show a error messages
-        // let data = this.state.data;
-        // const index = data.indexOf(oldData);
-        // data.splice(index, 1);
-        // this.setState({ data }, () => resolve());
-      })
-      .catch(e => {
-        console.log(e);
-        return 3;
-        // setFieldValue("sendProgress", 3);
-      });
-  };
+  // const handleLoading = () => {
+  //   // setLoading(true);
+  //   axios
+  //     .get(`https://bubbletown.me/images`)
+  //     .then(res => {
+  //       if (res.status === 200) {
+  //         console.log(res.data);
+  //         setData(res.data.images);
+  //         setLoading(false);
+  //       }
+  //       //   else return 3;
+  //       // else Show a error messages
+  //       // let data = this.state.data;
+  //       // const index = data.indexOf(oldData);
+  //       // data.splice(index, 1);
+  //       // this.setState({ data }, () => resolve());
+  //     })
+  //     .catch(e => {
+  //       console.log(e);
+  //       return 3;
+  //       // setFieldValue("sendProgress", 3);
+  //     });
+  // };
 
-  const url = `https://bubbletown.me/images`;
+  const url = `${apiUrl}/images`;
   useEffect(() => {
     const fetchData = async () => {
       //   setIsError(false);
@@ -73,7 +74,7 @@ export default function GalleryImages(props) {
                       <i class="big check circle icon"></i>
                     </div>
                     <div class="small image">
-                      <img src={`https://bubbletown.me/download/${imagen}`} />
+                      <img src={`${apiUrl}/download/${imagen}`} />
                     </div>
                   </a>
                 );
@@ -84,9 +85,9 @@ export default function GalleryImages(props) {
                     onClick={() =>{
                       props.setToogleGalleryLocalToCloud(true);
                       setImageSelected(imagen);
-                      props.setFieldValue(`${props.iconoFormikname}.downloadUrl`,`https://bubbletown.me/download/${imagen}`);
+                      props.setFieldValue(`${props.iconoFormikname}.downloadUrl`,`${apiUrl}/download/${imagen}`);
                       console.log("selected");
-                      props.setFieldValue(`${props.iconoFormikname}.fileUrl`, `https://bubbletown.me/download/${imagen}`);
+                      props.setFieldValue(`${props.iconoFormikname}.fileUrl`, `${apiUrl}/download/${imagen}`);
                       props.setFieldValue(`${props.iconoFormikname}.filename`, `${imagen}`);
                       // props.setFieldValue("icono.file.name", `${imagen}`);
                       props.setFieldValue(`${props.iconoFormikname}.status`, "fetched");
@@ -94,7 +95,7 @@ export default function GalleryImages(props) {
                     }}
                   >
                     <div class="small image">
-                      <img src={`https://bubbletown.me/download/${imagen}`} />
+                      <img src={`${apiUrl}/download/${imagen}`} />
                     </div>
                   </a>
                 );

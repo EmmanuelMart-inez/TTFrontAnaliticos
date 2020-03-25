@@ -4,6 +4,7 @@ import { Formik, Field, FieldArray } from "formik";
 import Thumb from "./Thumb";
 import { DisplayFormikState } from "./formik-helper";
 import axios from "axios";
+import {apiUrl} from "../shared/constants"; 
 
 import * as Yup from "yup";
 
@@ -47,13 +48,13 @@ const Basic = () => (
       onSubmit={(values, { setSubmitting }) => {
         axios
           .post(
-            `https://bubbletown.me/notificaciones/5e314c51a3a8cbfd5b3a62c0`,
+            `${apiUrl}/notificaciones/5e314c51a3a8cbfd5b3a62c0`,
             {
               titulo: "Te gustÃ³ tu bebida?",
               mensaje: "Gracias por tu compra",
               fecha: "2019-12-19T05:28:40.247",
               imagenIcon:
-                "https://bubbletown.me/download/notificacionIcon2.png",
+                `${apiUrl}/download/notificacionIcon2.png`,
               bar_text: "Recordar mÃ¡s tarde",
               tipo_notificacion: "encuesta",
               link: "5e3540ffdb5584c6403a6332",
@@ -125,7 +126,7 @@ const Basic = () => (
                 var formData = new FormData();
                 formData.append("photo", event.currentTarget.files[0]);
                 axios
-                  .post(`https://bubbletown.me/upload`, formData, {
+                  .post(`${apiUrl}/upload`, formData, {
                     headers: {
                       "Content-Type": "multipart/form-data"
                     }

@@ -1,13 +1,12 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
-import { spacing } from "@material-ui/system";
 
 import { useFormikContext } from "formik";
 
 import axios from "axios";
+import {apiUrl} from "../shared/constants"; 
 
 import AlertDialogControlled from "../shared/AlertDialogProgress";
 const useStyles = makeStyles(theme => ({
@@ -47,7 +46,7 @@ export default function FormButtons(props) {
   function sendFormBasica(props) {
     var url;
     if (!props.editar) {
-      url = "https://bubbletown.me/notificaciones";
+      url = `${apiUrl}/notificaciones`;
       axios
         .post(
           `${url}`,
@@ -55,9 +54,9 @@ export default function FormButtons(props) {
             titulo: values.titulo,
             mensaje: values.contenido,
             // fecha: "2019-12-19T05:28:40.247",
-            imagenIcon: `https://bubbletown.me/download/${values.icono.downloadUrl}`,
+            imagenIcon: `${apiUrl}/${values.icono.downloadUrl}`,
             // bar_text: values.textoAccionador,
-            tipo_notificacion: values.notificaciones.value
+            tipo_notificacion: values.notificaciones.value,
             // link: "5e3540ffdb5584c6403a6332",
           },
           {
@@ -76,7 +75,7 @@ export default function FormButtons(props) {
           setFieldValue("sendProgress", 3);
         });
     } else {
-      url = `https://bubbletown.me/admin/notificaciones/${values.id}/acciones/${values.notificaciones.value}`;
+      url = `${apiUrl}/admin/notificaciones/${values.id}/acciones/${values.notificaciones.value}`;
       axios
         .put(
           `${url}`,
@@ -114,14 +113,14 @@ export default function FormButtons(props) {
     if (!props.editar) {
       axios
         .post(
-          `https://bubbletown.me/premios`,
+          `${apiUrl}/premios`,
           {
             nombre: values.premio.titulo,
             // fecha: "2019-12-19T05:28:40.247",
             imagen_icon: `${values.iconoMiniatura.downloadUrl}`,
             imagen_display: `${values.iconoDetalles.downloadUrl}`,
-            // imagen_icon: `https://bubbletown.me/download/${values.iconoMiniatura.downloadUrl}`,
-            // imagen_display: `https://bubbletown.me/download/${values.iconoDetalles.downloadUrl}`,
+            // imagen_icon: `${apiUrl}/download/${values.iconoMiniatura.downloadUrl}`,
+            // imagen_display: `${apiUrl}/download/${values.iconoDetalles.downloadUrl}`,
             puntos: parseInt(values.puntos, 1) || 0 //opcional
 
             // link: "5e3540ffdb5584c6403a6332",
@@ -137,13 +136,13 @@ export default function FormButtons(props) {
           if (res.status === 200)
             axios
               .post(
-                `https://bubbletown.me/notificaciones`,
+                `${apiUrl}/notificaciones`,
                 {
                   titulo: values.premio.titulo,
                   mensaje: values.premio.contenido,
                   // fecha: "2019-12-19T05:28:40.247",
                   imagenIcon: `${values.icono.downloadUrl}`,
-                  // imagenIcon: `https://bubbletown.me/download/${values.icono.downloadUrl}`,
+                  // imagenIcon: `${apiUrl}/download/${values.icono.downloadUrl}`,
                   bar_text: values.textoAccionador,
                   textoAccionador: values.notificaciones.textoAccionador,
                   tipo_notificacion: values.notificaciones.value
@@ -170,7 +169,7 @@ export default function FormButtons(props) {
           setFieldValue("sendProgress", 3);
         });
     } else {
-      url = `https://bubbletown.me/admin/notificaciones/${values.id}/acciones/${values.notificaciones.value}`;
+      url = `${apiUrl}/admin/notificaciones/${values.id}/acciones/${values.notificaciones.value}`;
       axios
         .put(
           url,
@@ -215,15 +214,12 @@ export default function FormButtons(props) {
       values.encuesta.paginas.map((pag, index) => {
         pag.opciones.map(ops => {
           ops.icon = ops.icon.downloadUrl;
-          // "https://www.bubbletown.me/download/" + ops.icon.downloadUrl;
-          // ops.icon.downloadUrl ||
-          // "https://www.bubbletown.me/download/defaultencuesta.png";
         });
       });
 
       axios
         .post(
-          `https://bubbletown.me/encuesta`,
+          `${apiUrl}/encuesta`,
           {
             titulo: values.encuesta.titulo,
             categoria: values.encuesta.categoria,
@@ -231,10 +227,10 @@ export default function FormButtons(props) {
             // puntos: values.encuesta.puntos,
             paginas: values.encuesta.paginas,
             // fecha: "2019-12-19T05:28:40.247",
-            // imagen_icon: `https://bubbletown.me/download/${
+            // imagen_icon: `${apiUrl}/download/${
             //   values.iconoMiniatura.downloadUrl
             // }`,
-            // imagen_display: `https://bubbletown.me/download/${
+            // imagen_display: `${apiUrl}/download/${
             //   values.iconoDetalles.downloadUrl
             // }`,
             puntos: parseInt(values.puntos, 1) || 0 //opcional
@@ -253,7 +249,7 @@ export default function FormButtons(props) {
           // console.log(idEncuesta);
           axios
             .post(
-              `https://bubbletown.me/notificaciones`,
+              `${apiUrl}/notificaciones`,
               {
                 titulo: values.titulo,
                 mensaje: values.contenido,
@@ -291,19 +287,13 @@ export default function FormButtons(props) {
         if (pag.tipo == "emoji"){
           pag.opciones.map(ops => {
             ops.icon = ops.icon.downloadUrl;
-            // !ops.icon.downloadUrl;
-            // ops.icon.downloadUrl =
-            //   "https://www.bubbletown.me/download/defaultencuesta.png";
           });}
         if (pag.tipo == "multiple"){
           pag.opciones.map(ops => {
-            ops.icon = "https://www.bubbletown.me/download/null.png";
-            // !ops.icon.downloadUrl;
-            // ops.icon.downloadUrl =
-            //   "https://www.bubbletown.me/download/defaultencuesta.png";
+            ops.icon = `${apiUrl}/download/null.png`;
           });}
       });
-      url = `https://bubbletown.me/admin/notificaciones/${values.id}/acciones/${values.notificaciones.value}`;
+      url = `${apiUrl}/admin/notificaciones/${values.id}/acciones/${values.notificaciones.value}`;
       axios
         .put(
           url,

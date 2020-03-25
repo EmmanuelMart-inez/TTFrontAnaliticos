@@ -20,6 +20,7 @@ import CropperIconButton from "./AlertDialogSlider";
 
 import { useFormikContext } from "formik";
 import axios from "axios";
+import {apiUrl} from "../shared/constants"; 
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -116,7 +117,7 @@ export default function CircularIntegration(props) {
       formData.append("photo", props.icono.fileCropped, props.icono.file.name);
     } else formData.append("photo", props.icono.file);
     axios
-      .post(`https://bubbletown.me/upload`, formData, {
+      .post(`${apiUrl}/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
@@ -149,30 +150,6 @@ export default function CircularIntegration(props) {
     props.setFieldValue(`${props.iconoFormikname}.fileUrl`, imageDataUrl);
     console.log(`${props.iconoFormikname}.fileUrl`);
   };
-
-  // const getImageFromURlServer = async filename => {
-  //   await axios
-  //     .get("https://bubbletown.me/download/monocara.png")
-  //     .then(res => {
-  //       console.log(res);
-  //       return res.blob();
-  //       // console.log(res.data);
-  //       // props.setFieldValue(`${props.iconoFormikname}.data`, res.data);
-  //       // props.setFieldValue(`${props.iconoFormikname}.status`, res.status);
-  //       // setSuccess(true);
-  //       // setLoading(false);
-  //     })
-  //     // .then(function(response) {
-  //     //   return response.blob();
-  //     // })
-  //     .then(miBlob => {
-  //       var objectURL = URL.createObjectURL(miBlob);
-  //       miImagen.src = objectURL;
-  //       console.log(miImagen);
-  //       return miImagen;
-  //     });
-  //     return "<h1>Loaded</h1>";
-  // };
 
   return (
     <div className={classes.root}>

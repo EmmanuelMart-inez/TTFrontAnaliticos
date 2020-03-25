@@ -26,6 +26,8 @@ import EncuestaPagesForm from "./new-encuestapagina";
 import PremioForm from "./new-premio";
 import FormButtons from "./formButtons";
 
+import {apiUrl} from "../shared/constants"; 
+
 import * as Yup from "yup";
 
 const useStyles = makeStyles(theme => ({
@@ -199,7 +201,7 @@ const Basic = () => {
                 opciones: [
                   {
                     icon:
-                      "https://www.bubbletown.me/download/notificacionIcon1.png",
+                      `${apiUrl}/download/notificacionIcon1.png`,
                     // {
                     //   file: null,
                     //   fileUrl: null,

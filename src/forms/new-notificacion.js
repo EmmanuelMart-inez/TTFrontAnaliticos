@@ -39,8 +39,6 @@ const useStyles = makeStyles(theme => ({
 export default function NotificacionForm(props) {
   const classes = useStyles();
   const { values, setFieldValue, handleSubmit } = useFormikContext();
-  const [showAlert, setShowAlert] = React.useState(false);
-  const [metrica, setMetrica] = React.useState(0);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -58,6 +56,7 @@ export default function NotificacionForm(props) {
             select
             label="Tipo de notificación"
             name="notificaciones"
+            disabled={props.editar}
             value={values.notificaciones.value}
             onChange={event => {
               setFieldValue("notificaciones.value", event.target.value);
@@ -117,8 +116,8 @@ export default function NotificacionForm(props) {
             }}
           />
         </Grid>
-        <Grid item xs={6}>
-          <SelectArrayChips />
+         <Grid item xs={6}>
+          <SelectArrayChips disabled={props.editar}/>
         </Grid>
         <Grid item xs={6}>
           <TextField

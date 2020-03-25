@@ -16,6 +16,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import {apiUrl} from "../shared/constants"; 
 
 const theme = createMuiTheme({
   palette: {
@@ -150,7 +151,7 @@ export default function EncuestaForm(props) {
                       onClick={() =>
                         arrayHelpers.push({
                           icon:
-                            "https://www.bubbletown.me/download/notificacionIcon1.png",
+                          `${apiUrl}/download/notificacionIcon1.png`,
                           calificacion: "",
                           rubrica: ""
                         })
@@ -172,7 +173,7 @@ export default function EncuestaForm(props) {
               onClick={() =>
                 arrayHelpers.push({
                   icon:
-                    "https://www.bubbletown.me/download/notificacionIcon1.png",
+                    `${apiUrl}/download/notificacionIcon1.png`,
                   calificacion: "",
                   rubrica: ""
                 })

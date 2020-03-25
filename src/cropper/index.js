@@ -65,7 +65,7 @@ export default class CropperFileButton extends React.Component {
       const formData = new FormData();
       formData.append("photo", file, filna);
       axios
-        .post(`https://bubbletown.me/upload`, formData, {
+        .post(`${apiUrl}/upload`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }

@@ -1,11 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
-
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
 import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from '@material-ui/styles';
 import green from "@material-ui/core/colors/green";
 
 export default function SwitchLabels() {

@@ -1,18 +1,13 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import { useFormikContext, Formik, Field, FieldArray } from "formik";
+import { Formik, FieldArray } from "formik";
 import { DisplayFormikState } from "./formik-helper";
 import axios from "axios";
-import { useAsync } from "react-async";
+import { apiUrl } from "../shared/constants";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Icon from "@material-ui/core/Icon";
-import Typography from "@material-ui/core/Typography";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 import NotificacionForm from "./new-notificacion";
@@ -152,7 +147,7 @@ const Basic = props => {
   // // Implementar enpoints : get, put:editar, delete:eliminar,
   // const [query, setQuery] = useState("redux");
   // const [{ data, isLoading, isError }, doFetch] = useDataApi(
-  //   `https://bubbletown.me/admin/notificaciones/${props.id}/acciones/ninguna`,
+  //   `${apiUrl}/admin/notificaciones/${props.id}/acciones/ninguna`,
   //   { hits: [] }
   // );
 
@@ -160,22 +155,15 @@ const Basic = props => {
     var a = undefined;
     if (isfetching)
       axios
-        .get(
-          `https://bubbletown.me/admin/notificaciones/${
-            props.id
-          }/acciones/ninguna`,
-          {
-            headers: {
-              "Content-Type": "application/json"
-            }
+        .get(`${apiUrl}/admin/notificaciones/${props.id}/acciones/ninguna`, {
+          headers: {
+            "Content-Type": "application/json"
           }
-        )
+        })
         .then(res => {
           axios
             .get(
-              `https://bubbletown.me/admin/notificaciones/${
-                props.id
-              }/acciones/${res.data.notificacion.tipo_notificacion}`,
+              `${apiUrl}/admin/notificaciones/${props.id}/acciones/${res.data.notificacion.tipo_notificacion}`,
               {
                 headers: {
                   "Content-Type": "application/json"
@@ -279,15 +267,25 @@ const Basic = props => {
                 categoria: response.encuesta.categoria,
                 // fechaCreacion: "",
                 metrica: response.encuesta.metrica,
-                // puntos: null,
+                puntos: response.encuesta.puntos,
                 paginas: response.encuesta.paginas
               },
               textoAccionador: response.notificacion.bar_text,
               contenido: response.notificacion.mensaje,
               // fechaLanzamiento: "",
               segmentacion: "todos",
+              indexFiltro: 0,
+              indexCollection: 0,
+              indexField: 0,
+              indexTipo: 0,
+              indexScale: 0,
+              filtros: [{
+                res : {
+                  participantes :response.notificacion.filtros || []}
+              }],
+              participantesFor: [],
               // link: "",
-              puntos: response.premio.puntos,
+              puntos: response.premio.puntos || response.encuesta.puntos,
               notificaciones: {
                 value: response.notificacion.tipo_notificacion
                 // value: "ninguna"
@@ -356,7 +354,6 @@ const Basic = props => {
                           addSteps={addSteps}
                           pageCounter={pageCounter}
                           pageArraySize={values.encuesta.paginas.length}
-                        
                         />
                       )}
                     />

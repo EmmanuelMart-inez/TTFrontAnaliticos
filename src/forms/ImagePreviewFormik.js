@@ -6,22 +6,19 @@ import { green } from "@material-ui/core/colors";
 import Button from "@material-ui/core/Button";
 import Fab from "@material-ui/core/Fab";
 import CheckIcon from "@material-ui/icons/Check";
-import SaveIcon from "@material-ui/icons/Save";
 import PersonFilled from "@material-ui/icons/PersonRounded";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import CloseIcon from "@material-ui/icons/Close";
-import PhotoSizeSelectLargeOutlinedIcon from "@material-ui/icons/PhotoSizeSelectLargeOutlined";
 import Icon from "@material-ui/core/Icon";
 
-import Thumb from "../cropper/Thumb";
 import ImageInput from "../cropper/ImageInput";
 import CropperIconButton from "../cropper/AlertDialogSlider";
 import Alert from "./GalleryAlert";
 import GalleryImagesFromServer from "./GalleryImages";
 
-import { useFormikContext } from "formik";
 import axios from "axios";
+import {apiUrl} from "../shared/constants"; 
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -168,7 +165,7 @@ export default function CircularIntegration(props) {
       formData.append("photo", props.icono.file);
     }
     axios
-      .post(`https://bubbletown.me/upload`, formData, {
+      .post(`${apiUrl}/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
@@ -180,7 +177,7 @@ export default function CircularIntegration(props) {
         props.setFieldValue(`${props.iconoFormikname}.status`, res.status);
         props.setFieldValue(
           `${props.iconoFormikname}.downloadUrl`,
-          `https://bubbletown.me/download/${res.data}`
+          `${apiUrl}/download/${res.data}`
         );
         props.setFieldValue(`${props.iconoFormikname}.filename`, res.data);
         setSuccess(true);

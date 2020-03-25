@@ -1,34 +1,15 @@
 import React from "react";
-import { useFormikContext, Formik, Form, Field } from "formik";
+import { useFormikContext} from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 
-import ImagePreview from "./ImagePreviewFormik";
-// import ImagePreview from "../cropper/ImagePreview";
-import { DisplayFormikState } from "./formik-helper";
-import AlertDialog from "../shared/AlertDialog";
-import EncuestaPage from "./new-encuestapagina";
+// import { DisplayFormikState } from "./formik-helper";
 
 import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles(theme => ({
-  title: {
-    marginBottom: theme.spacing(3)
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 220
-  }
-}));
-
 export default function EncuestaForm(props) {
-  const classes = useStyles();
   const { values, setFieldValue, handleSubmit } = useFormikContext();
-  const [showAlert, setShowAlert] = React.useState(false);
 
   // console.log("page:", props.pageCounter, "   step:", props.activeStep);
 
