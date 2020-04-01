@@ -19,9 +19,7 @@ export default function AlertDialog(props) {
   };
 
   const handleAgree = async() => {
-    // props.setFieldValue("sendProgress", 1);
     setSendProgress(1);
-    // props.setFieldValue("isCompleted", false);
     var status =  await props.action();
     console.log(status);
     if(status === 2 )

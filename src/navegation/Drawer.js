@@ -26,6 +26,7 @@ import NotificacionForm from "../forms/NotificacionWithMaterialUI";
 import TableRemote from "../home/TableRemote";
 import EditRow from "../forms/EditarNotificacionForm";
 import BirthdayPaper from "../birthdays/index";
+import AyudaPaper from "../ayuda/index";
 
 import Date from "../forms/filters/DateRange";
 import Rango from "../forms/filters/RangoPicker";
@@ -237,7 +238,7 @@ export default function MiniDrawer() {
           </Route>
           <Route path="/questionsAnswers">
             <>
-              <Rango />
+              <AyudaPaper />
             </>
           </Route>
           <Route path="/stamp">
