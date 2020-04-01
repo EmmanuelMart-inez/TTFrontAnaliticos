@@ -16,9 +16,11 @@
     "axios": "0.19.2",
     "date": "1.0.2",
     "date-fns": "^2.9.0",
+    "fg-loadcss": "^2.1.0",
     "formik": "2.0.6",
     "formik-material-ui": "2.0.0-alpha.3",
     "get-orientation": "1.1.2",
+    "lodash": "^4.17.15",
     "material-table": "^1.57.2",
     "react": "16.13.0",
     "react-async": "10.0.0",
@@ -45,5 +47,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "alias": {
+    "#helpers": "./src/helpers"
+  }
 }

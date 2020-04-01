@@ -9,6 +9,7 @@ import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import FontAwesome from '../shared/FontAwesome';
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -18,10 +19,13 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-
+import CakeRoundedIcon from '@material-ui/icons/CakeRounded';
+import HelpOutlineRoundedIcon from '@material-ui/icons/HelpOutlineRounded';
+import ShowChartRoundedIcon from '@material-ui/icons/ShowChartRounded';
 import NotificacionForm from "../forms/NotificacionWithMaterialUI";
 import TableRemote from "../home/TableRemote";
 import EditRow from "../forms/EditarNotificacionForm";
+import BirthdayPaper from "../birthdays/index";
 
 import Date from "../forms/filters/DateRange";
 import Rango from "../forms/filters/RangoPicker";
@@ -172,9 +176,39 @@ export default function MiniDrawer() {
             </ListItemIcon>
             <ListItemText primary={"Formularios"} />
           </ListItem>
-          <ListItem button key={3} component={Link} to="/demos">
+          <ListItem button key={3} component={Link} to="/birthdays">
             <ListItemIcon>
-              <InboxIcon />
+              <CakeRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Cumpleaños"} />
+          </ListItem>
+          <ListItem button key={4} component={Link} to="/questionsAnswers">
+            <ListItemIcon>
+              <HelpOutlineRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Ayuda (Q&A)"} />
+          </ListItem>
+          <ListItem button key={5} component={Link} to="/stamps">
+            <ListItemIcon>
+              <FontAwesome stamp={true}/>
+            </ListItemIcon>
+            <ListItemText primary={"Sistema de sellos"} />
+          </ListItem>
+          <ListItem button key={6} component={Link} to="/points">
+            <ListItemIcon>
+              <FontAwesome coins={true}/>
+            </ListItemIcon>
+            <ListItemText primary={"Sistema de puntos"} />
+          </ListItem>
+          <ListItem button key={9} component={Link} to="/palette">
+            <ListItemIcon>
+              <FontAwesome palette={true}/>
+            </ListItemIcon>
+            <ListItemText primary={"Preferencias"} />
+          </ListItem>
+          <ListItem button key={100} component={Link} to="/demos">
+            <ListItemIcon>
+              <ShowChartRoundedIcon />
             </ListItemIcon>
             <ListItemText primary={"Demo Async"} />
           </ListItem>
@@ -197,6 +231,23 @@ export default function MiniDrawer() {
               {/* <Date /> */}
               <Rango />
             </>
+          </Route>
+          <Route path="/birthdays">
+              <BirthdayPaper />
+          </Route>
+          <Route path="/questionsAnswers">
+            <>
+              <Rango />
+            </>
+          </Route>
+          <Route path="/stamp">
+              <Rango />
+          </Route>
+          <Route path="/points">
+              <Rango />
+          </Route>
+          <Route path="/palette">
+              <Rango />
           </Route>
           <Route path="/" />
         </Switch>

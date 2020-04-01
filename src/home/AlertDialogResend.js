@@ -59,7 +59,7 @@ export default function AlertDialog(props) {
           {sendProgress === 1 ? (
             <CircularProgress color="primary" />
           ) : sendProgress === 2 ? (
-            <CheckIcon
+            <><CheckIcon
               style={{
                 fontSize: 40,
                 color: "#45D6A9",
@@ -67,6 +67,7 @@ export default function AlertDialog(props) {
                 borderColor: "#45D6A9"
               }}
             />
+            </>
           ) : sendProgress === 3 ? (
             <ErrorIcon
               style={{ fontSize: 40, color: "red", marginBottom: "15px" }}
@@ -85,7 +86,7 @@ export default function AlertDialog(props) {
               : sendProgress === 1
               ? "Por favor espere"
               : sendProgress === 2
-              ? "Enviado con éxito!"
+              ? <> <div>Enviado con éxito!</div><div>{props.okmessage}</div> </>
               : "Verifique que el formulario este completo, llenado correctamente y usted tenga una conexión a internet o que el servidor se encuentre en servicio"}
           </DialogContentText>
         </DialogContent>
