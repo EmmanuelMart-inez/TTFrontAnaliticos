@@ -12,7 +12,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
-import useBubbletownApi from "../helpers/useBubbletownApi";
+import useBubbletownApi from "../../helpers/useBubbletownApi";
 
 const useStyles = makeStyles(theme => ({
   root: {

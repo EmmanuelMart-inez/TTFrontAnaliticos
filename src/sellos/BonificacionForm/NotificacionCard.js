@@ -1,8 +1,9 @@
 import React from "react";
-import useBubbletownApi from "../helpers/useBubbletownApi";
+import useBubbletownApi from "../../helpers/useBubbletownApi";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { apiUrlImages } from "../shared/constants";
-import PremioCard from "../sellos/BonificacionForm/PremioCard/index";
+import { apiUrlImages } from "../../shared/constants";
+import PremioCard from "./PremioCard";
+import EncuestaCard from "./EncuestaCard/index";
 
 export default function PromoCard(props) {
   const { data: tile, loading } = useBubbletownApi({
@@ -19,6 +20,7 @@ export default function PromoCard(props) {
   return (
     <>
       <div class="ui link cards" style={{ height: "120px" }}>
+        {/* <a class="ui teal ribbon label">Notificación</a> */}
         <div class="card">
           <div class="content">
             <img
@@ -52,7 +54,12 @@ export default function PromoCard(props) {
           </div>
         </div>
       </div>
-      {tile.notificacion.tipo_notificacion == 'premio' && <PremioCard premioId={tile.notificacion.link} />}
+      {tile.notificacion.tipo_notificacion == "premio" && (
+        <PremioCard premioId={"5ea36d5eb6a3c50765333b75"} />
+      )}
+      {tile.notificacion.tipo_notificacion == "encuesta" && (
+        <EncuestaCard encuestaId={"5ea5ecbd192170cfe4045258"} />
+      )}
     </>
   );
 }

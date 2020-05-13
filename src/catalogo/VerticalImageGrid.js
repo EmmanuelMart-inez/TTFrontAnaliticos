@@ -9,7 +9,8 @@ import useBubbletownApi from "../helpers/useBubbletownApi";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import AlertDialogProgressResend from "../home/AlertDialogResend";
 import axios from "axios";
-import { apiUrl, apiUrlImages } from "../shared/constants";
+import { apiUrl } from "../shared/constants";
+import ProductCard from "./ProductoCard";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,10 +42,10 @@ const useStyles = makeStyles(theme => ({
 export default function SingleLineGridList() {
   const classes = useStyles();
   const [openAlert, setOpenAlert] = React.useState(false);
-  const [ayudaId, setAyudaId] = React.useState(false);
+  const [productoId, setProductoId] = React.useState(false);
   const gridRef = React.useRef();
-  const { data: Ayuda, loading } = useBubbletownApi({
-    path: `ayuda`
+  const { data: Catalogo, loading } = useBubbletownApi({
+    path: `catalogo`
   });
 
   if (loading) return <CircularProgress />;
@@ -59,10 +60,10 @@ export default function SingleLineGridList() {
           switch={openAlert}
           action={async () => 
             await axios
-              .delete(`${apiUrl}/ayuda/${ayudaId}`)
+              .delete(`${apiUrl}/catalogo/${productoId}`)
               .then(res => {
                 if (res.status === 200) {
-                  console.log(Ayuda.Ayuda = Ayuda.Ayuda.filter(a => a._id !== ayudaId));
+                  console.log(Catalogo.Catalogo = Catalogo.Catalogo.filter(a => a._id !== productoId));
                   return 2;}
                 else return 3;
               })
@@ -81,26 +82,8 @@ export default function SingleLineGridList() {
       )}
       <GridList cellHeight={200} className={classes.gridList} cols={1} ref={gridRef}>
         <div class="ui divided items">
-          {Ayuda.Ayuda.map(tile => (
-            <div key={tile._id} class="item" style={{ marginBottom: "20px" }}>
-              <div class="ui tiny image">
-                <img src={`${apiUrlImages}/${tile.imagen_icon}`} alt={`${apiUrlImages}/${tile.imagen_icon}`} />
-              </div>
-              <div class="middle aligned content">
-                <div class="ui right floated">
-                  <i
-                    class="red right close link icon"
-                    onClick={() => {
-                      setAyudaId(tile._id);
-                      console.log(tile._id);
-                      setOpenAlert(true);
-                    }}
-                  ></i>
-                </div>
-                <div class="header">{tile.titulo}</div>
-                <div class="description">{tile.descripcion}</div>
-              </div>
-            </div>
+          {Catalogo.Catalogo.map(tile => (
+            <ProductCard producto={tile} onDelete={setOpenAlert} setProductoId={setProductoId}/>
           ))}
         </div>
       </GridList>

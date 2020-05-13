@@ -201,7 +201,7 @@ const Basic = () => {
                 opciones: [
                   {
                     icon:
-                      `${apiUrl}/download/notificacionIcon1.png`,
+                      `notificacionIcon1.png`,
                     // {
                     //   file: null,
                     //   fileUrl: null,

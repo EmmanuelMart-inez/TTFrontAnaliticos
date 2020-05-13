@@ -11,14 +11,13 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
-import useBubbletownApi from "../helpers/useBubbletownApi";
+import useBubbletownApi from "../../helpers/useBubbletownApi";
 import NotificacionCard from "./NotificacionCard";
 import PromoCard from "./PromoCard";
-import PremioCard from "../sellos/BonificacionForm/index";
 
 export default function CurrentPromo() {
-  const { data: notificaciones, loading } = useBubbletownApi({
-    path: `birthday`
+  const { data: tarjetaSellos, loading } = useBubbletownApi({
+    path: `tarjetasellos`
   });
   const parseISOString = s => {
     var b = s.split(/\D+/);
@@ -29,9 +28,10 @@ export default function CurrentPromo() {
   if (loading) return <CircularProgress />;
   return (
     <>
-      <NotificacionCard notificacionId={notificaciones[0].id_notificacion} />
-      <PromoCard promoId={notificaciones[0].id_promocion} />
-      <Typography variant="body2" gutterBottom>
+      <NotificacionCard notificacionId={tarjetaSellos.id_notificacion} />
+      <PromoCard promoId={tarjetaSellos.id_promocion} />
+
+      {/* <Typography variant="body2" gutterBottom>
         Fecha de creacion: {notificaciones[0].fecha_creacion}
       </Typography>
       <Typography variant="body2" gutterBottom>
@@ -42,7 +42,7 @@ export default function CurrentPromo() {
       </Typography>
       <Typography variant="body2" gutterBottom>
         Vigencia: {notificaciones[0].vigencia} 
-      </Typography>
+      </Typography> */}
     </>
   );
 }

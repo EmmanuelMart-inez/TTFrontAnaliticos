@@ -54,10 +54,11 @@ export default function FormButtons(props) {
             titulo: values.titulo,
             mensaje: values.contenido,
             // fecha: "2019-12-19T05:28:40.247",
-            imagenIcon: `${apiUrl}/${values.icono.downloadUrl}`,
+            imagenIcon: `${values.icono.filename}`,
             // bar_text: values.textoAccionador,
             tipo_notificacion: values.notificaciones.value,
             // link: "5e3540ffdb5584c6403a6332",
+            filtros: values.participantesFor
           },
           {
             headers: {
@@ -84,7 +85,7 @@ export default function FormButtons(props) {
               titulo: values.titulo,
               mensaje: values.contenido,
               // fecha: "2019-12-19T05:28:40.247",
-              imagenIcon: `${values.icono.downloadUrl}`,
+              imagenIcon: `${values.icono.filename}`,
               // bar_text: values.textoAccionador,
               tipo_notificacion: values.notificaciones.value
               // link: "5e3540ffdb5584c6403a6332",
@@ -117,10 +118,10 @@ export default function FormButtons(props) {
           {
             nombre: values.premio.titulo,
             // fecha: "2019-12-19T05:28:40.247",
-            imagen_icon: `${values.iconoMiniatura.downloadUrl}`,
-            imagen_display: `${values.iconoDetalles.downloadUrl}`,
-            // imagen_icon: `${apiUrl}/download/${values.iconoMiniatura.downloadUrl}`,
-            // imagen_display: `${apiUrl}/download/${values.iconoDetalles.downloadUrl}`,
+            imagen_icon: `${values.iconoMiniatura.filename}`,
+            imagen_display: `${values.iconoDetalles.filename}`,
+            // imagen_icon: `${apiUrl}/download/${values.iconoMiniatura.filename}`,
+            // imagen_display: `${apiUrl}/download/${values.iconoDetalles.filename}`,
             puntos: parseInt(values.puntos, 1) || 0 //opcional
 
             // link: "5e3540ffdb5584c6403a6332",
@@ -141,8 +142,8 @@ export default function FormButtons(props) {
                   titulo: values.premio.titulo,
                   mensaje: values.premio.contenido,
                   // fecha: "2019-12-19T05:28:40.247",
-                  imagenIcon: `${values.icono.downloadUrl}`,
-                  // imagenIcon: `${apiUrl}/download/${values.icono.downloadUrl}`,
+                  imagenIcon: `${values.icono.filename}`,
+                  // imagenIcon: `${apiUrl}/download/${values.icono.filename}`,
                   bar_text: values.textoAccionador,
                   textoAccionador: values.notificaciones.textoAccionador,
                   tipo_notificacion: values.notificaciones.value
@@ -178,7 +179,7 @@ export default function FormButtons(props) {
               titulo: values.premio.titulo,
               mensaje: values.premio.contenido,
               // fecha: "2019-12-19T05:28:40.247",
-              imagenIcon: `${values.icono.downloadUrl}`,
+              imagenIcon: `${values.icono.filename}`,
               bar_text: values.textoAccionador,
               textoAccionador: values.notificaciones.textoAccionador,
               tipo_notificacion: values.notificaciones.value
@@ -186,8 +187,8 @@ export default function FormButtons(props) {
             premio: {
               nombre: values.premio.titulo,
               // fecha: "2019-12-19T05:28:40.247",
-              imagen_icon: `${values.iconoMiniatura.downloadUrl}`,
-              imagen_display: `${values.iconoDetalles.downloadUrl}`,
+              imagen_icon: `${values.iconoMiniatura.filename}`,
+              imagen_display: `${values.iconoDetalles.filename}`,
               puntos: parseInt(values.puntos, 1) || 0
             }
           },
@@ -213,7 +214,7 @@ export default function FormButtons(props) {
     if (!props.editar) {
       values.encuesta.paginas.map((pag, index) => {
         pag.opciones.map(ops => {
-          ops.icon = ops.icon.downloadUrl;
+          ops.icon = ops.icon.filename;
         });
       });
 
@@ -228,10 +229,10 @@ export default function FormButtons(props) {
             paginas: values.encuesta.paginas,
             // fecha: "2019-12-19T05:28:40.247",
             // imagen_icon: `${apiUrl}/download/${
-            //   values.iconoMiniatura.downloadUrl
+            //   values.iconoMiniatura.filename
             // }`,
             // imagen_display: `${apiUrl}/download/${
-            //   values.iconoDetalles.downloadUrl
+            //   values.iconoDetalles.filename
             // }`,
             puntos: parseInt(values.puntos, 1) || 0 //opcional
 
@@ -254,7 +255,7 @@ export default function FormButtons(props) {
                 titulo: values.titulo,
                 mensaje: values.contenido,
                 // fecha: "2019-12-19T05:28:40.247",
-                imagenIcon: `${values.icono.downloadUrl}`,
+                imagenIcon: `${values.icono.filename}`,
                 bar_text: values.textoAccionador,
                 textoAccionador: values.notificaciones.textoAccionador,
                 tipo_notificacion: values.notificaciones.value,
@@ -286,7 +287,7 @@ export default function FormButtons(props) {
       values.encuesta.paginas.map((pag, index) => {
         if (pag.tipo == "emoji"){
           pag.opciones.map(ops => {
-            ops.icon = ops.icon.downloadUrl;
+            ops.icon = ops.icon.filename;
           });}
         if (pag.tipo == "multiple"){
           pag.opciones.map(ops => {
@@ -302,7 +303,7 @@ export default function FormButtons(props) {
               titulo: values.titulo,
               mensaje: values.contenido,
               // fecha: "2019-12-19T05:28:40.247",
-              imagenIcon: `${values.icono.downloadUrl}`,
+              imagenIcon: `${values.icono.filename}`,
               bar_text: values.textoAccionador,
               textoAccionador: values.notificaciones.textoAccionador,
               tipo_notificacion: values.notificaciones.value

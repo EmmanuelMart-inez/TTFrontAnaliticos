@@ -1,51 +1,52 @@
 import React, { useState, withStyles } from "react";
 
-import Grid from "@material-ui/core/Grid";
-import ImagePreview from "../forms/ImagePreviewFormik";
-import TextField from "@material-ui/core/TextField";
 import { useFormikContext, Formik, Field, FieldArray } from "formik";
 import * as Yup from "yup";
 import { DisplayFormikState } from "../forms/formik-helper";
+
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import SaveIcon from "@material-ui/icons/Save";
 import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import SaveIcon from "@material-ui/icons/Save";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import AlertDialogProgressResend from "../home/AlertDialogResend";
 
 import axios from "axios";
 import { apiUrl } from "../shared/constants";
+import useBubbletownApi from "../helpers/useBubbletownApi";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
-    marginBottom: theme.spacing(3)
-  }
+    marginBottom: theme.spacing(3),
+  },
 }));
 
-export default function AyudaForm() {
+export default function NivelForm() {
   const classes = useStyles();
   const [openAlert, setOpenAlert] = React.useState(false);
+  // const [addLevelForm, setAddLevelForm] = React.useState(false);
+  const { data: config, loading } = useBubbletownApi({
+    path: `config`,
+  });
+
+  function getFormatedJustIds(array) {
+    return array.map((i) => i.value);
+  }
+
+  if (loading) return <CircularProgress />;
   return (
     <Formik
       initialValues={{
-        titulo: "",
-        descripcion: "",
-        icono: {
-          file: null,
-          fileUrl: null,
-          filename: "image_cropped",
-          fileUrlCropped: null,
-          fileCropped: null,
-          downloadUrl: null,
-          status: "",
-          isCroppedCompleted: false
-        }
+        equivalencia_punto_pesos: config.equivalencia_punto_pesos || "",
       }}
       validationSchema={Yup.object({
         titulo: Yup.string()
           .min(1, "Must be 15 characters or less")
-          .required("Required")
+          .required("Required"),
       })}
       onSubmit={(values, { setSubmitting }) => {}}
     >
@@ -57,7 +58,7 @@ export default function AyudaForm() {
         handleBlur,
         handleSubmit,
         isSubmitting,
-        setFieldValue
+        setFieldValue,
         /* and other goodies */
       }) => (
         <Grid container spacing={3}>
@@ -70,23 +71,23 @@ export default function AyudaForm() {
               switch={openAlert}
               action={async () =>
                 await axios
-                  .post(`${apiUrl}/ayuda`, 
-                  {
-                    // imagen_icon: values.icono.fileUrl,
-                    imagen_icon: values.icono.filename,
-                    titulo: values.titulo,
-                    descripcion: values.descripcion
-                  }
-                  ,{
-                    headers: {
-                      "Content-Type": "application/json"
+                  .put(
+                    `${apiUrl}/config`,
+                    {
+                      equivalencia_punto_pesos:
+                        values.equivalencia_punto_pesos,
+                    },
+                    {
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
                     }
-                  })
-                  .then(res => {
+                  )
+                  .then((res) => {
                     if (res.status === 200) return 2;
                     else return 3;
                   })
-                  .catch(e => {
+                  .catch((e) => {
                     console.log(e);
                     return 3;
                     // setFieldValue("sendProgress", 3);
@@ -102,42 +103,25 @@ export default function AyudaForm() {
           <Grid item xs={12}>
             <div className={classes.title}>
               <Typography variant="h6" color="inherit">
-                {"Nuevo elemento de Ayuda"}
+                {"Sistema de niveles"}
               </Typography>
             </div>
           </Grid>
-          <Grid item xs={6}>
-            <TextField
-              label="Título"
-              multiline
-              rowsMax="4"
-              name={values.titulo}
-              value={values.titulo}
-              onChange={event => {
-                setFieldValue("titulo", event.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              label="Descripción"
-              multiline
-              rowsMax="6"
-              name={values.descripcion}
-              value={values.descripcion}
-              onChange={event => {
-                setFieldValue("descripcion", event.target.value);
-              }}
-            />
-          </Grid>
           <Grid item xs={12}>
-            <ImagePreview
-              icono={values.icono}
-              setFieldValue={setFieldValue}
-              values={values}
-              subirIconoButtonTag="Seleccionar ícono"
-              iconoFormikname="icono"
-            />
+            <TextField
+              id="outlined-select-NpuntosGastdos"
+              label="Equivalencia de un punto a pesos"
+              value={values.equivalencia_punto_pesos}
+              onChange={(event) => {
+                if (event.target.value.length === 0) {
+                  setFieldValue("equivalencia_punto_pesos", event.target.value);
+                } else {
+                  let value = parseInt(event.target.value, 10);
+                  setFieldValue("equivalencia_punto_pesos", value);
+                }
+              }}
+              helperText="1 peso en compras a cuantos puntos equivale?"
+            ></TextField>
           </Grid>
           <Grid item xs={12}>
             <Box p={2}>
@@ -148,6 +132,11 @@ export default function AyudaForm() {
                 onClick={() => {
                   setOpenAlert(true);
                 }}
+                disabled={
+                  typeof values.equivalencia_punto_pesos !== "number" ||
+                  values.equivalencia_punto_pesos == undefined ||
+                  values.equivalencia_punto_pesos.lenght === "null"
+                }
               >
                 Guardar
               </Button>

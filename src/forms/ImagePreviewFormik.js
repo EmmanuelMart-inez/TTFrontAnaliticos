@@ -13,6 +13,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Icon from "@material-ui/core/Icon";
 
 import ImageInput from "../cropper/ImageInput";
+import GalleryIcon from "./gallery.png";
 import CropperIconButton from "../cropper/AlertDialogSlider";
 import Alert from "./GalleryAlert";
 import GalleryImagesFromServer from "./GalleryImages";
@@ -239,7 +240,7 @@ export default function CircularIntegration(props) {
                   )}
                   <div>
                     <img
-                      src="assets/gallery.png"
+                      src={GalleryIcon}
                       alt="Galería imagen"
                       height="100"
                     />

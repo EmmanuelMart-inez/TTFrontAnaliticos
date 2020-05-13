@@ -11,19 +11,21 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import Box from "@material-ui/core/Box";
+import MenuItem from '@material-ui/core/MenuItem';
 
+import DatePicker from "../forms/calendarField";
 import AlertDialogProgressResend from "../home/AlertDialogResend";
 
 import axios from "axios";
 import { apiUrl } from "../shared/constants";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
-    marginBottom: theme.spacing(3)
-  }
+    marginBottom: theme.spacing(3),
+  },
 }));
 
-export default function AyudaForm() {
+export default function CatalogoForm() {
   const classes = useStyles();
   const [openAlert, setOpenAlert] = React.useState(false);
   return (
@@ -31,6 +33,8 @@ export default function AyudaForm() {
       initialValues={{
         titulo: "",
         descripcion: "",
+        tipo: "",
+        vigencia: "",
         icono: {
           file: null,
           fileUrl: null,
@@ -39,13 +43,13 @@ export default function AyudaForm() {
           fileCropped: null,
           downloadUrl: null,
           status: "",
-          isCroppedCompleted: false
-        }
+          isCroppedCompleted: false,
+        },
       }}
       validationSchema={Yup.object({
         titulo: Yup.string()
           .min(1, "Must be 15 characters or less")
-          .required("Required")
+          .required("Required"),
       })}
       onSubmit={(values, { setSubmitting }) => {}}
     >
@@ -57,7 +61,7 @@ export default function AyudaForm() {
         handleBlur,
         handleSubmit,
         isSubmitting,
-        setFieldValue
+        setFieldValue,
         /* and other goodies */
       }) => (
         <Grid container spacing={3}>
@@ -70,23 +74,26 @@ export default function AyudaForm() {
               switch={openAlert}
               action={async () =>
                 await axios
-                  .post(`${apiUrl}/ayuda`, 
-                  {
-                    // imagen_icon: values.icono.fileUrl,
-                    imagen_icon: values.icono.filename,
-                    titulo: values.titulo,
-                    descripcion: values.descripcion
-                  }
-                  ,{
-                    headers: {
-                      "Content-Type": "application/json"
+                  .post(
+                    `${apiUrl}/catalogo`,
+                    {
+                      titulo: values.titulo,
+                      descripcion: values.descripcion,
+                      tipo: values.tipo,
+                      fecha_vigencia: values.vigencia,
+                      imagen: values.icono.filename,
+                    },
+                    {
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
                     }
-                  })
-                  .then(res => {
+                  )
+                  .then((res) => {
                     if (res.status === 200) return 2;
                     else return 3;
                   })
-                  .catch(e => {
+                  .catch((e) => {
                     console.log(e);
                     return 3;
                     // setFieldValue("sendProgress", 3);
@@ -102,7 +109,7 @@ export default function AyudaForm() {
           <Grid item xs={12}>
             <div className={classes.title}>
               <Typography variant="h6" color="inherit">
-                {"Nuevo elemento de Ayuda"}
+                {"Nuevo elemento del catálogo"}
               </Typography>
             </div>
           </Grid>
@@ -113,7 +120,7 @@ export default function AyudaForm() {
               rowsMax="4"
               name={values.titulo}
               value={values.titulo}
-              onChange={event => {
+              onChange={(event) => {
                 setFieldValue("titulo", event.target.value);
               }}
             />
@@ -125,17 +132,40 @@ export default function AyudaForm() {
               rowsMax="6"
               name={values.descripcion}
               value={values.descripcion}
-              onChange={event => {
+              onChange={(event) => {
                 setFieldValue("descripcion", event.target.value);
               }}
             />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Tipo"
+              select
+              name={values.tipo}
+              value={values.tipo}
+              helperText="Seleccione un tipo de producto. Solo las bebidas y alimentos aparecerán en la app"
+              onChange={(event) => {
+                setFieldValue("tipo", event.target.value);
+              }}
+            >
+              <MenuItem value="">
+                <em>Ninguno</em>
+              </MenuItem>
+              <MenuItem value={"Bebidas"}>Bebida</MenuItem>
+              <MenuItem value={"Alimentos"}>Alimento</MenuItem>
+              <MenuItem value={"Otro"}>Otro</MenuItem>
+            </TextField>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography style={{"height": "16px", "marginBottom": "5px", "color": "#757575"}} color="inherit">Vigencia</Typography>
+            <DatePicker setFieldValue={setFieldValue} field={"vigencia"} value={values.vigencia}/>
           </Grid>
           <Grid item xs={12}>
             <ImagePreview
               icono={values.icono}
               setFieldValue={setFieldValue}
               values={values}
-              subirIconoButtonTag="Seleccionar ícono"
+              subirIconoButtonTag="Seleccionar imagen"
               iconoFormikname="icono"
             />
           </Grid>
