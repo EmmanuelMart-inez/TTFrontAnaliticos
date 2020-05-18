@@ -148,7 +148,7 @@ export default function AlertDialogToCropImage(props) {
                     image={props.values.icono.fileUrl}
                     crop={crop}
                     zoom={zoom}
-                    aspect={4 / 3}
+                    aspect={4 }
                     onCropChange={setCrop}
                     onCropComplete={onCropComplete}
                     onZoomChange={setZoom}

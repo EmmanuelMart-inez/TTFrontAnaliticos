@@ -6,17 +6,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useFormikContext } from "formik";
 
 import axios from "axios";
-import {apiUrl} from "../shared/constants"; 
+import { apiUrl } from "../shared/constants";
 
 import AlertDialogControlled from "../shared/AlertDialogProgress";
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   actionsButtons: {
-    marginTop: "15px"
+    marginTop: "15px",
   },
   buttondown: {
     marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(0)
-  }
+    marginBottom: theme.spacing(0),
+  },
 }));
 
 export default function FormButtons(props) {
@@ -30,7 +30,7 @@ export default function FormButtons(props) {
     isSubmitting,
     onSubmit,
     isValid,
-    setSubmitting
+    setSubmitting,
   } = useFormikContext();
   // const p = useFormikContext();
   // console.log(p);
@@ -55,23 +55,24 @@ export default function FormButtons(props) {
             mensaje: values.contenido,
             // fecha: "2019-12-19T05:28:40.247",
             imagenIcon: `${values.icono.filename}`,
+            imagenDisplay: `${values.iconoDisplay.filename}`,
             // bar_text: values.textoAccionador,
             tipo_notificacion: values.notificaciones.value,
             // link: "5e3540ffdb5584c6403a6332",
-            filtros: values.participantesFor
+            filtros: values.participantesFor,
           },
           {
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           }
         )
-        .then(res => {
+        .then((res) => {
           // console.log(res);
           // console.log(res.data);
           setFieldValue("sendProgress", 2);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
           setFieldValue("sendProgress", 3);
         });
@@ -86,23 +87,24 @@ export default function FormButtons(props) {
               mensaje: values.contenido,
               // fecha: "2019-12-19T05:28:40.247",
               imagenIcon: `${values.icono.filename}`,
+              imagenDisplay: `${values.iconoDisplay.filename}`,
               // bar_text: values.textoAccionador,
-              tipo_notificacion: values.notificaciones.value
+              tipo_notificacion: values.notificaciones.value,
               // link: "5e3540ffdb5584c6403a6332",
-            }
+            },
           },
           {
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           }
         )
-        .then(res => {
+        .then((res) => {
           // console.log(res);
           // console.log(res.data);
           setFieldValue("sendProgress", 2);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
           setFieldValue("sendProgress", 3);
         });
@@ -122,17 +124,17 @@ export default function FormButtons(props) {
             imagen_display: `${values.iconoDetalles.filename}`,
             // imagen_icon: `${apiUrl}/download/${values.iconoMiniatura.filename}`,
             // imagen_display: `${apiUrl}/download/${values.iconoDetalles.filename}`,
-            puntos: parseInt(values.puntos, 1) || 0 //opcional
+            puntos: parseInt(values.puntos, 1) || 0, //opcional
 
             // link: "5e3540ffdb5584c6403a6332",
           },
           {
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           }
         )
-        .then(res => {
+        .then((res) => {
           // console.log(res);
           if (res.status === 200)
             axios
@@ -146,26 +148,27 @@ export default function FormButtons(props) {
                   // imagenIcon: `${apiUrl}/download/${values.icono.filename}`,
                   bar_text: values.textoAccionador,
                   textoAccionador: values.notificaciones.textoAccionador,
-                  tipo_notificacion: values.notificaciones.value
+                  tipo_notificacion: values.notificaciones.value,
+                  filtros: values.participantesFor,
                 },
                 {
                   headers: {
-                    "Content-Type": "application/json"
-                  }
+                    "Content-Type": "application/json",
+                  },
                 }
               )
-              .then(res => {
+              .then((res) => {
                 // console.log(res);
                 // console.log(res.data);
                 setFieldValue("sendProgress", 2);
               })
-              .catch(e => {
+              .catch((e) => {
                 console.log(e);
                 setFieldValue("sendProgress", 3);
               });
           // else Show a error message
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
           setFieldValue("sendProgress", 3);
         });
@@ -182,27 +185,27 @@ export default function FormButtons(props) {
               imagenIcon: `${values.icono.filename}`,
               bar_text: values.textoAccionador,
               textoAccionador: values.notificaciones.textoAccionador,
-              tipo_notificacion: values.notificaciones.value
+              tipo_notificacion: values.notificaciones.value,
             }, //opcional
             premio: {
               nombre: values.premio.titulo,
               // fecha: "2019-12-19T05:28:40.247",
               imagen_icon: `${values.iconoMiniatura.filename}`,
               imagen_display: `${values.iconoDetalles.filename}`,
-              puntos: parseInt(values.puntos, 1) || 0
-            }
+              puntos: parseInt(values.puntos, 1) || 0,
+            },
           },
           {
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) setFieldValue("sendProgress", 2);
           // else Show a error message
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
           setFieldValue("sendProgress", 3);
         });
@@ -213,9 +216,10 @@ export default function FormButtons(props) {
     var url;
     if (!props.editar) {
       values.encuesta.paginas.map((pag, index) => {
-        pag.opciones.map(ops => {
-          ops.icon = ops.icon.filename;
-        });
+        if (pag.tipo === "emoji")
+          pag.opciones.map((ops) => {
+            if (ops.icon.filename) ops.icon = ops.icon.filename;
+          });
       });
 
       axios
@@ -234,20 +238,21 @@ export default function FormButtons(props) {
             // imagen_display: `${apiUrl}/download/${
             //   values.iconoDetalles.filename
             // }`,
-            puntos: parseInt(values.puntos, 1) || 0 //opcional
+            puntos: parseInt(values.puntos, 1) || 0, //opcional
 
             // link: "5e3540ffdb5584c6403a6332",
           },
           {
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           }
         )
-        .then(res => {
+        .then((res) => {
           // console.log(res);
-          if (res.status === 200) var idEncuesta = res.data.ObjectId._id;
-          // console.log(idEncuesta);
+          if (res.status === 200)
+            var idEncuesta = res.data.EncuestaModel_id._id;
+          console.log(res.data._id);
           axios
             .post(
               `${apiUrl}/notificaciones`,
@@ -259,40 +264,43 @@ export default function FormButtons(props) {
                 bar_text: values.textoAccionador,
                 textoAccionador: values.notificaciones.textoAccionador,
                 tipo_notificacion: values.notificaciones.value,
-                link: idEncuesta
+                link: idEncuesta,
+                filtros: values.participantesFor,
               },
               {
                 headers: {
-                  "Content-Type": "application/json"
-                }
+                  "Content-Type": "application/json",
+                },
               }
             )
-            .then(res => {
-              // console.log(res);
+            .then((res) => {
+              console.log(res);
               // console.log(res.data);
               setFieldValue("sendProgress", 2);
             })
-            .catch(e => {
+            .catch((e) => {
               console.log(e);
               setFieldValue("sendProgress", 3);
             });
 
           // else Show a error message
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
           setFieldValue("sendProgress", 3);
         });
     } else {
       values.encuesta.paginas.map((pag, index) => {
-        if (pag.tipo == "emoji"){
-          pag.opciones.map(ops => {
+        if (pag.tipo == "emoji") {
+          pag.opciones.map((ops) => {
             ops.icon = ops.icon.filename;
-          });}
-        if (pag.tipo == "multiple"){
-          pag.opciones.map(ops => {
+          });
+        }
+        if (pag.tipo == "multiple") {
+          pag.opciones.map((ops) => {
             ops.icon = `${apiUrl}/download/null.png`;
-          });}
+          });
+        }
       });
       url = `${apiUrl}/admin/notificaciones/${values.id}/acciones/${values.notificaciones.value}`;
       axios
@@ -306,7 +314,7 @@ export default function FormButtons(props) {
               imagenIcon: `${values.icono.filename}`,
               bar_text: values.textoAccionador,
               textoAccionador: values.notificaciones.textoAccionador,
-              tipo_notificacion: values.notificaciones.value
+              tipo_notificacion: values.notificaciones.value,
               // link: idEncuesta
             }, //opcional
             encuesta: {
@@ -315,20 +323,20 @@ export default function FormButtons(props) {
               metrica: values.encuesta.metrica,
               // puntos: values.encuesta.puntos,
               paginas: values.encuesta.paginas,
-              puntos: parseInt(values.puntos, 1) || 0 //opcional
-            }
+              puntos: parseInt(values.puntos, 1) || 0, //opcional
+            },
           },
           {
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           }
         )
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) setFieldValue("sendProgress", 2);
           // else Show a error message
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
           setFieldValue("sendProgress", 3);
         });
@@ -585,9 +593,9 @@ export default function FormButtons(props) {
                           {
                             icon: "",
                             calificacion: "",
-                            rubrica: null
-                          }
-                        ]
+                            rubrica: null,
+                          },
+                        ],
                       });
                     }
                     props.handleNextPage();

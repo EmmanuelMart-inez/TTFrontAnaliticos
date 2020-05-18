@@ -82,9 +82,9 @@ export default function AlertDialog(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          {/* <Button onClick={handleClose} color="primary">
             {props.disagree}
-          </Button>
+          </Button> */}
           {props.sendProgress === 0 ? (
             <Button onClick={handleAgree} color="primary" autoFocus>
               {props.agree}

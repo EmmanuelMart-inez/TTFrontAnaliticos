@@ -167,6 +167,7 @@ export default function CatalogoForm() {
               values={values}
               subirIconoButtonTag="Seleccionar imagen"
               iconoFormikname="icono"
+              aspectRatioFraction={139/144}
             />
           </Grid>
           <Grid item xs={12}>

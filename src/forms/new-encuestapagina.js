@@ -16,7 +16,7 @@ import EncuestaReactiva from "./EncuestaReactiva";
 
 const tipoEncuesta = [
   {
-    value: "multiple",
+    value: "opcion multiple",
     label: "Opción múltiple"
   },
   {
@@ -82,7 +82,7 @@ export default function EncuestaForm(props) {
 
   const getTipoEncuesta = tipoEncuesta => {
     switch (tipoEncuesta) {
-      case "multiple":
+      case "opcion multiple":
         return <EncuestaOpcionMultiple pageCounter={props.pageCounter} />;
       case "abierta":
         return;

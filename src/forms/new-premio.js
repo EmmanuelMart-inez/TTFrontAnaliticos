@@ -60,6 +60,7 @@ export default function NotificacionForm(props) {
             values={values}
             subirIconoButtonTag="Seleccionar imagen miniatura"
             iconoFormikname="iconoMiniatura"
+            aspectRatioFraction={99/105}
           />
         </Grid>
         <Grid item xs={6}>
@@ -69,6 +70,7 @@ export default function NotificacionForm(props) {
             values={values}
             subirIconoButtonTag="Seleccionar imagen detalles"
             iconoFormikname="iconoDetalles"
+            aspectRatioFraction={224/431}
           />
         </Grid>
       </Grid>

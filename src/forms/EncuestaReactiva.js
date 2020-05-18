@@ -110,6 +110,7 @@ export default function EncuestaForm(props) {
                       rowsMax="3"
                       onChange={event => {
                         var value = parseInt(event.target.value, 10);
+                        if (isNaN(value)) value = event.target.value;
                         setFieldValue(
                           `encuesta.paginas.${
                             props.pageCounter
@@ -177,6 +178,7 @@ export default function EncuestaForm(props) {
                       iconoFormikname={`encuesta.paginas[${
                         props.pageCounter
                       }].opciones[${index}].icon`}
+                      aspectRatioFraction={50/55}
                     />
                   </Grid>
                 </>

@@ -17,23 +17,22 @@ import SelectArrayChips from "./filters/FilterChips/SelectArrayChips";
 const notificaciones = [
   {
     value: "ninguna",
-    label: "Básica"
+    label: "Básica",
   },
   {
     value: "premio",
-    label: "Premio"
+    label: "Premio",
   },
   {
     value: "encuesta",
-    label: "Encuesta"
-  }
+    label: "Encuesta",
+  },
 ];
 
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
-    marginBottom: theme.spacing(3)
-  }
+    marginBottom: theme.spacing(3),
+  },
 }));
 
 export default function NotificacionForm(props) {
@@ -58,13 +57,13 @@ export default function NotificacionForm(props) {
             name="notificaciones"
             disabled={props.editar}
             value={values.notificaciones.value}
-            onChange={event => {
+            onChange={(event) => {
               setFieldValue("notificaciones.value", event.target.value);
             }}
             helperText="Por favor seleccione algún tipo de notificación"
             variant="outlined"
           >
-            {notificaciones.map(option => (
+            {notificaciones.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>
@@ -76,7 +75,7 @@ export default function NotificacionForm(props) {
             label="Título"
             name={values.titulo}
             value={values.titulo}
-            onChange={event => {
+            onChange={(event) => {
               setFieldValue("titulo", event.target.value);
             }}
           />
@@ -88,15 +87,27 @@ export default function NotificacionForm(props) {
             values={values}
             subirIconoButtonTag="Seleccionar ícono"
             iconoFormikname="icono"
+            aspectRatioFraction={4/3.5}
           />
         </Grid>
+        {/* TODO: Resolver después */}
+        {/* <Grid item xs={6}>
+          <ImagePreview
+            icono={values.iconoDisplay}
+            setFieldValue={setFieldValue}
+            values={values}
+            subirIconoButtonTag="Seleccionar imagen de detalles"
+            iconoFormikname="iconoDisplay"
+            aspectRatioFraction={4/3}
+          />
+        </Grid> */}
         {values.notificaciones.value === "ninguna" || (
           <Grid item xs={6}>
             <TextField
               label="Texto del accionador"
               name={values.textoAccionador}
               value={values.textoAccionador}
-              onChange={event => {
+              onChange={(event) => {
                 setFieldValue("textoAccionador", event.target.value);
               }}
             />
@@ -111,23 +122,25 @@ export default function NotificacionForm(props) {
             rowsMax="4"
             name={values.contenido}
             value={values.contenido}
-            onChange={event => {
+            onChange={(event) => {
               setFieldValue("contenido", event.target.value);
             }}
           />
         </Grid>
-         <Grid item xs={6}>
-          <SelectArrayChips disabled={props.editar}/>
-        </Grid>
         <Grid item xs={6}>
-          <TextField
-            label="Puntos"
-            value={values.puntos}
-            onChange={event => {
-              setFieldValue("puntos", event.target.value);
-            }}
-          />
+          <SelectArrayChips disabled={props.editar} />
         </Grid>
+        {values.notificaciones.value !== "ninguna" && (
+          <Grid item xs={6}>
+            <TextField
+              label="Puntos"
+              value={values.puntos}
+              onChange={(event) => {
+                setFieldValue("puntos", event.target.value);
+              }}
+            />
+          </Grid>
+        )}
       </Grid>
     </form>
   );

@@ -75,21 +75,21 @@ export default function SellosForm() {
         producto: [],
         iconoOn: {
           file: null,
-          fileUrl: "http://127.0.0.1:5001/download/stamp_off.png",
+          fileUrl: `${apiUrl}/download/stamp_off.png`,
           filename: "image_cropped",
-          fileUrlCropped: "http://127.0.0.1:5001/download/stamp_off.png",
+          fileUrlCropped: `${apiUrl}download/stamp_off.png`,
           fileCropped: null,
-          downloadUrl: "http://127.0.0.1:5001/download/stamp_off.png",
+          downloadUrl: `${apiUrl}download/stamp_off.png`,
           status: "",
           isCroppedCompleted: false
         },
         iconoOff: {
           file: null,
-          fileUrl: "http://127.0.0.1:5001/download/stamp_off.png",
+          fileUrl: `${apiUrl}download/stamp_off.png`,
           filename: "image_cropped",
           fileUrlCropped: null,
           fileCropped: null,
-          downloadUrl: "http://127.0.0.1:5001/download/stamp_on.png",
+          downloadUrl: `${apiUrl}download/stamp_on.png`,
           status: "",
           isCroppedCompleted: false
         },
@@ -161,8 +161,8 @@ export default function SellosForm() {
                       num_sellos: values.num_sellos,
                       titulo: values.titulo,
                       descripcion: values.descripcion,
-                      icono_off: values.iconoOff.downloadUrl,
-                      icono_on: values.iconoOn.downloadUrl,
+                      icono_off: values.iconoOff.filename,
+                      icono_on: values.iconoOn.filename,
                       producto: getFormatedJustIds(values.producto),
                       cantidad_trigger: values.cantidad_trigger,
                       id_notificacion: values.id_notificacion,
@@ -227,7 +227,7 @@ export default function SellosForm() {
               id="outlined-select-Nsellos"
               select
               label="Número de sellos"
-              value={values.trigger}
+              value={values.num_sellos}
               onChange={(event) => {
                 let value = parseInt(event.target.value, 10);
                 setFieldValue("num_sellos", value);

@@ -128,6 +128,7 @@ export default function AlertDialogSlide(props) {
               values={props.values}
               icono={props.icono}
               iconoFormikName={props.iconoFormikname}
+              aspectRatioFraction={props.aspectRatioFraction}
             />
           </DialogContent>
           <DialogActions>

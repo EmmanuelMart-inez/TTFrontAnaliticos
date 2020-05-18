@@ -24,7 +24,8 @@ export default function CropControls(props) {
           image={props.icono.fileUrl}
           crop={crop}
           zoom={zoom}
-          aspect={4 / 3}
+          aspect={ props.aspectRatioFraction }
+          // aspect={ 4 / 3}
           onCropChange={setCrop}
           onCropComplete={onCropComplete}
           onZoomChange={setZoom}

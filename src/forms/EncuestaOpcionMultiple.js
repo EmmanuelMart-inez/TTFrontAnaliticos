@@ -3,7 +3,7 @@ import { useFormikContext, Formik, Form, Field, FieldArray } from "formik";
 import {
   makeStyles,
   createMuiTheme,
-  ThemeProvider
+  ThemeProvider,
 } from "@material-ui/core/styles";
 import { green, purple } from "@material-ui/core/colors";
 
@@ -16,33 +16,33 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import {apiUrl} from "../shared/constants"; 
+import { apiUrl } from "../shared/constants";
 
 const theme = createMuiTheme({
   palette: {
-    info: green
-  }
+    info: green,
+  },
 });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(3),
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 220
+    width: 220,
   },
   TextSubtitle: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   buttonPlusMinus: {
     margin: 0,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   gridCenter: {
-    alignContent: "center"
-  }
+    alignContent: "center",
+  },
 }));
 
 export default function EncuestaForm(props) {
@@ -64,7 +64,7 @@ export default function EncuestaForm(props) {
       <FieldArray
         id={`encuesta.paginas[${props.pageCounter}].opciones`}
         name={`encuesta.paginas[${props.pageCounter}].opciones`}
-        render={arrayHelpers =>
+        render={(arrayHelpers) =>
           values.encuesta.paginas[props.pageCounter].opciones &&
           values.encuesta.paginas[props.pageCounter].opciones.length > 0 ? (
             values.encuesta.paginas[props.pageCounter].opciones.map(
@@ -79,9 +79,7 @@ export default function EncuestaForm(props) {
                   <Grid item xs={4}>
                     <TextField
                       label={`Opción ${index + 1}`}
-                      name={`encuesta.paginas.${
-                        props.pageCounter
-                      }.opciones.${index}.calificacion`}
+                      name={`encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`}
                       value={
                         values.encuesta.paginas[props.pageCounter].opciones[
                           index
@@ -89,11 +87,9 @@ export default function EncuestaForm(props) {
                       }
                       multiline
                       rowsMax="3"
-                      onChange={event => {
+                      onChange={(event) => {
                         setFieldValue(
-                          `encuesta.paginas.${
-                            props.pageCounter
-                          }.opciones.${index}.calificacion`,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`,
                           event.target.value
                         );
                       }}
@@ -104,9 +100,8 @@ export default function EncuestaForm(props) {
                       label={`Ponderación ${index + 1}`}
                       type="number"
                       name={
-                        `encuesta.paginas.${
-                          props.pageCounter
-                        }.opciones.${index}`.rubrica
+                        `encuesta.paginas.${props.pageCounter}.opciones.${index}`
+                          .rubrica
                       }
                       value={
                         values.encuesta.paginas[props.pageCounter].opciones[
@@ -115,12 +110,11 @@ export default function EncuestaForm(props) {
                       }
                       multiline
                       rowsMax="3"
-                      onChange={event => {
+                      onChange={(event) => {
                         var value = parseInt(event.target.value, 10);
+                        if (isNaN(value)) value = event.target.value;
                         setFieldValue(
-                          `encuesta.paginas.${
-                            props.pageCounter
-                          }.opciones.${index}.rubrica`,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`,
                           value
                         );
                       }}
@@ -150,10 +144,9 @@ export default function EncuestaForm(props) {
                       className={classes.buttonPlusMinus}
                       onClick={() =>
                         arrayHelpers.push({
-                          icon:
-                          `${apiUrl}/download/notificacionIcon1.png`,
+                          icon: `${apiUrl}/download/notificacionIcon1.png`,
                           calificacion: "",
-                          rubrica: ""
+                          rubrica: "",
                         })
                       } // insert an empty string at a position
                     >
@@ -172,10 +165,9 @@ export default function EncuestaForm(props) {
               // color="info"
               onClick={() =>
                 arrayHelpers.push({
-                  icon:
-                    `${apiUrl}/download/notificacionIcon1.png`,
+                  icon: `${apiUrl}/download/notificacionIcon1.png`,
                   calificacion: "",
-                  rubrica: ""
+                  rubrica: "",
                 })
               }
             >

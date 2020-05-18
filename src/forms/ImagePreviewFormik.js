@@ -313,6 +313,7 @@ export default function CircularIntegration(props) {
                la ubicación de la imagen dentro de la sección a recortar"
                 agree="Recortar"
                 disagree="Cancelar"
+                aspectRatioFraction={props.aspectRatioFraction}
               />
             </Box>
           )}
@@ -348,6 +349,7 @@ export default function CircularIntegration(props) {
                la ubicación de la imagen dentro de la sección a recortar"
                 agree="Recortar"
                 disagree="Cancelar"
+                aspectRatioFraction={props.aspectRatioFraction}
               />
             </Box>
           )}

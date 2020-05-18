@@ -1,5 +1,5 @@
 export const segmentacion = [
-  {
+   {
     id: 0,
     value: "todos",
     label: "Ninguna",
@@ -149,7 +149,19 @@ export const segmentacion = [
         tipo: "float"
       }
     ]
-  }
+  },
+  {
+    id: 8,
+    value: "nadie",
+    label: "No enviar a nadie",
+    fields: [
+      {
+        value: "nombre",
+        label: "Nombre",
+        tipo: "-"
+      }
+    ]
+  },
 ];
 
 export const segmentacion_metrica = [

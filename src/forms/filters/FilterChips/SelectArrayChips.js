@@ -310,7 +310,7 @@ export default function SelectArrayChips(props) {
                 ))}
               </TextField>
 
-              {segmentacion[values.indexCollection].value !== "todos" && (
+              {segmentacion[values.indexCollection].value !== "todos" && segmentacion[values.indexCollection].value !== "nadie" && (
                 <TextField
                   id="standard-select-field"
                   style={{ marginTop: "30px" }}
