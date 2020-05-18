@@ -208,6 +208,7 @@ export default function SellosForm() {
               onChange={(event) => {
                 setFieldValue("titulo", event.target.value);
               }}
+              helperText="Ingresa un título para esta tarjeta de sellos, no aparecerá en la aplicación pero servirá de identificador"
             />
           </Grid>
           <Grid item xs={6}>
@@ -220,6 +221,7 @@ export default function SellosForm() {
               onChange={(event) => {
                 setFieldValue("descripcion", event.target.value);
               }}
+              helperText="Escribe algún texto que describa la dinámica de esta tarjeta de sellos. Incita a tus clientes a conseguir sellos."
             />
           </Grid>
           <Grid item xs={6}>
@@ -232,7 +234,7 @@ export default function SellosForm() {
                 let value = parseInt(event.target.value, 10);
                 setFieldValue("num_sellos", value);
               }}
-              helperText="Por favor seleccione algún número"
+              helperText="Por favor seleccione algún número. Cúantos sellos tendrá la tarjeta de sellos, es decir, cuántos sellos deberán acumular los participantes?"
               variant="outlined"
             >
               {numSellos.map((option) => (
@@ -265,7 +267,7 @@ export default function SellosForm() {
               onChange={(event) => {
                 setFieldValue("trigger", event.target.value);
               }}
-              helperText="Por favor seleccione algún de disparador"
+              helperText="Por favor seleccione algún de disparador. ¿Dé que forma se obtendrán los sellos?"
               variant="outlined"
             >
               {trigggerSello.map((option) => (
@@ -287,7 +289,7 @@ export default function SellosForm() {
                   let value = parseInt(event.target.value, 10);
                   setFieldValue("cantidad_trigger", value);
                 }}
-                helperText="Pesos ($)"
+                helperText="Valor en pesos ($) que debe sobrepasar el ticket de venta"
               />
             </Grid>
           )}
@@ -339,7 +341,7 @@ export default function SellosForm() {
               //   setFormState(prevState => ({ ...prevState, 'id_notificacion': "5e7bdf4da36b5ac9b43604a"}));
               //   console.log (values.id_notificacion);
               // }}
-              helperText="Por favor seleccione algún tipo de notificación"
+              helperText="Por favor, seleccione algún tipo de notificación. ¿Qué notificación de cumpleaños recibirán los participantes?. Recuerda que debes crearla previamente en la pestaña Formularios, enviándosela a 0 participantes"
               variant="outlined"
             >
               <NotificacionListGridGallery

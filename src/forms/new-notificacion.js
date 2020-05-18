@@ -73,6 +73,7 @@ export default function NotificacionForm(props) {
         <Grid item xs={6}>
           <TextField
             label="Título"
+            helperText="Qué quieres que diga el encabezado de esta notificación. Es lo primero que verán los clientes"
             name={values.titulo}
             value={values.titulo}
             onChange={(event) => {
@@ -110,6 +111,7 @@ export default function NotificacionForm(props) {
               onChange={(event) => {
                 setFieldValue("textoAccionador", event.target.value);
               }}
+              helperText="Qué quieres que diga el botón que llevará al usuario a responder la encuesta"
             />
           </Grid>
         )}
@@ -125,6 +127,7 @@ export default function NotificacionForm(props) {
             onChange={(event) => {
               setFieldValue("contenido", event.target.value);
             }}
+            helperText="Cuerpo, mensaje o descripción de la notificación. ¿Qué quieres notificar?"
           />
         </Grid>
         <Grid item xs={6}>
@@ -138,6 +141,7 @@ export default function NotificacionForm(props) {
               onChange={(event) => {
                 setFieldValue("puntos", event.target.value);
               }}
+              helperText="Beneficio que obtiene un participante por responder tu encuesta. Recuerda que esto es un gana-gana. ¿Cuántos puntos quieres otorgar por la respuesta de esta encuesta?"
             />
           </Grid>
         )}

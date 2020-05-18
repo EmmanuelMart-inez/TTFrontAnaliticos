@@ -18,14 +18,12 @@ export default function AlertDialog(props) {
     setOpen(true);
   };
 
-  const handleAgree = async() => {
+  const handleAgree = async () => {
     setSendProgress(1);
-    var status =  await props.action();
+    var status = await props.action();
     console.log(status);
-    if(status === 2 )
-      setSendProgress(2); 
-    else
-      setSendProgress(3); 
+    if (status === 2) setSendProgress(2);
+    else setSendProgress(3);
     //  setLoading(false);
   };
 
@@ -57,14 +55,15 @@ export default function AlertDialog(props) {
           {sendProgress === 1 ? (
             <CircularProgress color="primary" />
           ) : sendProgress === 2 ? (
-            <><CheckIcon
-              style={{
-                fontSize: 40,
-                color: "#45D6A9",
-                borderStyle: "solid",
-                borderColor: "#45D6A9"
-              }}
-            />
+            <>
+              <CheckIcon
+                style={{
+                  fontSize: 40,
+                  color: "#45D6A9",
+                  borderStyle: "solid",
+                  borderColor: "#45D6A9",
+                }}
+              />
             </>
           ) : sendProgress === 3 ? (
             <ErrorIcon
@@ -79,23 +78,31 @@ export default function AlertDialog(props) {
             style={{ paddingLeft: "15px" }}
             id="alert-dialog-description"
           >
-            {sendProgress === 0
-              ? props.body
-              : sendProgress === 1
-              ? "Por favor espere"
-              : sendProgress === 2
-              ? <> <div>Enviado con éxito!</div><div>{props.okmessage}</div> </>
-              : "Verifique que el formulario este completo, llenado correctamente y usted tenga una conexión a internet o que el servidor se encuentre en servicio"}
+            {sendProgress === 0 ? (
+              props.body
+            ) : sendProgress === 1 ? (
+              "Por favor espere"
+            ) : sendProgress === 2 ? (
+              <>
+                {" "}
+                <div>Enviado con éxito!</div>
+                <div>{props.okmessage}</div>{" "}
+              </>
+            ) : (
+              "Verifique que el formulario este completo, llenado correctamente y usted tenga una conexión a internet o que el servidor se encuentre en servicio"
+            )}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            {props.disagree}
-          </Button>
           {sendProgress === 0 ? (
-            <Button onClick={handleAgree} color="primary" autoFocus>
-              {props.agree}
-            </Button>
+            <>
+              <Button onClick={handleClose} color="primary">
+                {props.disagree}
+              </Button>
+              <Button onClick={handleAgree} color="primary" autoFocus>
+                {props.agree}
+              </Button>
+            </>
           ) : sendProgress === 2 ? (
             <Button onClick={handleClose} color="primary" autoFocus>
               {props.agree}

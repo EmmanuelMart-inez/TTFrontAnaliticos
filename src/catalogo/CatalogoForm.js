@@ -34,7 +34,7 @@ export default function CatalogoForm() {
         titulo: "",
         descripcion: "",
         tipo: "",
-        vigencia: "",
+        vigencia: Date.now(),
         icono: {
           file: null,
           fileUrl: null,
@@ -70,7 +70,7 @@ export default function CatalogoForm() {
               titulo="Confirmar acción"
               body="Esta seguro de que desea guardar este elemento"
               agree="Aceptar"
-              disagree="Cancelar"
+              // disagree="Cancelar"
               switch={openAlert}
               action={async () =>
                 await axios
@@ -123,6 +123,7 @@ export default function CatalogoForm() {
               onChange={(event) => {
                 setFieldValue("titulo", event.target.value);
               }}
+              helperText="Ingrese el nombre del producto"
             />
           </Grid>
           <Grid item xs={6}>
@@ -135,6 +136,7 @@ export default function CatalogoForm() {
               onChange={(event) => {
                 setFieldValue("descripcion", event.target.value);
               }}
+              helperText="Describe el producto. Quizá, qué es?, qué contiene?, cuál es el atractivo?"
             />
           </Grid>
           <Grid item xs={6}>

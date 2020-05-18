@@ -116,6 +116,7 @@ export default function AyudaForm() {
               onChange={event => {
                 setFieldValue("titulo", event.target.value);
               }}
+              helperText="En qué quieres ayudar al participante?, ingresa una pregunta o algo que sea relevante saber"
             />
           </Grid>
           <Grid item xs={6}>
@@ -128,6 +129,7 @@ export default function AyudaForm() {
               onChange={event => {
                 setFieldValue("descripcion", event.target.value);
               }}
+              helperText="Ingrese algún texto, si en el titulo colocaste una pregunta frecuente, aquí puedes ingresar la respuesta"
             />
           </Grid>
           <Grid item xs={12}>

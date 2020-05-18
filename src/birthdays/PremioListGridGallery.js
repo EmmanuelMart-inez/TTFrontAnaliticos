@@ -60,7 +60,7 @@ export default function TitlebarGridList(props) {
           //   console.log("valor:",props.value);
 
           // }}
-          helperText="Por favor seleccione algún tipo de promoción"
+          helperText="Por favor seleccione algún tipo de promoción del punto de venta. ¿Qué transacción del sistema punto de venta corresponde a este evento, es decir, cómo entiende el PV esta transacción?"
           variant="outlined"
         >
           {notificaciones.map(tile => (

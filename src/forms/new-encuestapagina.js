@@ -89,7 +89,7 @@ export default function EncuestaForm(props) {
       case "emoji":
         return <EncuestaReactiva pageCounter={props.pageCounter} />;
       default:
-        return <div>Tipo de encuesta invalido!!</div>;
+        return <div></div>;
     }
   };
 
@@ -146,6 +146,7 @@ export default function EncuestaForm(props) {
                 event.target.value
               );
             }}
+            helperText="Qué quieres preguntar?"
           />
         </Grid>
         <Grid item xs={12}>
@@ -161,6 +162,7 @@ export default function EncuestaForm(props) {
                 event.target.value
               );
             }}
+            helperText="Ingresa algún texto que te permita clasificar esta pregunta. Puedes ingresar el nombre de indicador que estas midiendo con esta pregunta. Lo más importante, obtendrá respuestas de encuestas estructuradas que producen datos limpios para el análisis"
           />
         </Grid>
         {getTipoEncuesta(values.encuesta.paginas[props.pageCounter].tipo)}

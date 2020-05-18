@@ -93,6 +93,7 @@ export default function EncuestaForm(props) {
                           event.target.value
                         );
                       }}
+                      helperText="Ingrese alguna posible respuesta"
                     />
                   </Grid>
                   <Grid item xs={4}>
@@ -118,6 +119,7 @@ export default function EncuestaForm(props) {
                           value
                         );
                       }}
+                      helperText="Ingrese algún número. Qué valor númerico (ponderación) le otorgas a esta respuesta?"
                     />
                   </Grid>
                   <Grid

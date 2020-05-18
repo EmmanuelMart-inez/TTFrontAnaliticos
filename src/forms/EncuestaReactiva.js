@@ -91,6 +91,7 @@ export default function EncuestaForm(props) {
                           event.target.value
                         );
                       }}
+                      helperText="Ingrese algún texto. Qué significado le quieres dar a este ícono gráfico o con qué respuesta lo asociarias?"
                     />
                   </Grid>
                   <Grid item xs={4}>
@@ -118,6 +119,7 @@ export default function EncuestaForm(props) {
                           value
                         );
                       }}
+                      helperText="Ingrese algún número. Qué valor númerico (ponderación) le otorgas a esta respuesta?"
                     />
                   </Grid>
                   <Grid

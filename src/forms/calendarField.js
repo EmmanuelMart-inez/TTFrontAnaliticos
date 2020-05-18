@@ -29,6 +29,7 @@ export default function CalendarTimePicker(props) {
       /> */}
       <KeyboardDateTimePicker
         // label="Fecha de expiraciÃ³n"
+        invalidDateMessage="Por favor, de click en el calendario y seleccione una fecha"
         value={props.value}
         onChange={date => {
           handleDateChange(date);

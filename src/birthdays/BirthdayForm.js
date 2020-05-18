@@ -168,7 +168,7 @@ export default function BirthdayForm() {
                 //   setFormState(prevState => ({ ...prevState, 'notificacion': "5e7bdf4da36b5ac9b43604a"}));
                 //   console.log (formState.notificacion);
                 // }}
-                helperText="Por favor seleccione algún tipo de notificación"
+                helperText="Por favor, seleccione algún tipo de notificación. ¿Qué notificación de cumpleaños recibirán los participantes?. Recuerda que debes crearla previamente en la pestaña Formularios, enviándosela a 0 participantes"
                 variant="outlined"
               >
                 <NotificacionListGridGallery
@@ -201,7 +201,7 @@ export default function BirthdayForm() {
                 type="number"
                 // name={values.titulo}
                 value={values.trigger || ""}
-                helperText="Días antes a la fecha de cumpleaños en que será enviada la notificación"
+                helperText="Días de antelación a la fecha de cumpleaños del participante en el que será enviada la notificación"
                 onChange={event => {
                   let value = parseInt(event.target.value, 10);
                   setFieldValue("trigger", value);
@@ -214,7 +214,7 @@ export default function BirthdayForm() {
                 type="number"
                 // name={values.titulo}
                 value={values.antiguedad || ""}
-                helperText="Dias de antiguedad como cliente necesarios desde la fecha de registro en el programa de lealtad"
+                helperText="Dias de antiguedad como cliente desde la fecha de registro en la aplicación móvil de el programa de lealtad suficientes para ser merecedor a este premio. ¿A cuántos días se es digno?"
                 onChange={event => {
                   let value = parseInt(event.target.value, 10);
                   setFieldValue("antiguedad", value);
@@ -232,7 +232,7 @@ export default function BirthdayForm() {
                 onChange={event => {
                   setFieldValue("vigencia", event.target.value);
                 }}
-                helperText="Días válidos para canjear el premio"
+                helperText="Días válidos para canjear el premio. Nada es para siempre"
                 variant="outlined"
               >
                 {vigencia.map(option => (

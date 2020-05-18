@@ -32,6 +32,7 @@ export default function EncuestaForm(props) {
             onChange={event => {
               setFieldValue("encuesta.titulo", event.target.value);
             }}
+            helperText="Ponle un título a la encuesta, que te permita distinguirla de las demás. Esto no se verá en la aplicación móvil"
           />
         </Grid>
         <Grid item xs={6}>
@@ -44,6 +45,7 @@ export default function EncuestaForm(props) {
             onChange={event => {
               setFieldValue("encuesta.categoria", event.target.value);
             }}
+            helperText="Ingresa un tag para esta encuesta, el clasificar las encuestas te facilitá el orden, distinguir, y agrupar las campañas y resultados de las encuestas"
           />
         </Grid>
         <Grid item xs={6}>
@@ -56,6 +58,7 @@ export default function EncuestaForm(props) {
             onChange={event => {
               setFieldValue("encuesta.metrica", event.target.value);
             }}
+            helperText="Qué quieres medir o conocer con esta encuesta?"
           />
         </Grid>
       </Grid>
