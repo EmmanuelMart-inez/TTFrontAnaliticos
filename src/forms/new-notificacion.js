@@ -171,7 +171,26 @@ export default function NotificacionForm(props) {
         <Grid item xs={6}>
           <SelectArrayChips disabled={props.editar} />
         </Grid>
-        {values.notificaciones.value !== "ninguna" && (
+        {values.notificaciones.value == "encuesta" && (
+          <Grid item xs={6}>
+            <TextField
+              label="Puntos"
+              value={values.encuesta.puntos}
+              onChange={(event) => {
+                setFieldValue("encuesta.puntos", event.target.value);
+              }}
+              helperText="Beneficio que obtiene un participante por responder tu encuesta. Recuerda que esto es un gana-gana. ¿Cuántos puntos quieres otorgar por la respuesta de esta encuesta?"
+              // error={Boolean(errors.puntos)}
+              // onFocus={() => setFieldTouched("encuesta.puntos")}
+            />
+            {/* {errors.puntos && touched.puntos && (
+              <div style={{ color: "red", marginTop: ".5rem" }}>
+                {errors.puntos}
+              </div> 
+            )} */}
+          </Grid>
+        )}
+        {values.notificaciones.value == "premio" && (
           <Grid item xs={6}>
             <TextField
               label="Puntos"
@@ -179,15 +198,15 @@ export default function NotificacionForm(props) {
               onChange={(event) => {
                 setFieldValue("puntos", event.target.value);
               }}
-              helperText="Beneficio que obtiene un participante por responder tu encuesta. Recuerda que esto es un gana-gana. ¿Cuántos puntos quieres otorgar por la respuesta de esta encuesta?"
-              error={Boolean(errors.puntos)}
-              onFocus={() => setFieldTouched("puntos")}
+              helperText="Beneficio que obtiene un participante por premio. Recuerda que esto es un gana-gana. ¿Cuántos puntos quieres otorgar de premio?"
+              // error={Boolean(errors.puntos)}
+              // onFocus={() => setFieldTouched("encuesta.puntos")}
             />
-            {errors.puntos && touched.puntos && (
+            {/* {errors.puntos && touched.puntos && (
               <div style={{ color: "red", marginTop: ".5rem" }}>
                 {errors.puntos}
-              </div>
-            )}
+              </div> 
+            )} */}
           </Grid>
         )}
       </Grid>

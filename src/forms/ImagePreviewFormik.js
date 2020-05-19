@@ -263,25 +263,26 @@ export default function CircularIntegration(props) {
               aria-label="save"
               color="primary"
               className={
-                props.icono.status === "fetched"
+                props.icono && props.icono.status === "fetched"
                   ? classes.green
                   : buttonClassname
               }
               disableTouchRipple="true"
             >
-              {success || props.icono.status === "200" ? (
+              {success || props.icono && props.icono.status === "200" ? (
                 <CheckIcon />
-              ) : select || props.icono.status === "loaded" ? (
+              ) : select || props.icono && props.icono.status === "loaded" ? (
                 <Avatar alt={props.icono.filename} src={`${props.icono.fileUrl}`} />
-              ) : props.icono.status === "fetched" ? (
+              ) : props.icono && props.icono.status === "fetched" ? (
                 <Avatar alt={props.icono.filename} src={`${apiUrlImages}/${props.icono.filename}`} />
               ) : (
                 // <Thumb file={props.icono.file} status="" />
+                props.icono && props.icono && props.icono.status != "" ? <Avatar alt={props.icono.filename} src={`${apiUrlImages}/${props.icono}`} /> : 
                 <PersonFilled />
               )}
             </Fab>
           </div>
-          {(select || props.icono.status === "loaded") && (
+          {(select || props.icono && props.icono.status === "loaded") && (
             <Box>
               {/* Icon to unselect or cancel the uploaded image */}
               <Fab
@@ -317,7 +318,7 @@ export default function CircularIntegration(props) {
               />
             </Box>
           )}
-          {props.icono.status === "fetched" && (
+          {props.icono && props.icono.status === "fetched" && (
             <Box className={classes.circleButtons}>
               {/* Icon to unselect or cancel the uploaded image */}
               <Fab
@@ -359,7 +360,7 @@ export default function CircularIntegration(props) {
         </Box>
       </div>
       <div className={classes.wrapper}>
-        {select || props.icono.status === "loaded" ? (
+        {select || props.icono && props.icono.status === "loaded" ? (
           <Button
             variant="contained"
             color="primary"
@@ -367,7 +368,7 @@ export default function CircularIntegration(props) {
             disabled={loading}
             onClick={handleButtonClick}
           >
-            {success || props.icono.status === "200" ? "Listo" : "Subir ícono"}
+            {success || props.icono && props.icono.status === "200" ? "Listo" : "Subir ícono"}
           </Button>
         ) : (
           <Button

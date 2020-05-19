@@ -39,7 +39,7 @@ export default function NotificacionForm(props) {
           />
         </Grid>
 
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <TextField
             id="filled-textarea"
             label="Contenido.*"
@@ -52,7 +52,7 @@ export default function NotificacionForm(props) {
               setFieldValue("premio.contenido", event.target.value);
             }}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={6}>
           <ImagePreview
             icono={values.iconoMiniatura}

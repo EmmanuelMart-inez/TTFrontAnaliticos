@@ -243,22 +243,22 @@ const Basic = props => {
               },
               iconoMiniatura: {
                 file: null,
-                fileUrl: null,
+                fileUrl: response.premio.imagen_icon,
                 filename: response.premio.imagen_icon || "image_cropped.png",
                 fileUrlCropped: null,
                 fileCropped: null,
                 downloadUrl: response.premio.imagen_icon,
-                status: "",
+                status: "fetched",
                 isCroppedCompleted: false
               },
               iconoDetalles: {
                 file: null,
-                fileUrl: null,
+                fileUrl: response.premio.imagen_icon,
                 filename: response.premio.imagen_icon || "image_cropped.png",
                 fileUrlCropped: null,
                 fileCropped: null,
                 downloadUrl: response.premio.imagen_display,
-                status: "",
+                status: "fetched",
                 isCroppedCompleted: false
               },
               encuesta: {

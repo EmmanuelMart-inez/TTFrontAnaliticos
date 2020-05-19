@@ -120,12 +120,13 @@ export default function FormButtons(props) {
           `${apiUrl}/premios`,
           {
             nombre: values.premio.titulo,
+
             // fecha: "2019-12-19T05:28:40.247",
             imagen_icon: `${values.iconoMiniatura.filename}`,
             imagen_display: `${values.iconoDetalles.filename}`,
             // imagen_icon: `${apiUrl}/download/${values.iconoMiniatura.filename}`,
             // imagen_display: `${apiUrl}/download/${values.iconoDetalles.filename}`,
-            puntos: parseInt(values.puntos, 1) || 0, //opcional
+            puntos: parseFloat(`${values.puntos}`) || 0, //opcional
 
             // link: "5e3540ffdb5584c6403a6332",
           },
@@ -142,6 +143,7 @@ export default function FormButtons(props) {
               .post(
                 `${apiUrl}/notificaciones`,
                 {
+                  link: res.data.ObjectId._id,
                   titulo: values.premio.titulo,
                   mensaje: values.premio.contenido,
                   // fecha: "2019-12-19T05:28:40.247",
@@ -194,7 +196,7 @@ export default function FormButtons(props) {
               // fecha: "2019-12-19T05:28:40.247",
               imagen_icon: `${values.iconoMiniatura.filename}`,
               imagen_display: `${values.iconoDetalles.filename}`,
-              puntos: parseInt(values.puntos, 1) || 0,
+              puntos: parseFloat(`${values.puntos}`) || 0, //opcional
             },
           },
           {
@@ -240,8 +242,7 @@ export default function FormButtons(props) {
             // imagen_display: `${apiUrl}/download/${
             //   values.iconoDetalles.filename
             // }`,
-            puntos: parseInt(values.puntos, 1) || 0, //opcional
-
+            puntos: parseFloat(values.encuesta.puntos) || 0, //opcional
             // link: "5e3540ffdb5584c6403a6332",
           },
           {
@@ -325,7 +326,7 @@ export default function FormButtons(props) {
               metrica: values.encuesta.metrica,
               // puntos: values.encuesta.puntos,
               paginas: values.encuesta.paginas,
-              puntos: parseInt(values.puntos, 1) || 0, //opcional
+              puntos: parseFloat(values.encuesta.puntos) || 0, 
             },
           },
           {
@@ -565,6 +566,21 @@ export default function FormButtons(props) {
                   Regresar
                 </Button>
               </Grid>
+              <Grid item xs={3}>
+                <Button
+                  className={classes.buttondown}
+                  color="primary"
+                  type="button"
+                  disabled={isSubmitting}
+                  onClick={() => {
+                    if (props.pageCounter == 0) props.handleBack();
+                    else props.handleBackPage();
+                    props.arrayHelpers.remove(props.pageCounter);
+                  }}
+                >
+                  Eliminar página
+                </Button>
+              </Grid>
               {/* )} */}
               {props.pageCounter > 0 && (
                 <>
@@ -581,21 +597,6 @@ export default function FormButtons(props) {
                   </Grid>
                 </>
               )}
-              <Grid item xs={3}>
-                <Button
-                  className={classes.buttondown}
-                  color="primary"
-                  type="button"
-                  disabled={isSubmitting}
-                  onClick={() => {
-                    if (props.pageCounter == 0) props.handleBack();
-                    else props.handleBackPage();
-                    props.arrayHelpers.remove(props.pageCounter);
-                  }}
-                >
-                  Eliminar página
-                </Button>
-              </Grid>
               <Grid item xs={2}>
                 <Button
                   className={classes.buttondown}
