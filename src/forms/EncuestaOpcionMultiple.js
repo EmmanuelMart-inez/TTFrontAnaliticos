@@ -67,97 +67,109 @@ export default function EncuestaForm(props) {
         render={(arrayHelpers) =>
           values.encuesta.paginas[props.pageCounter].opciones &&
           values.encuesta.paginas[props.pageCounter].opciones.length > 0 ? (
-            values.encuesta.paginas[props.pageCounter].opciones.map(
-              (friend, index) => (
-                <Grid
-                  style={{ padding: "12px" }}
-                  container
-                  spacing={1}
-                  justify="center"
-                  alignItems="center"
-                >
-                  <Grid item xs={4}>
-                    <TextField
-                      label={`Opción ${index + 1}`}
-                      name={`encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`}
-                      value={
-                        values.encuesta.paginas[props.pageCounter].opciones[
-                          index
-                        ].calificacion
-                      }
-                      multiline
-                      rowsMax="3"
-                      onChange={(event) => {
-                        setFieldValue(
-                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`,
-                          event.target.value
-                        );
-                      }}
-                      helperText="Ingrese alguna posible respuesta"
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <TextField
-                      label={`Ponderación ${index + 1}`}
-                      type="number"
-                      name={
-                        `encuesta.paginas.${props.pageCounter}.opciones.${index}`
-                          .rubrica
-                      }
-                      value={
-                        values.encuesta.paginas[props.pageCounter].opciones[
-                          index
-                        ].rubrica
-                      }
-                      multiline
-                      rowsMax="3"
-                      onChange={(event) => {
-                        var value = parseInt(event.target.value, 10);
-                        if (isNaN(value)) value = event.target.value;
-                        setFieldValue(
-                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`,
-                          value
-                        );
-                      }}
-                      helperText="Ingrese algún número. Qué valor númerico (ponderación) le otorgas a esta respuesta?"
-                    />
-                  </Grid>
+            <>
+              {values.encuesta.paginas[props.pageCounter].opciones.map(
+                (friend, index) => (
                   <Grid
-                    item
-                    xs={2}
-                    className={classes.gridCenter}
-                    id="gridCenter"
+                    style={{ padding: "12px" }}
+                    container
+                    spacing={1}
+                    justify="center"
+                    alignItems="center"
                   >
-                    <Button
-                      size="small"
-                      className={classes.buttonPlusMinus}
-                      variant="outlined"
-                      color="secondary"
-                      onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                    <Grid item xs={4}>
+                      <TextField
+                        label={`Opción ${index + 1}`}
+                        name={`encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`}
+                        value={
+                          values.encuesta.paginas[props.pageCounter].opciones[
+                            index
+                          ].calificacion
+                        }
+                        multiline
+                        rowsMax="3"
+                        onChange={(event) => {
+                          setFieldValue(
+                            `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`,
+                            event.target.value
+                          );
+                        }}
+                        helperText="Ingrese alguna posible respuesta"
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <TextField
+                        label={`Ponderación ${index + 1}`}
+                        type="number"
+                        name={
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}`
+                            .rubrica
+                        }
+                        value={
+                          values.encuesta.paginas[props.pageCounter].opciones[
+                            index
+                          ].rubrica
+                        }
+                        multiline
+                        rowsMax="3"
+                        onChange={(event) => {
+                          var value = parseInt(event.target.value, 10);
+                          if (isNaN(value)) value = event.target.value;
+                          setFieldValue(
+                            `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`,
+                            value
+                          );
+                        }}
+                        helperText="Ingrese algún número. Qué valor númerico (ponderación) le otorgas a esta respuesta?"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      xs={2}
+                      className={classes.gridCenter}
+                      id="gridCenter"
                     >
-                      -
-                    </Button>
+                      <Button
+                        size="small"
+                        className={classes.buttonPlusMinus}
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                      >
+                        -
+                      </Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                        className={classes.buttonPlusMinus}
+                        onClick={() =>
+                          arrayHelpers.push({
+                            icon: `${apiUrl}/download/notificacionIcon1.png`,
+                            calificacion: "",
+                            rubrica: "",
+                          })
+                        } // insert an empty string at a position
+                      >
+                        +
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={2}>
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      color="primary"
-                      className={classes.buttonPlusMinus}
-                      onClick={() =>
-                        arrayHelpers.push({
-                          icon: `${apiUrl}/download/notificacionIcon1.png`,
-                          calificacion: "",
-                          rubrica: "",
-                        })
-                      } // insert an empty string at a position
-                    >
-                      +
-                    </Button>
-                  </Grid>
-                </Grid>
-              )
-            )
+                )
+              )}
+              {/* <Grid item xs={12}>
+                <button
+                  class="ui orange basic button"
+                  onClick={() => {
+                    arrayHelpers.remove(props.pageCounter);
+                  }}
+                >
+                  Eliminar esta página (Página {props.pageCounter + 1})
+                </button>
+              </Grid> */}
+            </>
           ) : (
             // <ThemeProvider theme={theme}>
             <Button

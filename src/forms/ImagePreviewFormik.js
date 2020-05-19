@@ -19,7 +19,7 @@ import Alert from "./GalleryAlert";
 import GalleryImagesFromServer from "./GalleryImages";
 
 import axios from "axios";
-import {apiUrl} from "../shared/constants"; 
+import {apiUrl, apiUrlImages} from "../shared/constants"; 
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -272,9 +272,9 @@ export default function CircularIntegration(props) {
               {success || props.icono.status === "200" ? (
                 <CheckIcon />
               ) : select || props.icono.status === "loaded" ? (
-                <Avatar alt={props.icono.fileUrl} src={props.icono.fileUrl} />
+                <Avatar alt={props.icono.filename} src={`${props.icono.fileUrl}`} />
               ) : props.icono.status === "fetched" ? (
-                <Avatar alt={props.icono.fileUrl} src={props.icono.fileUrl} />
+                <Avatar alt={props.icono.filename} src={`${apiUrlImages}/${props.icono.filename}`} />
               ) : (
                 // <Thumb file={props.icono.file} status="" />
                 <PersonFilled />

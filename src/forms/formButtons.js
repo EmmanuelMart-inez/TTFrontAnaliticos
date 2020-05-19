@@ -87,10 +87,11 @@ export default function FormButtons(props) {
               mensaje: values.contenido,
               // fecha: "2019-12-19T05:28:40.247",
               imagenIcon: `${values.icono.filename}`,
-              imagenDisplay: `${values.iconoDisplay.filename}`,
+              // imagenDisplay: `${values.iconoDisplay.filename}`,
               // bar_text: values.textoAccionador,
               tipo_notificacion: values.notificaciones.value,
               // link: "5e3540ffdb5584c6403a6332",
+              filtros: values.participantesFor,
             },
           },
           {
@@ -186,6 +187,7 @@ export default function FormButtons(props) {
               bar_text: values.textoAccionador,
               textoAccionador: values.notificaciones.textoAccionador,
               tipo_notificacion: values.notificaciones.value,
+              filtros: values.participantesFor,
             }, //opcional
             premio: {
               nombre: values.premio.titulo,
@@ -296,7 +298,7 @@ export default function FormButtons(props) {
             ops.icon = ops.icon.filename;
           });
         }
-        if (pag.tipo == "multiple") {
+        if (pag.tipo == "opcion multiple") {
           pag.opciones.map((ops) => {
             ops.icon = `${apiUrl}/download/null.png`;
           });
@@ -565,18 +567,35 @@ export default function FormButtons(props) {
               </Grid>
               {/* )} */}
               {props.pageCounter > 0 && (
-                <Grid item xs={2}>
-                  <Button
-                    className={classes.buttondown}
-                    color="primary"
-                    type="button"
-                    disabled={isSubmitting}
-                    onClick={props.handleBackPage}
-                  >
-                    Página anterior
-                  </Button>
-                </Grid>
+                <>
+                  <Grid item xs={2}>
+                    <Button
+                      className={classes.buttondown}
+                      color="primary"
+                      type="button"
+                      disabled={isSubmitting}
+                      onClick={props.handleBackPage}
+                    >
+                      Página anterior
+                    </Button>
+                  </Grid>
+                </>
               )}
+              <Grid item xs={3}>
+                <Button
+                  className={classes.buttondown}
+                  color="primary"
+                  type="button"
+                  disabled={isSubmitting}
+                  onClick={() => {
+                    if (props.pageCounter == 0) props.handleBack();
+                    else props.handleBackPage();
+                    props.arrayHelpers.remove(props.pageCounter);
+                  }}
+                >
+                  Eliminar página
+                </Button>
+              </Grid>
               <Grid item xs={2}>
                 <Button
                   className={classes.buttondown}
@@ -587,7 +606,7 @@ export default function FormButtons(props) {
                     if (props.pageCounter + 2 > props.pageArraySize) {
                       props.arrayHelpers.push({
                         titulo: "",
-                        tipo: "multiple",
+                        tipo: "opcion multiple",
                         metrica: "",
                         opciones: [
                           {

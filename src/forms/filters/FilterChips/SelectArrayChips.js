@@ -219,7 +219,7 @@ export default function SelectArrayChips(props) {
         name="filtros"
         render={arrayHelpers => (
           <div>
-            {!props.disabled && values.filtros && values.filtros.length > 0
+            { values.filtros && values.filtros.length > 0
               ? values.filtros.map((filtro, index) => (
                   <div key={index}>
                     <Tooltip
@@ -283,7 +283,7 @@ export default function SelectArrayChips(props) {
                 id="standard-select-tabla"
                 select
                 label="Segmentar destinatarios"
-                disabled={props.disabled}
+                // disabled={props.disabled}
                 value={eCollection || ""}
                 // value={segmentacion[values.indexCollection].value}
                 onChange={event => {

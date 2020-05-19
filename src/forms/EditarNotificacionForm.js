@@ -191,8 +191,8 @@ const Basic = props => {
               } else
                 res.data.encuesta.paginas.map(function(p) {
                   console.log(p);
-                  if (p.tipo === "opcion multiple")
-                    return (p.tipo = "multiple");
+                  if (p.tipo === "opcion multiple" || p.tipo === "multiple")
+                    return (p.tipo = "opcion multiple");
                 });
               setResponse(res.data);
               setIsfetching(false);
@@ -234,7 +234,7 @@ const Basic = props => {
               icono: {
                 file: null,
                 fileUrl: response.notificacion.imagenIcon,
-                filename: "image_cropped.png",
+                filename: response.notificacion.imagenIcon || "image_cropped.png",
                 fileUrlCropped: null,
                 fileCropped: null,
                 downloadUrl: response.notificacion.imagenIcon,
@@ -244,7 +244,7 @@ const Basic = props => {
               iconoMiniatura: {
                 file: null,
                 fileUrl: null,
-                filename: "image_cropped.png",
+                filename: response.premio.imagen_icon || "image_cropped.png",
                 fileUrlCropped: null,
                 fileCropped: null,
                 downloadUrl: response.premio.imagen_icon,
@@ -254,7 +254,7 @@ const Basic = props => {
               iconoDetalles: {
                 file: null,
                 fileUrl: null,
-                filename: "image_cropped.png",
+                filename: response.premio.imagen_icon || "image_cropped.png",
                 fileUrlCropped: null,
                 fileCropped: null,
                 downloadUrl: response.premio.imagen_display,

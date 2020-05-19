@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormikContext, Formik, Form, Field } from "formik";
+import { useFormikContext, Formik, Form, Field, getIn } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 
 import ImagePreview from "./ImagePreviewFormik";
@@ -37,7 +37,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NotificacionForm(props) {
   const classes = useStyles();
-  const { values, setFieldValue, handleSubmit } = useFormikContext();
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    setFieldTouched,
+    setFieldValue,
+    handleSubmit,
+  } = useFormikContext();
 
   return (
     <form onSubmit={handleSubmit}>
@@ -72,14 +80,24 @@ export default function NotificacionForm(props) {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            id="titulo"
             label="Título"
-            helperText="Qué quieres que diga el encabezado de esta notificación. Es lo primero que verán los clientes"
             name={values.titulo}
             value={values.titulo}
+            helperText={
+              "Qué quieres que diga el encabezado de esta notificación. Es lo primero que verán los clientes"
+            }
             onChange={(event) => {
               setFieldValue("titulo", event.target.value);
             }}
+            error={Boolean(errors.titulo)}
+            onFocus={() => setFieldTouched("titulo")}
           />
+          {errors.titulo && touched.titulo && (
+            <div style={{ color: "red", marginTop: ".5rem" }}>
+              {errors.titulo}
+            </div>
+          )}
         </Grid>
         <Grid item xs={6}>
           <ImagePreview
@@ -88,8 +106,14 @@ export default function NotificacionForm(props) {
             values={values}
             subirIconoButtonTag="Seleccionar ícono"
             iconoFormikname="icono"
-            aspectRatioFraction={4/3.5}
+            aspectRatioFraction={4 / 3.5}
           />
+          {/* {`${getIn(errors, 'icono.status')} ${getIn(errors, 'icono.filename')} ${getIn(errors, 'icono')}`}
+          {getIn(errors, 'icono.status') && touched.titulo && touched.contenido && (
+            <div style={{ color: "red", marginTop: ".5rem" }}>
+              {errors.icono}
+            </div>
+          )} */}
         </Grid>
         {/* TODO: Resolver después */}
         {/* <Grid item xs={6}>
@@ -112,7 +136,14 @@ export default function NotificacionForm(props) {
                 setFieldValue("textoAccionador", event.target.value);
               }}
               helperText="Qué quieres que diga el botón que llevará al usuario a responder la encuesta"
+              error={Boolean(errors.textoAccionador)}
+              onFocus={() => setFieldTouched("textoAccionador")}
             />
+            {errors.textoAccionador && touched.textoAccionador && (
+              <div style={{ color: "red", marginTop: ".5rem" }}>
+                {errors.textoAccionador}
+              </div>
+            )}
           </Grid>
         )}
         <Grid item xs={6}>
@@ -128,7 +159,14 @@ export default function NotificacionForm(props) {
               setFieldValue("contenido", event.target.value);
             }}
             helperText="Cuerpo, mensaje o descripción de la notificación. ¿Qué quieres notificar?"
+            error={Boolean(errors.contenido)}
+            onFocus={() => setFieldTouched("contenido")}
           />
+          {errors.contenido && touched.contenido && (
+            <div style={{ color: "red", marginTop: ".5rem" }}>
+              {errors.contenido}
+            </div>
+          )}
         </Grid>
         <Grid item xs={6}>
           <SelectArrayChips disabled={props.editar} />
@@ -142,7 +180,14 @@ export default function NotificacionForm(props) {
                 setFieldValue("puntos", event.target.value);
               }}
               helperText="Beneficio que obtiene un participante por responder tu encuesta. Recuerda que esto es un gana-gana. ¿Cuántos puntos quieres otorgar por la respuesta de esta encuesta?"
+              error={Boolean(errors.puntos)}
+              onFocus={() => setFieldTouched("puntos")}
             />
+            {errors.puntos && touched.puntos && (
+              <div style={{ color: "red", marginTop: ".5rem" }}>
+                {errors.puntos}
+              </div>
+            )}
           </Grid>
         )}
       </Grid>

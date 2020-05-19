@@ -1,9 +1,6 @@
 import React from "react";
 import { useFormikContext } from "formik";
-import {
-  makeStyles,
-  createMuiTheme,
-} from "@material-ui/core/styles";
+import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import { green, purple } from "@material-ui/core/colors";
 
 import TextField from "@material-ui/core/TextField";
@@ -17,62 +14,62 @@ import EncuestaReactiva from "./EncuestaReactiva";
 const tipoEncuesta = [
   {
     value: "opcion multiple",
-    label: "Opción múltiple"
+    label: "Opción múltiple",
   },
   {
     value: "abierta",
-    label: "Abierta"
+    label: "Abierta",
   },
   {
     value: "emoji",
-    label: "Reactiva/Emoji"
-  }
+    label: "Reactiva/Emoji",
+  },
 ];
 
 const segmentacion = [
   {
     value: "todos",
-    label: "Ninguna"
+    label: "Ninguna",
   },
   {
     value: "metrica",
-    label: "Por métrica"
+    label: "Por métrica",
   },
   {
     value: "montocompra",
-    label: "Monto de compra"
+    label: "Monto de compra",
   },
   {
     value: "productocompra",
-    label: "Al comprar determinado un producto"
-  }
+    label: "Al comprar determinado un producto",
+  },
 ];
 
 const theme = createMuiTheme({
   palette: {
-    info: green
-  }
+    info: green,
+  },
 });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(3),
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 220
+    width: 220,
   },
   TextSubtitle: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   buttonPlusMinus: {
     margin: 0,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   gridCenter: {
-    alignContent: "center"
-  }
+    alignContent: "center",
+  },
 }));
 
 export default function EncuestaForm(props) {
@@ -80,7 +77,7 @@ export default function EncuestaForm(props) {
   const { values, setFieldValue, handleSubmit } = useFormikContext();
   const [showAlert, setShowAlert] = React.useState(false);
 
-  const getTipoEncuesta = tipoEncuesta => {
+  const getTipoEncuesta = (tipoEncuesta) => {
     switch (tipoEncuesta) {
       case "opcion multiple":
         return <EncuestaOpcionMultiple pageCounter={props.pageCounter} />;
@@ -117,7 +114,7 @@ export default function EncuestaForm(props) {
             label="Tipo de pregunta"
             name="tipo de pregunta"
             value={values.encuesta.paginas[props.pageCounter].tipo}
-            onChange={event => {
+            onChange={(event) => {
               setFieldValue(
                 `encuesta.paginas[${props.pageCounter}].tipo`,
                 event.target.value
@@ -126,7 +123,7 @@ export default function EncuestaForm(props) {
             helperText="Por favor seleccione algún tipo de pregunta"
             variant="outlined"
           >
-            {tipoEncuesta.map(option => (
+            {tipoEncuesta.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>
@@ -140,7 +137,7 @@ export default function EncuestaForm(props) {
             value={values.encuesta.paginas[props.pageCounter].titulo || ""}
             multiline
             rowsMax="3"
-            onChange={event => {
+            onChange={(event) => {
               setFieldValue(
                 `encuesta.paginas[${props.pageCounter}].titulo`,
                 event.target.value
@@ -156,7 +153,7 @@ export default function EncuestaForm(props) {
             value={values.encuesta.paginas[props.pageCounter].metrica || ""}
             multiline
             rowsMax="3"
-            onChange={event => {
+            onChange={(event) => {
               setFieldValue(
                 `encuesta.paginas[${props.pageCounter}].metrica`,
                 event.target.value

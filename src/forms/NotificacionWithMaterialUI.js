@@ -543,10 +543,26 @@ const Basic = () => {
         //     // value: "ninguna"
         //   }
         // }}
-        validationSchema={Yup.object({
+        validationSchema={Yup.object().shape({
           titulo: Yup.string()
-            .min(1, "Must be 15 characters or less")
-            .required("Required"),
+            // .min(1, "Must be 15 characters or less")
+            .required("Requerido"),
+          textoAccionador: Yup.string().required("Requerido"),
+          contenido: Yup.string().required("Requerido"),
+          puntos: Yup.number()
+            .typeError("El campo puntos debe ser de tipo numérico")
+            .positive("Solo se admiten valores positivos")
+            .required("Requerido"),
+          icono: Yup.object().shape({
+            filename: Yup.string().required(
+              "Requerido, seleccione o suba una imágen"
+            ),
+          }),
+          encuesta: Yup.object().shape({
+            titulo: Yup.string().required("Requerido"),
+            categoria: Yup.string().required("Requerido"),
+            metrica: Yup.string().required("Requerido"),
+          }),
           // email: Yup.string()
           //   .email("Invalid email addresss`")
           //   .required("Required"),
@@ -583,6 +599,7 @@ const Basic = () => {
           handleChange,
           handleBlur,
           handleSubmit,
+          setFieldTouched,
           isSubmitting,
           setFieldValue,
           /* and other goodies */
