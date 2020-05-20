@@ -182,12 +182,12 @@ export default function FormButtons(props) {
           url,
           {
             notificacion: {
-              titulo: values.premio.titulo,
+              titulo: values.titulo,
               mensaje: values.premio.contenido,
               // fecha: "2019-12-19T05:28:40.247",
               imagenIcon: `${values.icono.filename}`,
               bar_text: values.textoAccionador,
-              textoAccionador: values.notificaciones.textoAccionador,
+              // textoAccionador: values.notificaciones.textoAccionador,
               tipo_notificacion: values.notificaciones.value,
               filtros: values.participantesFor,
             }, //opcional

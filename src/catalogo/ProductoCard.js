@@ -4,6 +4,7 @@ import {apiUrlImages} from '../shared/constants'
 export default function PromoCard(props) {
   const tile = props.producto;
   const parseISOString = (s) => {
+    if (!s) return s;
     var b = s.split(/\D+/);
     var time = new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
     return <>{time.toLocaleDateString() + " " + time.toLocaleTimeString()}</>;

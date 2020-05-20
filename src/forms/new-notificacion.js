@@ -126,7 +126,7 @@ export default function NotificacionForm(props) {
             aspectRatioFraction={4/3}
           />
         </Grid> */}
-        {values.notificaciones.value === "ninguna" || (
+        {values.notificaciones.value === "encuesta" && (
           <Grid item xs={6}>
             <TextField
               label="Texto del accionador"

@@ -4,10 +4,11 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function PromoCard(props) {
   const { data: tile, loading } = useBubbletownApi({
-    path: `promociones/${props.promoId}`
+    path: `promociones/${props.promoId}`,
   });
 
-  const parseISOString = s => {
+  const parseISOString = (s) => {
+    if (!s) return s;
     var b = s.split(/\D+/);
     var time = new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
     return <>{time.toLocaleDateString() + " " + time.toLocaleTimeString()}</>;
@@ -15,7 +16,7 @@ export default function PromoCard(props) {
 
   if (loading) return <CircularProgress />;
   return (
-    <div class="ui card link" >
+    <div class="ui card link">
       <div class="image">
         <img src={tile.imagen} style={{ "max-height": "200px" }} />
       </div>

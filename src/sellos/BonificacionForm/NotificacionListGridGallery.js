@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 import useBubbletownApi from "../../helpers/useBubbletownApi";
+import { apiUrlImages } from "../../shared/constants";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,6 +38,7 @@ export default function TitlebarGridList(props) {
   });
 
   const parseISOString = s => {
+    if (!s) return s;
     var b = s.split(/\D+/);
     var time = new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
     return <>{time.toLocaleDateString() + " " + time.toLocaleTimeString()}</>;
@@ -57,7 +59,8 @@ export default function TitlebarGridList(props) {
                   <div class="content">
                     <img
                       class="right floated mini ui image"
-                      src={tile.imagenIcon}
+                      src={`${apiUrlImages}/${tile.imagenIcon}`}
+                      alt={`${tile.imagenIcon}`}
                     />
                     <div class="header" style={{"max-height":"40px", "overflow": "hidden"}}>{tile.titulo || ""}</div>
                     <div class="meta">{parseISOString(tile.fecha) || ""}</div>
