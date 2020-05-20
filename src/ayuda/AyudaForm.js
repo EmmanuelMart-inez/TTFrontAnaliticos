@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
+import CloseIcon from "@material-ui/icons/Close";
 import Box from "@material-ui/core/Box";
 
 import AlertDialogProgressResend from "../home/AlertDialogResend";
@@ -17,147 +18,181 @@ import AlertDialogProgressResend from "../home/AlertDialogResend";
 import axios from "axios";
 import { apiUrl } from "../shared/constants";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
-    marginBottom: theme.spacing(3)
-  }
+    marginBottom: theme.spacing(3),
+  },
 }));
 
 export default function AyudaForm() {
   const classes = useStyles();
   const [openAlert, setOpenAlert] = React.useState(false);
-  return (
-    <Formik
-      initialValues={{
-        titulo: "",
-        descripcion: "",
-        icono: {
-          file: null,
-          fileUrl: null,
-          filename: "image_cropped",
-          fileUrlCropped: null,
-          fileCropped: null,
-          downloadUrl: null,
-          status: "",
-          isCroppedCompleted: false
+  const { values, setFieldValue, resetForm } = useFormikContext();
+
+  const guardarNuevoItem = async () =>
+    await axios
+      .post(
+        `${apiUrl}/ayuda`,
+        {
+          // imagen_icon: values.icono.fileUrl,
+          imagen_icon: values.icono.filename,
+          titulo: values.titulo,
+          descripcion: values.descripcion,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      }}
-      validationSchema={Yup.object({
-        titulo: Yup.string()
-          .min(1, "Must be 15 characters or less")
-          .required("Required")
-      })}
-      onSubmit={(values, { setSubmitting }) => {}}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-        setFieldValue
-        /* and other goodies */
-      }) => (
-        <Grid container spacing={3}>
-          {openAlert && (
-            <AlertDialogProgressResend
-              titulo="Confirmar acción"
-              body="Esta seguro de que desea guardar este elemento"
-              agree="Aceptar"
-              disagree="Cancelar"
-              switch={openAlert}
-              action={async () =>
-                await axios
-                  .post(`${apiUrl}/ayuda`, 
-                  {
-                    // imagen_icon: values.icono.fileUrl,
-                    imagen_icon: values.icono.filename,
-                    titulo: values.titulo,
-                    descripcion: values.descripcion
-                  }
-                  ,{
-                    headers: {
-                      "Content-Type": "application/json"
-                    }
-                  })
-                  .then(res => {
-                    if (res.status === 200) return 2;
-                    else return 3;
-                  })
-                  .catch(e => {
-                    console.log(e);
-                    return 3;
-                    // setFieldValue("sendProgress", 3);
-                  })
-              }
-              close={() => {
-                setOpenAlert(false);
-                console.log("click cerrar");
-                return 2;
+      )
+      .then((res) => {
+        if (res.status === 200) return 2;
+        else return 3;
+      })
+      .catch((e) => {
+        console.log(e);
+        return 3;
+        // setFieldValue("sendProgress", 3);
+      });
+
+  const editarItem = async () =>
+    await axios
+      .put(
+        `${apiUrl}/ayuda/${values._id}`,
+        {
+          imagen_icon: values.icono.filename,
+          titulo: values.titulo,
+          descripcion: values.descripcion,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          return 2;
+        } else return 3;
+      })
+      .catch((e) => {
+        console.log(e);
+        return 3;
+        // setFieldValue("sendProgress", 3);
+      });
+
+  return (
+    <Grid container spacing={3}>
+      {openAlert && (
+        <AlertDialogProgressResend
+          titulo={
+            values.isEditEnabled ? "Confirmar edición" : "Confirmar eliminación"
+          }
+          body={
+            values.isEditEnabled
+              ? "Esta seguro de que desea actualizar este elemento?"
+              : "Esta seguro de que desea guardar este elemento"
+          }
+          agree="Aceptar"
+          disagree="Cancelar"
+          switch={openAlert}
+          action={values.isEditEnabled ? editarItem : guardarNuevoItem}
+          close={() => {
+            setOpenAlert(false);
+            console.log("click cerrar");
+            return 2;
+          }}
+        />
+      )}
+      <Grid item xs={12}>
+        <div className={classes.title}>
+          <Typography variant="h6" color="inherit">
+            {"Nuevo elemento de Ayuda"}
+          </Typography>
+        </div>
+      </Grid>
+      <Grid item xs={6}>
+        <TextField
+          label="Título"
+          multiline
+          rowsMax="4"
+          name={values.titulo}
+          value={values.titulo}
+          onChange={(event) => {
+            setFieldValue("titulo", event.target.value);
+          }}
+          helperText="En qué quieres ayudar al participante?, ingresa una pregunta o algo que sea relevante saber"
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <TextField
+          label="Descripción"
+          multiline
+          rowsMax="6"
+          name={values.descripcion}
+          value={values.descripcion}
+          onChange={(event) => {
+            setFieldValue("descripcion", event.target.value);
+          }}
+          helperText="Ingrese algún texto, si en el titulo colocaste una pregunta frecuente, aquí puedes ingresar la respuesta"
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <ImagePreview
+          icono={values.icono}
+          setFieldValue={setFieldValue}
+          values={values}
+          subirIconoButtonTag="Seleccionar ícono"
+          iconoFormikname="icono"
+        />
+      </Grid>
+      {values.isEditEnabled || (
+        <Grid item xs={12}>
+          <Box p={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<SaveIcon />}
+              onClick={() => {
+                setOpenAlert(true);
               }}
-            />
-          )}
-          <Grid item xs={12}>
-            <div className={classes.title}>
-              <Typography variant="h6" color="inherit">
-                {"Nuevo elemento de Ayuda"}
-              </Typography>
-            </div>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              label="Título"
-              multiline
-              rowsMax="4"
-              name={values.titulo}
-              value={values.titulo}
-              onChange={event => {
-                setFieldValue("titulo", event.target.value);
-              }}
-              helperText="En qué quieres ayudar al participante?, ingresa una pregunta o algo que sea relevante saber"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              label="Descripción"
-              multiline
-              rowsMax="6"
-              name={values.descripcion}
-              value={values.descripcion}
-              onChange={event => {
-                setFieldValue("descripcion", event.target.value);
-              }}
-              helperText="Ingrese algún texto, si en el titulo colocaste una pregunta frecuente, aquí puedes ingresar la respuesta"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <ImagePreview
-              icono={values.icono}
-              setFieldValue={setFieldValue}
-              values={values}
-              subirIconoButtonTag="Seleccionar ícono"
-              iconoFormikname="icono"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Box p={2}>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<SaveIcon />}
-                onClick={() => {
-                  setOpenAlert(true);
-                }}
-              >
-                Guardar
-              </Button>
-            </Box>
-            <DisplayFormikState {...values} />
-          </Grid>
+            >
+              Guardar
+            </Button>
+          </Box>
+          <DisplayFormikState {...values} />
         </Grid>
       )}
-    </Formik>
+      {values.isEditEnabled && (
+        <Grid item xs={12}>
+          <Box p={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<SaveIcon />}
+              onClick={() => {
+                setOpenAlert(true);
+              }}
+            >
+              Actualizar
+            </Button>
+          </Box>
+          <Box p={2}>
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<CloseIcon />}
+              onClick={() => {
+                setFieldValue("isEditEnabled", false);
+                resetForm();
+              }}
+            >
+              cancelar
+            </Button>
+          </Box>
+          <DisplayFormikState {...values} />
+        </Grid>
+      )}
+    </Grid>
   );
 }

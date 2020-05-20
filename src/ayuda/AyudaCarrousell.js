@@ -5,16 +5,18 @@ import Grid from "@material-ui/core/Grid";
 
 import AyudaForm from "./AyudaForm";
 import VerticalImageGrid from "./VerticalImageGrid";
+import { useFormikContext, Formik, Field, FieldArray } from "formik";
+import * as Yup from "yup";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(2),
     // textAlign: "center",
     // color: theme.palette.text.secondary
-  }
+  },
 }));
 
 export default function AyudaCarrousell() {
@@ -22,21 +24,59 @@ export default function AyudaCarrousell() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
-        {/* <Grid item xs={12}>
+      <Formik
+        initialValues={{
+          _id : "",
+          isEditEnabled: false,
+          titulo: "",
+          descripcion: "",
+          icono: {
+            file: null,
+            fileUrl: null,
+            filename: "image_cropped",
+            fileUrlCropped: null,
+            fileCropped: null,
+            downloadUrl: null,
+            status: "",
+            isCroppedCompleted: false,
+          },
+        }}
+        validationSchema={Yup.object({
+          titulo: Yup.string()
+            .min(1, "Must be 15 characters or less")
+            .required("Required"),
+        })}
+        onSubmit={(values, { setSubmitting }) => {}}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          setFieldValue,
+          resetForm
+          /* and other goodies */
+        }) => (
+          <Grid container spacing={3}>
+            {/* <Grid item xs={12}>
           <Paper className={classes.paper}>xs=12</Paper>
         </Grid> */}
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            <VerticalImageGrid />
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            <AyudaForm />
-          </Paper>
-        </Grid>
-      </Grid>
+            <Grid item xs={6}>
+              <Paper className={classes.paper}>
+                <VerticalImageGrid />
+              </Paper>
+            </Grid>
+            <Grid item xs={6}>
+              <Paper className={classes.paper}>
+                <AyudaForm />
+              </Paper>
+            </Grid>
+          </Grid>
+        )}
+      </Formik>
     </div>
   );
 }
