@@ -22,7 +22,7 @@ export default function PromoCard(props) {
     <>
       <div class="ui link cards" style={{ height: "120px" }}>
         {/* <a class="ui teal ribbon label">Notificación</a> */}
-        <div class="card">
+        <div class="card" id={tile.notificacion._id}>
           <div class="content">
             <img
               class="right floated mini ui image"
@@ -55,12 +55,16 @@ export default function PromoCard(props) {
           </div>
         </div>
       </div>
-      {tile.notificacion.tipo_notificacion == "premio" && (
-        <PremioCard premioId={"5ea36d5eb6a3c50765333b75"} />
-      )}
-      {tile.notificacion.tipo_notificacion == "encuesta" && (
-        <EncuestaCard encuestaId={"5ea5ecbd192170cfe4045258"} />
-      )}
+      {tile.notificacion.tipo_notificacion == "premio" &&
+        tile.notificacion.link &&
+        tile.notificacion.link !== "null" && (
+          <PremioCard premioId={tile.notificacion.link} />
+        )}
+      {tile.notificacion.tipo_notificacion == "encuesta" &&
+        tile.notificacion.link &&
+        tile.notificacion.link !== "null" && (
+          <EncuestaCard encuestaId={tile.notificacion.link} />
+        )}
     </>
   );
 }

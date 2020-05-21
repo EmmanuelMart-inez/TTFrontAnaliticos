@@ -51,7 +51,7 @@ export default function TitlebarGridList(props) {
         <TextField
           id="outlined-select-premio"
           select
-          label="Seleccionar premio/promoción"
+          label="Seleccionar promoción"
           name="notificaciones"
           // disabled={props.editar}
           value={props.value}

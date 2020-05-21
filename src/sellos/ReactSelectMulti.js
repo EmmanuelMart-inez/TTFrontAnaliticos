@@ -8,20 +8,20 @@ import useBubbletownApi from "../helpers/useBubbletownApi";
 
 const colourOptions = [
   { value: "asdadgfasg", label: "Bebida de choco" },
-  { value: "13asda", label: "Bebida de fre" }
+  { value: "13asda", label: "Bebida de fre" },
 ];
 
 const animatedComponents = makeAnimated();
 
 export default function AnimatedMulti(props) {
   const { data: productos, loading } = useBubbletownApi({
-    path: `productos`
+    path: `productos`,
   });
 
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
-    //   width: "100%",
+      //   width: "100%",
       padding: 20,
     }),
     // control: () => ({
@@ -30,36 +30,52 @@ export default function AnimatedMulti(props) {
     // }),
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = 'opacity 300ms';
-  
-      return { ...provided, opacity, transition };
-    }
-  }
+      const transition = "opacity 300ms";
 
+      return { ...provided, opacity, transition };
+    },
+  };
+
+  // Converts an arrays of _ids to an array of values, label tags
   function formatSelectInput(array) {
-    const formatedArray = array.map(item => {
+    const formatedArray = array.map((item) => {
       var f = {};
       f["value"] = item._id;
       f["label"] = item.nombre;
       return f;
     });
-    console.log(formatedArray);
+    // console.log(formatedArray);
     return formatedArray;
+  }
+
+  
+
+  // Get Product formated { labels, value } from ids array
+  function completeMatchId(allProducts, arrayIds) {
+    const arrayIntersection = allProducts.filter((x) =>
+      arrayIds.includes(x._id)
+    );
+    const formatedArrayIntersection = formatSelectInput(arrayIntersection);
+    // console.log(formatedArrayIntersection);
+    return formatedArrayIntersection;
   }
 
   if (loading) return <CircularProgress />;
   return (
-    <Select
-      closeMenuOnSelect={false}
-      components={animatedComponents}
-      //defaultValue={[colourOptions[4], colourOptions[5]]}
-      onChange={props.handleChange}
-      noOptionsMessage={() => <>No quedan más productos</>}
-      value={props.value}
-      placeholder="Seleccione algunos productos válidos"
-      isMulti
-      styles={customStyles}
-      options={formatSelectInput(productos)}
-    />
+    <>
+      <Select
+        closeMenuOnSelect={false}
+        components={animatedComponents}
+        defaultValue={completeMatchId(productos || [], props.values || [])}
+        onChange={props.handleChange}
+        noOptionsMessage={() => <>No quedan más productos</>}
+        // value={completeMatchId(productos || [], props.values || [])}
+        placeholder="Seleccione algunos productos válidos"
+        isMulti
+        styles={customStyles}
+        options={formatSelectInput(productos)}
+      />
+      <h1>{props.value}</h1>
+    </>
   );
 }
