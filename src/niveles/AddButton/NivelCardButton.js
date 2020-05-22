@@ -32,7 +32,7 @@ export default function SimpleCard(props) {
   return (
     <Button
       variant="contained"
-      style={{ backgroundColor: "#EDF0FA", border: "2px dashed #1565C0" }}
+      style={{ backgroundColor: "#EDF0FA", border: "2px dashed #1565C0",  height: "300px"}}
       onClick={props.onClick}
     >
       <CardContent>

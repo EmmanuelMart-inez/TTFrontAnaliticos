@@ -120,14 +120,13 @@ export default function FormButtons(props) {
           `${apiUrl}/premios`,
           {
             nombre: values.premio.titulo,
-
             // fecha: "2019-12-19T05:28:40.247",
             imagen_icon: `${values.iconoMiniatura.filename}`,
             imagen_display: `${values.iconoDetalles.filename}`,
             // imagen_icon: `${apiUrl}/download/${values.iconoMiniatura.filename}`,
             // imagen_display: `${apiUrl}/download/${values.iconoDetalles.filename}`,
             puntos: parseFloat(`${values.puntos}`) || 0, //opcional
-
+            vidas: values.premio.vidas || 0
             // link: "5e3540ffdb5584c6403a6332",
           },
           {
@@ -197,6 +196,7 @@ export default function FormButtons(props) {
               imagen_icon: `${values.iconoMiniatura.filename}`,
               imagen_display: `${values.iconoDetalles.filename}`,
               puntos: parseFloat(`${values.puntos}`) || 0, //opcional
+              vidas: values.premio.vidas || 0
             },
           },
           {

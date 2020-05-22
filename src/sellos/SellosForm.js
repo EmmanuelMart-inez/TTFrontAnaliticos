@@ -242,6 +242,7 @@ export default function SellosForm() {
               value={values.num_sellos > 0 ? values.num_sellos : ""}
               onChange={(event) => {
                 let value = parseInt(event.target.value, 10);
+                if (isNaN(value)) value = event.target.value;
                 setFieldValue("num_sellos", value);
               }}
               helperText="Por favor seleccione algún número. Cúantos sellos tendrá la tarjeta de sellos, es decir, cuántos sellos deberán acumular los participantes?"
@@ -299,6 +300,7 @@ export default function SellosForm() {
                 value={values.cantidad_trigger}
                 onChange={(event) => {
                   let value = parseInt(event.target.value, 10);
+                  if (isNaN(value)) value = event.target.value;
                   setFieldValue("cantidad_trigger", value);
                 }}
                 helperText="Valor en pesos ($) que debe sobrepasar el ticket de venta"

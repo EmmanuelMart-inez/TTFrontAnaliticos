@@ -6,6 +6,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
+import { useFormikContext, Formik, Field, FieldArray } from "formik";
+
 import AlertDialogProgressResend from "../home/AlertDialogResend";
 
 import axios from "axios";
@@ -31,6 +33,7 @@ const useStyles = makeStyles({
 export default function SimpleCard(props) {
   const classes = useStyles();
   const [openAlert, setOpenAlert] = React.useState(false);
+  const { values, setFieldValue, resetForm } = useFormikContext();
 
   const parseISOString = (s) => {
     if (!s) return s;
@@ -40,7 +43,7 @@ export default function SimpleCard(props) {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} id={props._id}>
       {openAlert && (
         <AlertDialogProgressResend
           titulo="Confirmar acción"
@@ -50,14 +53,11 @@ export default function SimpleCard(props) {
           switch={openAlert}
           action={async () =>
             await axios
-              .delete(
-                `${apiUrl}/niveles/${props._id}`,
-                {
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                }
-              )
+              .delete(`${apiUrl}/niveles/${props._id}`, {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
               .then((res) => {
                 if (res.status === 200) return 2;
                 else return 3;
@@ -91,12 +91,28 @@ export default function SimpleCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" disabled>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => {
+            setFieldValue("_id", props._id);
+            setFieldValue("id_notificacion", props.id_notificacion);
+            setFieldValue("id_promocion", props.id_promocion);
+            setFieldValue("dias_vigencia", props.dias_vigencia);
+            setFieldValue("max_canjeos", props.max_canjeos);
+            setFieldValue("num_puntos", props.num_puntos);
+            setFieldValue("editar", true);
+          }}
+        >
           Editar
         </Button>
-        <Button size="small"
+        <Button
+          size="small"
           onClick={() => setOpenAlert(true)}
-        >Eliminar</Button>
+          color="secondary"
+        >
+          Eliminar
+        </Button>
       </CardActions>
     </Card>
   );

@@ -204,6 +204,7 @@ export default function BirthdayForm() {
                 helperText="Días de antelación a la fecha de cumpleaños del participante en el que será enviada la notificación"
                 onChange={event => {
                   let value = parseInt(event.target.value, 10);
+                  if (isNaN(value)) value = event.target.value;
                   setFieldValue("trigger", value);
                 }}
               />
@@ -217,6 +218,7 @@ export default function BirthdayForm() {
                 helperText="Dias de antiguedad como cliente desde la fecha de registro en la aplicación móvil de el programa de lealtad suficientes para ser merecedor a este premio. ¿A cuántos días se es digno?"
                 onChange={event => {
                   let value = parseInt(event.target.value, 10);
+                  if (isNaN(value)) value = event.target.value;
                   setFieldValue("antiguedad", value);
                 }}
               />

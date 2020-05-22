@@ -229,7 +229,8 @@ const Basic = props => {
               premio: {
                 titulo: response.premio.nombre,
                 contenido: response.premio.mensaje,
-                fechaExpiracion: response.premio.fecha
+                fecha_vigencia: response.premio.fecha_vigencia,
+                vidas: response.premio.vidas
               },
               icono: {
                 file: null,

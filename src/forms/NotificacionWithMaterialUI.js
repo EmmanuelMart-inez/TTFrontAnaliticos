@@ -154,6 +154,7 @@ const Basic = () => {
             textoAccionador: "rrrrrrrrrrrrrrr",
             contenido: "asdas asd adas as a a",
             fechaExpiracion: "",
+            vidas: 1
           },
           icono: {
             file: null,

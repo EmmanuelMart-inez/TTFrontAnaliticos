@@ -117,6 +117,7 @@ export default function NivelForm() {
                   setFieldValue("equivalencia_punto_pesos", event.target.value);
                 } else {
                   let value = parseInt(event.target.value, 10);
+                  if (isNaN(value)) value = event.target.value;
                   setFieldValue("equivalencia_punto_pesos", value);
                 }
               }}

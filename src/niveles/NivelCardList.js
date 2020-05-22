@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard() {
+export default function SimpleCard(props) {
   const classes = useStyles();
   const { data: niveles, loading } = useBubbletownApi({
     path: `niveles`,
@@ -69,6 +69,9 @@ export default function SimpleCard() {
                 num_puntos={tile.num_puntos}
                 fecha_creacion={tile.fecha_creacion}
                 dias_vigencia={tile.dias_vigencia}
+                id_promocion={tile.id_promocion}
+                id_notificacion={tile.id_notificacion}
+                max_canjeos={tile.max_canjeos}
               />
               <PromoCard promoId={tile.id_promocion} />
               <NotificacionCard notificacionId={tile.id_notificacion} style={{'width': 430}}/>
