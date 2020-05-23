@@ -35,8 +35,9 @@ export default function NivelesPaper() {
       initialValues={{
         _id: "",
         id_notificacion: "",
-        dias_vigencia: "",
-        max_canjeos: "",
+        // dias_vigencia: "",
+        fecha_vencimiento: null,
+        // max_canjeos: "",
         num_puntos: "",
         id_promocion: "",
         editar: false,

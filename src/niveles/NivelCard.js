@@ -5,6 +5,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import moment from 'moment';
+import 'moment/locale/es'; 
 
 import { useFormikContext, Formik, Field, FieldArray } from "formik";
 
@@ -12,6 +14,9 @@ import AlertDialogProgressResend from "../home/AlertDialogResend";
 
 import axios from "axios";
 import { apiUrl } from "../shared/constants";
+
+
+moment.locale('es')
 
 const useStyles = makeStyles({
   root: {
@@ -38,7 +43,9 @@ export default function SimpleCard(props) {
   const parseISOString = (s) => {
     if (!s) return s;
     var b = s.split(/\D+/);
-    var time = new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
+    var time = new Date(
+      Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5] || 0, b[6] || 0)
+    );
     return <>{time.toLocaleDateString() + " " + time.toLocaleTimeString()}</>;
   };
 
@@ -79,12 +86,21 @@ export default function SimpleCard(props) {
         <Typography variant="h5" component="h2">
           Nivel: {props.num_puntos}
         </Typography>
-        <Typography
+        {/* <Typography
           className={classes.title}
           color="textSecondary"
           gutterBottom
         >
           Días de vigencia: {props.dias_vigencia}
+        </Typography> */}
+        <Typography
+          // className={classes.title}
+          variant="body2"
+          color="textSecondary"
+          gutterBottom
+        >
+          {/* Fecha de vencimiento {parseISOString(props.fecha_vencimiento)} */}
+          Vencimiento: {moment(props.fecha_vencimiento.substring(0, 23).concat('Z')).fromNow()}
         </Typography>
         <Typography variant="body2" component="p">
           Fecha de creación: {parseISOString(props.fecha_creacion)}
@@ -98,8 +114,9 @@ export default function SimpleCard(props) {
             setFieldValue("_id", props._id);
             setFieldValue("id_notificacion", props.id_notificacion);
             setFieldValue("id_promocion", props.id_promocion);
-            setFieldValue("dias_vigencia", props.dias_vigencia);
-            setFieldValue("max_canjeos", props.max_canjeos);
+            // setFieldValue("dias_vigencia", props.dias_vigencia);
+            setFieldValue("fecha_vencimiento", props.fecha_vencimiento.substring(0, 23).concat('Z'));
+            // setFieldValue("max_canjeos", props.max_canjeos);
             setFieldValue("num_puntos", props.num_puntos);
             setFieldValue("editar", true);
           }}

@@ -16,6 +16,7 @@ import Typography from "@material-ui/core/Typography";
 import AlertDialogProgressResend from "../home/AlertDialogResend";
 import NotificacionListGridGallery from "../birthdays/NotificacionListGridGallery";
 import PremioListGridGallery from "../birthdays/PremioListGridGallery";
+import MaterialCalendarDatePicker from "../forms/calendarField";
 
 import axios from "axios";
 import { apiUrl } from "../shared/constants";
@@ -65,7 +66,8 @@ export default function NivelForm() {
         `${apiUrl}/niveles`,
         {
           num_puntos: values.num_puntos,
-          dias_vigencia: values.dias_vigencia,
+          // dias_vigencia: values.dias_vigencia,
+          fecha_vencimiento: values.fecha_vencimiento,
           // max_canjeos: values.max_canjeos,
           id_notificacion: values.id_notificacion,
           id_promocion: values.id_promocion,
@@ -92,7 +94,8 @@ export default function NivelForm() {
         `${apiUrl}/niveles/${values._id}`,
         {
           num_puntos: values.num_puntos,
-          dias_vigencia: values.dias_vigencia,
+          // dias_vigencia: values.dias_vigencia,
+          fecha_vencimiento: values.fecha_vencimiento,
           // max_canjeos: values.max_canjeos,
           id_notificacion: values.id_notificacion,
           id_promocion: values.id_promocion,
@@ -166,6 +169,10 @@ export default function NivelForm() {
         ></TextField>
       </Grid>
       <Grid item xs={6}>
+        <MaterialCalendarDatePicker label={"Fecha de vencimiento"} setFieldValue={setFieldValue} field={"fecha_vencimiento"} value={values.fecha_vencimiento}/>
+      </Grid>
+      {/* REMOVED FOR fecha_vencimiento
+       <Grid item xs={6}>
         <TextField
           id="outlined-select-Npuntos"
           label="Dias de vigencia"
@@ -177,7 +184,7 @@ export default function NivelForm() {
           }}
           helperText="Número de días que tendrá el participante para canjear el premio después de obtenerlo"
         ></TextField>
-      </Grid>
+      </Grid> */}
       {/* <Grid item xs={6}>
         <TextField
           id="outlined-select-Ncanjeos"
@@ -247,13 +254,14 @@ export default function NivelForm() {
                 color="primary"
                 startIcon={<SaveIcon />}
                 onClick={() => {
+                  console.log(values.fecha_vencimiento);
                   setOpenEditAlert(true);
                 }}
               >
                 Actualizar
               </Button>
               <Button
-                style={{'marginLeft': '20px'}}
+                style={{ marginLeft: "20px" }}
                 variant="contained"
                 color="secondary"
                 startIcon={<ClearIcon />}

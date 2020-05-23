@@ -68,10 +68,11 @@ export default function SimpleCard(props) {
                 _id={tile._id}
                 num_puntos={tile.num_puntos}
                 fecha_creacion={tile.fecha_creacion}
-                dias_vigencia={tile.dias_vigencia}
+                // dias_vigencia={tile.dias_vigencia}
+                fecha_vencimiento={tile.fecha_vencimiento}
                 id_promocion={tile.id_promocion}
                 id_notificacion={tile.id_notificacion}
-                max_canjeos={tile.max_canjeos}
+                // max_canjeos={tile.max_canjeos}
               />
               <PromoCard promoId={tile.id_promocion} />
               <NotificacionCard notificacionId={tile.id_notificacion} style={{'width': 430}}/>
