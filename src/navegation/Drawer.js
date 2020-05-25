@@ -109,13 +109,15 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "center",
     // justifyContent:"center"
   },
-  timeNow: {
+  timeNow: {    
+    alignSelf: "flex-start",
     position: "absolute",
-    left: "600px"
+    right: "30px",
+    textAlign: "end",
   },
   col: {
-    backgroundColor: '#dae1e7'
-  }
+    backgroundColor: "#dae1e7",
+  },
 }));
 
 export default function MiniDrawer() {
@@ -124,8 +126,8 @@ export default function MiniDrawer() {
   const [open, setOpen] = React.useState(false);
   const [currentPage, SetCurrentPage] = React.useState(0);
   const { data: Time, loading } = useBubbletownApi({
-      path: `time`
-    });
+    path: `time`,
+  });
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -159,9 +161,14 @@ export default function MiniDrawer() {
           <Typography variant="h6" noWrap>
             BubbleTown
           </Typography>
-          {loading ? <CircularProgress/> : <Typography variant="body1" className={classes.timeNow}>
-              {Time.current_date}   {Time.current_time}
-          </Typography>}
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <Box className={classes.timeNow}>
+              <Typography variant="overline">{Time.current_date}</Typography>
+              <Typography variant="h6">{Time.current_time}</Typography>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -188,43 +195,106 @@ export default function MiniDrawer() {
         </div>
         <Divider />
         <List>
-          <ListItem button key={1} component={Link} to="/home" className={currentPage == 1 && classes.col} onClick={() => {SetCurrentPage(1);}}>
-            <ListItemIcon >
-              <MailIcon/>
+          <ListItem
+            button
+            key={1}
+            component={Link}
+            to="/home"
+            className={currentPage == 1 && classes.col}
+            onClick={() => {
+              SetCurrentPage(1);
+            }}
+          >
+            <ListItemIcon>
+              <MailIcon />
             </ListItemIcon>
             <ListItemText primary={"Notificaciones"} />
           </ListItem>
-          <ListItem button key={2} component={Link} to="/forms" className={currentPage == 2 && classes.col}  onClick={() => {SetCurrentPage(2);}}>
+          <ListItem
+            button
+            key={2}
+            component={Link}
+            to="/forms"
+            className={currentPage == 2 && classes.col}
+            onClick={() => {
+              SetCurrentPage(2);
+            }}
+          >
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
             <ListItemText primary={"Formularios"} />
           </ListItem>
-          <ListItem button key={3} component={Link} to="/birthdays" className={currentPage == 3 && classes.col} onClick={() => {SetCurrentPage(3);}}>
+          <ListItem
+            button
+            key={3}
+            component={Link}
+            to="/birthdays"
+            className={currentPage == 3 && classes.col}
+            onClick={() => {
+              SetCurrentPage(3);
+            }}
+          >
             <ListItemIcon>
               <CakeRoundedIcon />
             </ListItemIcon>
             <ListItemText primary={"Cumpleaños"} />
           </ListItem>
-          <ListItem button key={4} component={Link} to="/questionsAnswers" className={currentPage == 4 && classes.col} onClick={() => {SetCurrentPage(4);}}>
-            <ListItemIcon >
+          <ListItem
+            button
+            key={4}
+            component={Link}
+            to="/questionsAnswers"
+            className={currentPage == 4 && classes.col}
+            onClick={() => {
+              SetCurrentPage(4);
+            }}
+          >
+            <ListItemIcon>
               <HelpOutlineRoundedIcon />
             </ListItemIcon>
             <ListItemText primary={"Ayuda (Q&A)"} />
           </ListItem>
-          <ListItem button key={5} component={Link} to="/stamps" className={currentPage == 5 && classes.col} onClick={() => {SetCurrentPage(5);}}>
+          <ListItem
+            button
+            key={5}
+            component={Link}
+            to="/stamps"
+            className={currentPage == 5 && classes.col}
+            onClick={() => {
+              SetCurrentPage(5);
+            }}
+          >
             <ListItemIcon>
               <FontAwesome stamp={true} />
             </ListItemIcon>
             <ListItemText primary={"Sistema de sellos"} />
           </ListItem>
-          <ListItem button key={6} component={Link} to="/points" className={currentPage == 6 && classes.col} onClick={() => {SetCurrentPage(6);}}>
+          <ListItem
+            button
+            key={6}
+            component={Link}
+            to="/points"
+            className={currentPage == 6 && classes.col}
+            onClick={() => {
+              SetCurrentPage(6);
+            }}
+          >
             <ListItemIcon>
               <FontAwesome coins={true} />
             </ListItemIcon>
             <ListItemText primary={"Sistema de puntos"} />
           </ListItem>
-          <ListItem button key={7} component={Link} to="/catalogo" className={currentPage == 7 && classes.col} onClick={() => {SetCurrentPage(7);}}>
+          <ListItem
+            button
+            key={7}
+            component={Link}
+            to="/catalogo"
+            className={currentPage == 7 && classes.col}
+            onClick={() => {
+              SetCurrentPage(7);
+            }}
+          >
             <ListItemIcon>
               <EmojiFoodBeverageOutlinedIcon />
             </ListItemIcon>
@@ -236,12 +306,12 @@ export default function MiniDrawer() {
             </ListItemIcon>
             <ListItemText primary={"Analíticos (Metabase)"} />
           </ListItem> */}
-          <ListItem button key={9} component={Link} to="/palette" className={currentPage == 9 && classes.col} onClick={() => {SetCurrentPage(9);}}>
+          {/* <ListItem button key={9} component={Link} to="/palette" className={currentPage == 9 && classes.col} onClick={() => {SetCurrentPage(9);}}>
             <ListItemIcon>
               <FontAwesome palette={true} />
             </ListItemIcon>
             <ListItemText primary={"Preferencias"} />
-          </ListItem>
+          </ListItem> */}
         </List>
         <Divider />
       </Drawer>
@@ -274,9 +344,7 @@ export default function MiniDrawer() {
           {/* <Route path="/metabase">
             <MetabaseIframe />
           </Route> */}
-          <Route path="/palette">
-            <Rango />
-          </Route>
+          {/* <Routs */}
           <Route path="/" />
         </Switch>
       </main>

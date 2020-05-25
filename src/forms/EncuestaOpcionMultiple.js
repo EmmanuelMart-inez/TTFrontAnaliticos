@@ -1,5 +1,12 @@
 import React from "react";
-import { useFormikContext, Formik, Form, Field, FieldArray } from "formik";
+import {
+  useFormikContext,
+  Formik,
+  Form,
+  Field,
+  FieldArray,
+  getIn,
+} from "formik";
 import {
   makeStyles,
   createMuiTheme,
@@ -47,7 +54,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EncuestaForm(props) {
   const classes = useStyles();
-  const { values, setFieldValue, handleSubmit } = useFormikContext();
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    setFieldTouched,
+    setFieldValue,
+    handleSubmit,
+  } = useFormikContext();
   const [showAlert, setShowAlert] = React.useState(false);
 
   return (
@@ -95,7 +110,43 @@ export default function EncuestaForm(props) {
                           );
                         }}
                         helperText="Ingrese alguna posible respuesta"
+                        error={Boolean(
+                          getIn(
+                            errors,
+                            `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                          ) &&
+                            Boolean(
+                              getIn(
+                                touched,
+                                `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                              )
+                            )
+                        )}
+                        onFocus={() =>
+                          setFieldTouched(
+                            `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                          )
+                        }
                       />
+                      {Boolean(
+                        getIn(
+                          errors,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                        )
+                      ) &&
+                        Boolean(
+                          getIn(
+                            touched,
+                            `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                          )
+                        ) && (
+                          <div style={{ color: "red", marginTop: ".5rem" }}>
+                            {getIn(
+                              errors,
+                              `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                            )}
+                          </div>
+                        )}
                     </Grid>
                     <Grid item xs={4}>
                       <TextField
@@ -113,7 +164,7 @@ export default function EncuestaForm(props) {
                         multiline
                         rowsMax="3"
                         onChange={(event) => {
-                          var value = parseInt(event.target.value, 10);
+                          var value = parseFloat(event.target.value);
                           if (isNaN(value)) value = event.target.value;
                           setFieldValue(
                             `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`,
@@ -121,7 +172,43 @@ export default function EncuestaForm(props) {
                           );
                         }}
                         helperText="Ingrese algún número. Qué valor númerico (ponderación) le otorgas a esta respuesta?"
+                        error={Boolean(
+                          getIn(
+                            errors,
+                            `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                          ) &&
+                            Boolean(
+                              getIn(
+                                touched,
+                                `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                              )
+                            )
+                        )}
+                        onFocus={() =>
+                          setFieldTouched(
+                            `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                          )
+                        }
                       />
+                      {Boolean(
+                        getIn(
+                          errors,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                        )
+                      ) &&
+                        Boolean(
+                          getIn(
+                            touched,
+                            `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                          )
+                        ) && (
+                          <div style={{ color: "red", marginTop: ".5rem" }}>
+                            {getIn(
+                              errors,
+                              `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                            )}
+                          </div>
+                        )}
                     </Grid>
                     <Grid
                       item
@@ -179,7 +266,7 @@ export default function EncuestaForm(props) {
               // color="info"
               onClick={() =>
                 arrayHelpers.push({
-                  icon: `${apiUrl}/download/notificacionIcon1.png`,
+                  icon: `notificacionIcon1.png`,
                   calificacion: "",
                   rubrica: "",
                 })

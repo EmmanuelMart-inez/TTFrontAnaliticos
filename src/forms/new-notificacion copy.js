@@ -90,14 +90,18 @@ export default function NotificacionForm(props) {
             onChange={(event) => {
               setFieldValue("titulo", event.target.value);
             }}
-            error={Boolean(errors.titulo && touched.titulo)}
-            onFocus={() => setFieldTouched("titulo")}
+            error={Boolean(
+              getIn(errors, "notificacion.titulo") &&
+                Boolean(getIn(touched, "notificacion.titulo"))
+            )}
+            onFocus={() => setFieldTouched("notificacion.titulo")}
           />
-          {errors.titulo && touched.titulo && (
-            <div style={{ color: "red", marginTop: ".5rem" }}>
-              {errors.titulo}
-            </div>
-          )}
+          {Boolean(getIn(errors, "notificacion.titulo")) &&
+            Boolean(getIn(touched, "notificacion.titulo")) && (
+              <div style={{ color: "red", marginTop: ".5rem" }}>
+                {getIn(errors, "notificacion.titulo")}
+              </div>
+            )}
         </Grid>
         <Grid item xs={6}>
           <ImagePreview
@@ -112,15 +116,15 @@ export default function NotificacionForm(props) {
             errors,
             "icono.filename"
           )} ${getIn(errors, "icono")}`} */}
-          {Boolean(getIn(errors, "icono.status")) &&
-            touched.titulo &&
-            touched.contenido && (
+          {Boolean(getIn(errors, "notificacion.icono.status")) &&
+            Boolean(getIn(touched, "notificacion.titulo")) &&
+            Boolean(getIn(touched, "notificacion.contenido")) && (
               <Typography
                 variant="caption"
                 gutterBottom
                 style={{ color: "red", marginTop: ".5rem" }}
               >
-                {getIn(errors, "icono.status")}
+                {getIn(errors, "notificacion.icono.status")}
               </Typography>
             )}
         </Grid>
@@ -145,18 +149,22 @@ export default function NotificacionForm(props) {
                 setFieldValue("textoAccionador", event.target.value);
               }}
               helperText="Qué quieres que diga el botón que llevará al usuario a responder la encuesta"
-              error={Boolean(errors.textoAccionador && touched.textoAccionador)}
-              onFocus={() => setFieldTouched("textoAccionador")}
+              error={
+                Boolean(getIn(errors, "notificacion.textoAccionador")) &&
+                Boolean(getIn(touched, "notificacion.textoAccionador"))
+              }
+              onFocus={() => setFieldTouched("notificacion.textoAccionador")}
             />
-            {errors.textoAccionador && touched.textoAccionador && (
-              <Typography
-                variant="caption"
-                gutterBottom
-                style={{ color: "red" }}
-              >
-                {errors.textoAccionador}
-              </Typography>
-            )}
+            {Boolean(getIn(errors, "notificacion.textoAccionador")) &&
+              Boolean(getIn(touched, "notificacion.textoAccionador")) && (
+                <Typography
+                  variant="caption"
+                  gutterBottom
+                  style={{ color: "red" }}
+                >
+                  {getIn(errors, "notificacion.textoAccionador")}
+                </Typography>
+              )}
           </Grid>
         )}
         <Grid item xs={6}>
@@ -172,14 +180,22 @@ export default function NotificacionForm(props) {
               setFieldValue("contenido", event.target.value);
             }}
             helperText="Cuerpo, mensaje o descripción de la notificación. ¿Qué quieres notificar?"
-            error={Boolean(errors.contenido && touched.contenido)}
-            onFocus={() => setFieldTouched("contenido")}
+            error={
+              Boolean(getIn(errors, "notificacion.contenido")) &&
+              Boolean(getIn(touched, "notificacion.contenido"))
+            }
+            onFocus={() => setFieldTouched("notificacion.contenido")}
           />
-          {errors.contenido && touched.contenido && (
-            <Typography variant="caption" gutterBottom style={{ color: "red" }}>
-              {errors.contenido}
-            </Typography>
-          )}
+          {Boolean(getIn(errors, "notificacion.contenido")) &&
+            Boolean(getIn(touched, "notificacion.contenido")) && (
+              <Typography
+                variant="caption"
+                gutterBottom
+                style={{ color: "red" }}
+              >
+                {getIn(touched, "notificacion.contenido")}
+              </Typography>
+            )}
         </Grid>
         <Grid item xs={6}>
           <SelectArrayChips disabled={props.editar} />
@@ -196,7 +212,10 @@ export default function NotificacionForm(props) {
               label="Puntos"
               value={values.encuesta.puntos}
               onFocus={() => setFieldTouched("encuesta.puntos")}
-              error={Boolean(getIn(errors, "encuesta.puntos")) && Boolean(getIn(touched, "encuesta.puntos"))}
+              error={
+                Boolean(getIn(errors, "encuesta.puntos")) &&
+                Boolean(getIn(touched, "encuesta.puntos"))
+              }
               onChange={(event) => {
                 setFieldValue("encuesta.puntos", event.target.value);
               }}
@@ -205,23 +224,27 @@ export default function NotificacionForm(props) {
               // onFocus={() => setFieldTouched("encuesta.puntos")}
             />
             {/* {`${Boolean(getIn(errors, "encuesta.puntos"))} && ${Boolean(getIn(touched, "encuesta.puntos"))}`} */}
-            {Boolean(getIn(errors, "encuesta.puntos")) && Boolean(getIn(touched, "encuesta.puntos")) && (
-              <Typography
-                variant="caption"
-                gutterBottom
-                style={{ color: "red", marginTop: "5px" }}
-              >
-                {getIn(errors, "encuesta.puntos")}
-              </Typography>
-            )}
+            {Boolean(getIn(errors, "encuesta.puntos")) &&
+              Boolean(getIn(touched, "encuesta.puntos")) && (
+                <Typography
+                  variant="caption"
+                  gutterBottom
+                  style={{ color: "red", marginTop: "5px" }}
+                >
+                  {getIn(errors, "encuesta.puntos")}
+                </Typography>
+              )}
           </Grid>
         )}
         {values.notificaciones.value == "premio" && (
           <Grid item xs={6}>
             <TextField
               label="Puntos"
-              error={Boolean(errors.puntos && touched.puntos)}
-              onFocus={() => setFieldTouched("puntos")}
+              error={
+                Boolean(getIn(errors, "premio.puntos")) &&
+                Boolean(getIn(touched, "premio.puntos"))
+              }
+              onFocus={() => setFieldTouched("premio.puntos")}
               value={values.puntos}
               onChange={(event) => {
                 setFieldValue("puntos", event.target.value);
@@ -230,15 +253,16 @@ export default function NotificacionForm(props) {
               // error={Boolean(errors.puntos)}
               // onFocus={() => setFieldTouched("encuesta.puntos")}
             />
-            {errors.puntos && touched.puntos && (
-              <Typography
-                variant="caption"
-                gutterBottom
-                style={{ color: "red", marginTop: "3px" }}
-              >
-                {errors.puntos}
-              </Typography>
-            )}
+            {Boolean(getIn(errors, "premio.puntos")) &&
+              Boolean(getIn(touched, "premio.puntos")) && (
+                <Typography
+                  variant="caption"
+                  gutterBottom
+                  style={{ color: "red", marginTop: "5px" }}
+                >
+                  {getIn(errors, "premio.puntos")}
+                </Typography>
+              )}
           </Grid>
         )}
       </Grid>

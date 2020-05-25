@@ -652,11 +652,11 @@ const Basic = () => {
               {
                 titulo: "",
                 // subcategoria: "",
-                tipo: "abierta",
+                tipo: "",
                 metrica: "",
                 opciones: [
                   {
-                    icon: "",
+                    icon: `notificacionIcon1.png`,
                     // {
                     //   file: null,
                     //   fileUrl: null,
@@ -768,30 +768,23 @@ const Basic = () => {
           },
         }}
         validationSchema={Yup.object().shape({
-          titulo: Yup.string()
-            // .min(1, "Must be 15 characters or less")
-            .required("Requerido"),
-          textoAccionador: Yup.string().required("Requerido"),
-          contenido: Yup.string().required("Requerido"),
-          puntos: Yup.number()
-            .typeError("El campo puntos debe ser de tipo numérico")
-            .positive("Solo se admiten valores positivos")
-            .required("Requerido"),
-          icono: Yup.object().shape({
-            status: Yup.mixed()
-              .notOneOf(
-                ["loaded"],
-                "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
-              )
-              .required("Campo requerido"),
-            // status: Yup.string().equals(['loaded']).required(
-            //   "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
-            // ),
+          notificacion: Yup.object().shape({
+            titulo: Yup.string().required("Requerido"),
+            textoAccionador: Yup.string().required("Requerido"),
+            contenido: Yup.string().required("Requerido"),
+            icono: Yup.object().shape({
+              status: Yup.mixed()
+                .notOneOf(
+                  ["loaded"],
+                  "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
+                )
+                .required("Campo requerido"),
+              // Validacion segmentar
+              indexCollection: Yup.number().required(
+                "De click en <Segmentar destinatarios> y seleccione un elemento de la lista de segmentación"
+              ),
+            }),
           }),
-          // Validacion segmentar
-          indexCollection: Yup.number().required(
-            "De click en <Segmentar destinatarios> y seleccione un elemento de la lista de segmentación"
-          ),
           encuesta: Yup.object().shape({
             titulo: Yup.string().required("Requerido"),
             categoria: Yup.string().required("Requerido"),
@@ -800,97 +793,17 @@ const Basic = () => {
               .typeError("El campo puntos debe ser de tipo numérico")
               .min(0, "Solo se admiten valores positivos y cero")
               .required("Requerido"),
-            paginas: Yup.array()
-              .of(
-                Yup.object().shape({
-                  titulo: Yup.string().required("Requerido"),
-                  tipo: Yup.string().required("Requerido"),
-                  metrica: Yup.string().required("Requerido"),
-                  opciones: Yup.array()
-                    .of(
-                      Yup.object().shape({
-                        icon: Yup.object().shape({
-                          status: Yup.mixed()
-                            .notOneOf(
-                              ["loaded"],
-                              "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
-                            )
-                            .required("Campo requerido"),
-                        }).nullable(),
-                        calificacion: Yup.string().required("Requerido"),
-                        rubrica: Yup.number()
-                          .typeError(
-                            "El campo puntos debe ser de tipo numérico"
-                          )
-                          .required("Requerido"),
-                      })
-                    )
-                    .compact(),
-                })
-              )
-              .compact(),
-            // paginas: Yup.array()
-            //   .of(
-            //     Yup.object().shape({
-            //       titulo: Yup.string().required("Requerido"),
-            //       tipo: Yup.string().required("Requerido"),
-            //       metrica: Yup.string().required("Requerido"),
-            //       opciones: Yup.object().shape({})
-
-            //       // }).when('tipo',
-            //       //   (val) => val !== 'abierta',
-            //       //   then: Yup.object().shape
-            //       // ),
-            //       // status: Yup.string().matches(/(200)/).required(),
-            //     })
-            //   ),
-            // opciones: {
-            //   icon: Yup.object().shape({
-            //     status: Yup.mixed()
-            //       .notOneOf(
-            //         ["loaded"],
-            //         "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
-            //       )
-            //       .required("Campo requerido"),
-            //   }),
-            calificacion: Yup.string().required(),
-            puntos: Yup.number()
-              .typeError("El campo puntos debe ser de tipo numérico")
-              .required("Requerido"),
           }),
           premio: Yup.object().shape({
-            titulo: Yup.string().required("Campo requerido"),
-            vidas: Yup.number()
+            puntos: Yup.number()
               .typeError("El campo puntos debe ser de tipo numérico")
               .positive("Solo se admiten valores positivos")
               .required("Requerido"),
           }),
-          iconoMiniatura: Yup.object().shape({
-            status: Yup.mixed()
-              .notOneOf(
-                ["loaded"],
-                "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
-              )
-              .required("Campo requerido"),
-            // status: Yup.string().equals(['loaded']).required(
-            //   "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
-            // ),
-          }),
-          iconoDetalles: Yup.object().shape({
-            status: Yup.mixed()
-              .notOneOf(
-                ["loaded"],
-                "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
-              )
-              .required("Campo requerido"),
-            // status: Yup.string().equals(['loaded']).required(
-            //   "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
-            // ),
-          }),
+
           // email: Yup.string()
           //   .email("Invalid email addresss`")
           //   .required("Required"),
-
           // imagenes: Yup.array()
           //   .min(2, "Agrega al menos dos imagenes")
           //   .of(

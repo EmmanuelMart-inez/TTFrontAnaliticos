@@ -30,8 +30,9 @@ export default function DateRange(props) {
         yesterday: "Ayer",
         last7Days: "Últimos 7 días"
       }}
-      value={[props.valueStart, props.valueEnd]}
-      ranges={[]}
+
+      // value={[props.valueStart, props.valueEnd]}
+      // ranges={[]}
       onOk={event => {
         props.setFieldValue(`${props.field1}`, event[0]);
         props.setFieldValue(`${props.field2}`, event[1]);

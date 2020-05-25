@@ -1,9 +1,16 @@
 import React from "react";
-import { useFormikContext, Formik, Form, Field, FieldArray } from "formik";
+import {
+  useFormikContext,
+  Formik,
+  Form,
+  Field,
+  FieldArray,
+  getIn,
+} from "formik";
 import {
   makeStyles,
   createMuiTheme,
-  ThemeProvider
+  ThemeProvider,
 } from "@material-ui/core/styles";
 import { green, purple } from "@material-ui/core/colors";
 
@@ -20,34 +27,42 @@ import Typography from "@material-ui/core/Typography";
 
 const theme = createMuiTheme({
   palette: {
-    info: green
-  }
+    info: green,
+  },
 });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(3),
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 220
+    width: 220,
   },
   TextSubtitle: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   buttonPlusMinus: {
     margin: 0,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   gridCenter: {
-    alignContent: "center"
-  }
+    alignContent: "center",
+  },
 }));
 
 export default function EncuestaForm(props) {
   const classes = useStyles();
-  const { values, setFieldValue, handleSubmit } = useFormikContext();
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    setFieldTouched,
+    setFieldValue,
+    handleSubmit,
+  } = useFormikContext();
   const [showAlert, setShowAlert] = React.useState(false);
 
   return (
@@ -64,7 +79,7 @@ export default function EncuestaForm(props) {
       <FieldArray
         id={`encuesta.paginas[${props.pageCounter}].opciones_Reactiva`}
         name={`encuesta.paginas[${props.pageCounter}].opciones`}
-        render={arrayHelpers =>
+        render={(arrayHelpers) =>
           values.encuesta.paginas[props.pageCounter].opciones &&
           values.encuesta.paginas[props.pageCounter].opciones.length > 0 ? (
             values.encuesta.paginas[props.pageCounter].opciones.map(
@@ -73,9 +88,7 @@ export default function EncuestaForm(props) {
                   <Grid item xs={4}>
                     <TextField
                       label={`Opción ${index + 1}`}
-                      name={`encuesta.paginas.${
-                        props.pageCounter
-                      }.opciones.${index}.calificacion`}
+                      name={`encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`}
                       value={
                         values.encuesta.paginas[props.pageCounter].opciones[
                           index
@@ -83,24 +96,57 @@ export default function EncuestaForm(props) {
                       }
                       multiline
                       rowsMax="3"
-                      onChange={event => {
+                      onChange={(event) => {
                         setFieldValue(
-                          `encuesta.paginas.${
-                            props.pageCounter
-                          }.opciones.${index}.calificacion`,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`,
                           event.target.value
                         );
                       }}
                       helperText="Ingrese algún texto. Qué significado le quieres dar a este ícono gráfico o con qué respuesta lo asociarias?"
+                      error={Boolean(
+                        getIn(
+                          errors,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                        ) &&
+                          Boolean(
+                            getIn(
+                              touched,
+                              `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                            )
+                          )
+                      )}
+                      onFocus={() =>
+                        setFieldTouched(
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                        )
+                      }
                     />
+                    {Boolean(
+                      getIn(
+                        errors,
+                        `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                      )
+                    ) &&
+                      Boolean(
+                        getIn(
+                          touched,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                        )
+                      ) && (
+                        <div style={{ color: "red", marginTop: ".5rem" }}>
+                          {getIn(
+                            errors,
+                            `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                          )}
+                        </div>
+                      )}
                   </Grid>
                   <Grid item xs={4}>
                     <TextField
                       label={`Ponderación ${index + 1}`}
                       name={
-                        `encuesta.paginas.${
-                          props.pageCounter
-                        }.opciones.${index}`.rubrica
+                        `encuesta.paginas.${props.pageCounter}.opciones.${index}`
+                          .rubrica
                       }
                       value={
                         values.encuesta.paginas[props.pageCounter].opciones[
@@ -109,18 +155,52 @@ export default function EncuestaForm(props) {
                       }
                       multiline
                       rowsMax="3"
-                      onChange={event => {
-                        var value = parseInt(event.target.value, 10);
+                      onChange={(event) => {
+                        var value = parseFloat(event.target.value);
                         if (isNaN(value)) value = event.target.value;
                         setFieldValue(
-                          `encuesta.paginas.${
-                            props.pageCounter
-                          }.opciones.${index}.rubrica`,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`,
                           value
                         );
                       }}
                       helperText="Ingrese algún número. Qué valor númerico (ponderación) le otorgas a esta respuesta?"
+                      error={Boolean(
+                        getIn(
+                          errors,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                        ) &&
+                          Boolean(
+                            getIn(
+                              touched,
+                              `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                            )
+                          )
+                      )}
+                      onFocus={() =>
+                        setFieldTouched(
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                        )
+                      }
                     />
+                    {Boolean(
+                      getIn(
+                        errors,
+                        `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                      )
+                    ) &&
+                      Boolean(
+                        getIn(
+                          touched,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                        )
+                      ) && (
+                        <div style={{ color: "red", marginTop: ".5rem" }}>
+                          {getIn(
+                            errors,
+                            `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                          )}
+                        </div>
+                      )}
                   </Grid>
                   <Grid
                     item
@@ -153,10 +233,10 @@ export default function EncuestaForm(props) {
                             fileUrlCropped: null,
                             fileCropped: null,
                             status: "",
-                            isCroppedCompleted: false
+                            isCroppedCompleted: false,
                           },
                           calificacion: "",
-                          rubrica: 0
+                          rubrica: 0,
                         })
                       } // insert an empty string at a position
                     >
@@ -177,11 +257,38 @@ export default function EncuestaForm(props) {
                       setFieldValue={setFieldValue}
                       values={values}
                       subirIconoButtonTag="Seleccionar ícono"
-                      iconoFormikname={`encuesta.paginas[${
-                        props.pageCounter
-                      }].opciones[${index}].icon`}
-                      aspectRatioFraction={50/55}
+                      iconoFormikname={`encuesta.paginas[${props.pageCounter}].opciones[${index}].icon`}
+                      aspectRatioFraction={50 / 55}
                     />
+                    {Boolean(
+                      getIn(
+                        errors,
+                        `encuesta.paginas[${props.pageCounter}].opciones[${index}].icon.status`
+                      )
+                    ) &&
+                      Boolean(
+                        getIn(
+                          touched,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.calificacion`
+                        )
+                      ) &&
+                      Boolean(
+                        getIn(
+                          touched,
+                          `encuesta.paginas.${props.pageCounter}.opciones.${index}.rubrica`
+                        )
+                      ) && (
+                        <Typography
+                          variant="caption"
+                          gutterBottom
+                          style={{ color: "red", marginTop: ".5rem" }}
+                        >
+                          {getIn(
+                            errors,
+                            `encuesta.paginas[${props.pageCounter}].opciones[${index}].icon.status`
+                          )}
+                        </Typography>
+                      )}
                   </Grid>
                 </>
               )
@@ -202,10 +309,10 @@ export default function EncuestaForm(props) {
                     fileUrlCropped: null,
                     fileCropped: null,
                     status: "",
-                    isCroppedCompleted: false
+                    isCroppedCompleted: false,
                   },
                   calificacion: "",
-                  rubrica: ""
+                  rubrica: "",
                 })
               }
             >

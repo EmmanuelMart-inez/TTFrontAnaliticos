@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormikContext } from "formik";
+import { useFormikContext, getIn } from "formik";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import { green, purple } from "@material-ui/core/colors";
 
@@ -74,7 +74,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EncuestaForm(props) {
   const classes = useStyles();
-  const { values, setFieldValue, handleSubmit } = useFormikContext();
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    setFieldTouched,
+    setFieldValue,
+    handleSubmit,
+  } = useFormikContext();
   const [showAlert, setShowAlert] = React.useState(false);
 
   const getTipoEncuesta = (tipoEncuesta) => {
@@ -144,7 +152,29 @@ export default function EncuestaForm(props) {
               );
             }}
             helperText="Qué quieres preguntar?"
+            error={Boolean(
+              getIn(errors, `encuesta.paginas[${props.pageCounter}].titulo`) &&
+                Boolean(
+                  getIn(
+                    touched,
+                    `encuesta.paginas[${props.pageCounter}].titulo`
+                  )
+                )
+            )}
+            onFocus={() =>
+              setFieldTouched(`encuesta.paginas[${props.pageCounter}].titulo`)
+            }
           />
+          {Boolean(
+            getIn(errors, `encuesta.paginas[${props.pageCounter}].titulo`)
+          ) &&
+            Boolean(
+              getIn(touched, `encuesta.paginas[${props.pageCounter}].titulo`)
+            ) && (
+              <div style={{ color: "red", marginTop: ".5rem" }}>
+                {getIn(errors, `encuesta.paginas[${props.pageCounter}].titulo`)}
+              </div>
+            )}
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -160,7 +190,29 @@ export default function EncuestaForm(props) {
               );
             }}
             helperText="Ingresa algún texto que te permita clasificar esta pregunta. Puedes ingresar el nombre de indicador que estas midiendo con esta pregunta. Lo más importante, obtendrá respuestas de encuestas estructuradas que producen datos limpios para el análisis"
+            error={Boolean(
+              getIn(errors, `encuesta.paginas[${props.pageCounter}].metrica`) &&
+                Boolean(
+                  getIn(
+                    touched,
+                    `encuesta.paginas[${props.pageCounter}].metrica`
+                  )
+                )
+            )}
+            onFocus={() =>
+              setFieldTouched(`encuesta.paginas[${props.pageCounter}].metrica`)
+            }
           />
+          {Boolean(
+            getIn(errors, `encuesta.paginas[${props.pageCounter}].metrica`)
+          ) &&
+            Boolean(
+              getIn(touched, `encuesta.paginas[${props.pageCounter}].metrica`)
+            ) && (
+              <div style={{ color: "red", marginTop: ".5rem" }}>
+                {getIn(errors, `encuesta.paginas[${props.pageCounter}].metrica`)}
+              </div>
+            )}
         </Grid>
         {getTipoEncuesta(values.encuesta.paginas[props.pageCounter].tipo)}
       </Grid>

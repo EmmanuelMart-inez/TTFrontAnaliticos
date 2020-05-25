@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormikContext } from "formik";
+import { useFormikContext, Formik, Form, Field, getIn } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 
 import ImagePreview from "./ImagePreviewFormik";
@@ -16,7 +16,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NotificacionForm(props) {
   const classes = useStyles();
-  const { values, setFieldValue, handleSubmit } = useFormikContext();
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    setFieldTouched,
+    setFieldValue,
+    handleSubmit,
+  } = useFormikContext();
 
   return (
     <form onSubmit={handleSubmit}>
@@ -36,7 +44,18 @@ export default function NotificacionForm(props) {
             onChange={(event) => {
               setFieldValue("premio.titulo", event.target.value);
             }}
+            error={Boolean(
+              getIn(errors, "premio.titulo") &&
+                Boolean(getIn(touched, "premio.titulo"))
+            )}
+            onFocus={() => setFieldTouched("premio.titulo")}
           />
+          {Boolean(getIn(errors, "premio.titulo")) &&
+            Boolean(getIn(touched, "premio.titulo")) && (
+              <div style={{ color: "red", marginTop: ".5rem" }}>
+                {getIn(errors, "premio.titulo")}
+              </div>
+            )}
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -49,7 +68,18 @@ export default function NotificacionForm(props) {
               setFieldValue("premio.vidas", value);
             }}
             helperText="Número de veces que se podrá canjear la bonificacion de este nive. Por favor ingrese algún número"
-          ></TextField>
+            error={Boolean(
+              getIn(errors, "premio.vidas") &&
+                Boolean(getIn(touched, "premio.vidas"))
+            )}
+            onFocus={() => setFieldTouched("premio.vidas")}
+          />
+          {Boolean(getIn(errors, "premio.vidas")) &&
+            Boolean(getIn(touched, "premio.vidas")) && (
+              <div style={{ color: "red", marginTop: ".5rem" }}>
+                {getIn(errors, "premio.vidas")}
+              </div>
+            )}
         </Grid>
         {/* <Grid item xs={6}>
           <TextField
@@ -74,6 +104,17 @@ export default function NotificacionForm(props) {
             iconoFormikname="iconoMiniatura"
             aspectRatioFraction={99 / 105}
           />
+          {Boolean(getIn(errors, "iconoMiniatura.status")) &&
+            Boolean(getIn(touched, "premio.vidas")) &&
+            Boolean(getIn(touched, "premio.titulo")) && (
+              <Typography
+                variant="caption"
+                gutterBottom
+                style={{ color: "red", marginTop: ".5rem" }}
+              >
+                {getIn(errors, "iconoMiniatura.status")}
+              </Typography>
+            )}
         </Grid>
         <Grid item xs={6}>
           <ImagePreview
@@ -83,7 +124,18 @@ export default function NotificacionForm(props) {
             subirIconoButtonTag="Seleccionar imagen detalles"
             iconoFormikname="iconoDetalles"
             aspectRatioFraction={224 / 431}
-          />
+          />{" "}
+          {Boolean(getIn(errors, "iconoDetalles.status")) &&
+            Boolean(getIn(touched, "premio.vidas")) &&
+            Boolean(getIn(touched, "premio.titulo")) && (
+              <Typography
+                variant="caption"
+                gutterBottom
+                style={{ color: "red", marginTop: ".5rem" }}
+              >
+                {getIn(errors, "iconoDetalles.status")}
+              </Typography>
+            )}
         </Grid>
       </Grid>
     </form>

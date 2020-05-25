@@ -41,7 +41,7 @@ export default function EncuestaForm(props) {
               setFieldValue("encuesta.titulo", event.target.value);
             }}
             helperText="Ponle un título a la encuesta, que te permita distinguirla de las demás. Esto no se verá en la aplicación móvil"
-            error={Boolean(getIn(errors, 'encuesta.titulo'))}
+            error={Boolean(getIn(errors, 'encuesta.titulo')) && getIn(touched, 'encuesta.titulo')}
             onFocus={() => setFieldTouched("encuesta.titulo")}
           />
           {/* {`${getIn(errors, 'encuesta.titulo')} && ${getIn(touched, 'encuesta.titulo')}`} */}
@@ -62,7 +62,7 @@ export default function EncuestaForm(props) {
               setFieldValue("encuesta.categoria", event.target.value);
             }}
             helperText="Ingresa un tag para esta encuesta, el clasificar las encuestas te facilitá el orden, distinguir, y agrupar las campañas y resultados de las encuestas"
-            error={Boolean(getIn(errors, 'encuesta.categoria'))}
+            error={Boolean(getIn(errors, 'encuesta.categoria')) && Boolean(getIn(touched, 'encuesta.categoria'))}
             onFocus={() => setFieldTouched("encuesta.categoria")}
           />
           {/* {`${getIn(errors, 'encuesta.categoria')} && ${getIn(touched, 'encuesta.categoria')}`} */}
@@ -83,7 +83,7 @@ export default function EncuestaForm(props) {
               setFieldValue("encuesta.metrica", event.target.value);
             }}
             helperText="Qué quieres medir o conocer con esta encuesta?"
-            error={Boolean(getIn(errors, 'encuesta.metrica'))}
+            error={Boolean(getIn(errors, 'encuesta.metrica')) && Boolean(getIn(touched, 'encuesta.metrica'))}
             onFocus={() => setFieldTouched("encuesta.metrica")}
           />
           {/* {`${getIn(errors, 'encuesta.metrica')} && ${getIn(touched, 'encuesta.metrica')}`} */}

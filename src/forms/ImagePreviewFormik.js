@@ -19,29 +19,29 @@ import Alert from "./GalleryAlert";
 import GalleryImagesFromServer from "./GalleryImages";
 
 import axios from "axios";
-import {apiUrl, apiUrlImages} from "../shared/constants"; 
+import { apiUrl, apiUrlImages } from "../shared/constants";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   wrapper: {
     margin: theme.spacing(1),
-    position: "relative"
+    position: "relative",
   },
   buttonSuccess: {
     backgroundColor: green[500],
     "&:hover": {
-      backgroundColor: green[700]
-    }
+      backgroundColor: green[700],
+    },
   },
   fabProgress: {
     color: green[500],
     position: "absolute",
     top: -6,
     left: -6,
-    zIndex: 1
+    zIndex: 1,
   },
   buttonProgress: {
     color: green[500],
@@ -49,32 +49,32 @@ const useStyles = makeStyles(theme => ({
     top: "50%",
     left: "50%",
     marginTop: -12,
-    marginLeft: -12
+    marginLeft: -12,
   },
   input: {
-    display: "none"
+    display: "none",
   },
   closeFab: {
     width: "32px",
     height: "32px",
     minHeight: "initial",
-    marginRight: "5px"
+    marginRight: "5px",
   },
   closeIcon: {
     display: "inline-flex",
     position: "relative",
     width: "18px",
-    height: "18px"
+    height: "18px",
   },
   photoSizeSelectLargeOutlinedIcon: {
     display: "inline-flex",
     position: "relative",
     width: "18px",
-    height: "18px"
+    height: "18px",
   },
   cardButton: {
     display: "inline",
-    textAlign: "center"
+    textAlign: "center",
   },
   cardButtonColor: {
     color: "#5B9595",
@@ -82,7 +82,7 @@ const useStyles = makeStyles(theme => ({
     borderStyle: "solid",
     borderWidth: "4px",
     borderColor: "#56DBC9",
-    marginBottom: "20px"
+    marginBottom: "20px",
   },
   cardButtonColorSelected: {
     color: "#5B9595",
@@ -90,15 +90,15 @@ const useStyles = makeStyles(theme => ({
     borderStyle: "solid",
     borderWidth: "4px",
     borderColor: "#56DBC9",
-    marginBottom: "20px"
+    marginBottom: "20px",
   },
   circleButtons: {
-    display: "flex"
+    display: "flex",
   },
   green: {
     color: green[500],
-    backgroundColor: green[500]
-  }
+    backgroundColor: green[500],
+  },
 }));
 
 export default function CircularIntegration(props) {
@@ -111,11 +111,14 @@ export default function CircularIntegration(props) {
   const [upload, setUpload] = React.useState(false);
   const [select, setSelect] = React.useState(false);
   const [alertGallery, setAlertGallery] = React.useState(false);
-  const [toogleGalleryLocalToCloud, setToogleGalleryLocalToCloud] = React.useState(false);
+  const [
+    toogleGalleryLocalToCloud,
+    setToogleGalleryLocalToCloud,
+  ] = React.useState(false);
   const timer = React.useRef();
 
   const buttonClassname = clsx({
-    [classes.buttonSuccess]: success
+    [classes.buttonSuccess]: success,
   });
 
   React.useEffect(() => {
@@ -124,8 +127,8 @@ export default function CircularIntegration(props) {
     };
   }, []);
 
-  const readFile = async file => {
-    return new Promise(resolve => {
+  const readFile = async (file) => {
+    return new Promise((resolve) => {
       const reader = new FileReader();
       reader.addEventListener("load", () => resolve(reader.result), false);
       reader.readAsDataURL(file);
@@ -168,10 +171,11 @@ export default function CircularIntegration(props) {
     axios
       .post(`${apiUrl}/upload`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
       })
-      .then(res => {
+      .then((res) => {
         console.log(res);
         console.log(res.data);
         props.setFieldValue(`${props.iconoFormikname}.data`, res.data);
@@ -186,7 +190,7 @@ export default function CircularIntegration(props) {
       });
   };
 
-  const handleButtonInputImage = async event => {
+  const handleButtonInputImage = async (event) => {
     setAlertGallery(true);
     setSelect(true);
     props.setFieldValue(
@@ -219,7 +223,12 @@ export default function CircularIntegration(props) {
           close={() => setAlertGallery(false)}
           toogleGalleryLocalToCloud={toogleGalleryLocalToCloud}
           selectFromGalleryComponent={
-            <ImageInput handleButtonInputImage={handleButtonInputImage} setgalleryInputIsSelected={setgalleryInputIsSelected} toogleGalleryLocalToCloud={toogleGalleryLocalToCloud} setToogleGalleryLocalToCloud={setToogleGalleryLocalToCloud}>
+            <ImageInput
+              handleButtonInputImage={handleButtonInputImage}
+              setgalleryInputIsSelected={setgalleryInputIsSelected}
+              toogleGalleryLocalToCloud={toogleGalleryLocalToCloud}
+              setToogleGalleryLocalToCloud={setToogleGalleryLocalToCloud}
+            >
               <Button
                 className={
                   galleryInputIsSelected
@@ -232,18 +241,14 @@ export default function CircularIntegration(props) {
                 component="span"
               >
                 <div className={classes.cardButton}>
-                  {(galleryInputIsSelected && (!toogleGalleryLocalToCloud)) && (
+                  {galleryInputIsSelected && !toogleGalleryLocalToCloud && (
                     <div class="content" style={{ backgroundColor: "#BBDEF9" }}>
                       <div class="right floated meta">Imagen Seleccionada</div>
                       <i class="big check circle icon"></i>
                     </div>
                   )}
                   <div>
-                    <img
-                      src={GalleryIcon}
-                      alt="Galería imagen"
-                      height="100"
-                    />
+                    <img src={GalleryIcon} alt="Galería imagen" height="100" />
                   </div>
                   <div>
                     Escoger imagen desde la galería{" "}
@@ -254,7 +259,14 @@ export default function CircularIntegration(props) {
             </ImageInput>
           }
           selectFromServer={
-            <GalleryImagesFromServer icono={props.icono} iconoFormikname={props.iconoFormikname} setAlertGallery={setAlertGallery} setFieldValue={props.setFieldValue} toogleGalleryLocalToCloud={toogleGalleryLocalToCloud} setToogleGalleryLocalToCloud={setToogleGalleryLocalToCloud} />
+            <GalleryImagesFromServer
+              icono={props.icono}
+              iconoFormikname={props.iconoFormikname}
+              setAlertGallery={setAlertGallery}
+              setFieldValue={props.setFieldValue}
+              toogleGalleryLocalToCloud={toogleGalleryLocalToCloud}
+              setToogleGalleryLocalToCloud={setToogleGalleryLocalToCloud}
+            />
           }
         />
         <Box p={0}>
@@ -267,22 +279,32 @@ export default function CircularIntegration(props) {
                   ? classes.green
                   : buttonClassname
               }
-              disableTouchRipple="true"
+              onClick={() => setAlertGallery(true)}
             >
-              {success || props.icono && props.icono.status === "200" ? (
+              {success || (props.icono && props.icono.status === "200") ? (
                 <CheckIcon />
-              ) : select || props.icono && props.icono.status === "loaded" ? (
-                <Avatar alt={props.icono.filename} src={`${props.icono.fileUrl}`} />
+              ) : select || (props.icono && props.icono.status === "loaded") ? (
+                <Avatar
+                  alt={props.icono.filename}
+                  src={`${props.icono.fileUrl}`}
+                />
               ) : props.icono && props.icono.status === "fetched" ? (
-                <Avatar alt={props.icono.filename} src={`${apiUrlImages}/${props.icono.filename}`} />
+                <Avatar
+                  alt={props.icono.filename}
+                  src={`${apiUrlImages}/${props.icono.filename}`}
+                />
+              ) : // <Thumb file={props.icono.file} status="" />
+              props.icono && props.icono && props.icono.status != "" ? (
+                <Avatar
+                  alt={props.icono.filename}
+                  src={`${apiUrlImages}/${props.icono}`}
+                />
               ) : (
-                // <Thumb file={props.icono.file} status="" />
-                props.icono && props.icono && props.icono.status != "" ? <Avatar alt={props.icono.filename} src={`${apiUrlImages}/${props.icono}`} /> : 
                 <PersonFilled />
               )}
             </Fab>
           </div>
-          {(select || props.icono && props.icono.status === "loaded") && (
+          {(select || (props.icono && props.icono.status === "loaded")) && (
             <Box>
               {/* Icon to unselect or cancel the uploaded image */}
               <Fab
@@ -360,7 +382,7 @@ export default function CircularIntegration(props) {
         </Box>
       </div>
       <div className={classes.wrapper}>
-        {select || props.icono && props.icono.status === "loaded" ? (
+        {select || (props.icono && props.icono.status === "loaded") ? (
           <Button
             variant="contained"
             color="primary"
@@ -368,7 +390,9 @@ export default function CircularIntegration(props) {
             disabled={loading}
             onClick={handleButtonClick}
           >
-            {success || props.icono && props.icono.status === "200" ? "Listo" : "Subir ícono"}
+            {success || (props.icono && props.icono.status === "200")
+              ? "Listo"
+              : "Subir ícono"}
           </Button>
         ) : (
           <Button

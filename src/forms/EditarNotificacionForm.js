@@ -40,9 +40,9 @@ import * as Yup from "yup";
 //   return [{ data, isLoading, isError }, setUrl];
 // };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   appBar: {
-    position: "relative"
+    position: "relative",
   },
   layout: {
     width: "auto",
@@ -51,8 +51,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
       marginLeft: "auto",
-      marginRight: "auto"
-    }
+      marginRight: "auto",
+    },
   },
   paper: {
     marginTop: theme.spacing(3),
@@ -61,12 +61,12 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
-      padding: theme.spacing(3)
-    }
-  }
+      padding: theme.spacing(3),
+    },
+  },
 }));
 
-const Basic = props => {
+const Basic = (props) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [pageCounter, setPageCounter] = React.useState(0);
@@ -88,7 +88,7 @@ const Basic = props => {
     console.log(pageCounter);
   };
 
-  const addSteps = value => {
+  const addSteps = (value) => {
     setActiveStep(activeStep + value);
   };
 
@@ -97,7 +97,7 @@ const Basic = props => {
     console.log(pageCounter);
   };
 
-  const getStepContent = step => {
+  const getStepContent = (step) => {
     switch (step) {
       case 0:
         return <NotificacionForm editar={true} />;
@@ -157,20 +157,20 @@ const Basic = props => {
       axios
         .get(`${apiUrl}/admin/notificaciones/${props.id}/acciones/ninguna`, {
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         })
-        .then(res => {
+        .then((res) => {
           axios
             .get(
               `${apiUrl}/admin/notificaciones/${props.id}/acciones/${res.data.notificacion.tipo_notificacion}`,
               {
                 headers: {
-                  "Content-Type": "application/json"
-                }
+                  "Content-Type": "application/json",
+                },
               }
             )
-            .then(res => {
+            .then((res) => {
               console.log(res);
               console.log(res.data);
               // Handling undefined or diferents tipes of not
@@ -179,17 +179,17 @@ const Basic = props => {
                   nombre: "",
                   mensaje: "",
                   fecha: "",
-                  puntos: ""
+                  puntos: "",
                 };
                 console.log(res.premio);
               }
               if (typeof res.data.encuesta === "undefined") {
                 res.data.encuesta = {
-                  paginas: []
+                  paginas: [],
                 };
                 console.log(res.premio);
               } else
-                res.data.encuesta.paginas.map(function(p) {
+                res.data.encuesta.paginas.map(function (p) {
                   console.log(p);
                   if (p.tipo === "opcion multiple" || p.tipo === "multiple")
                     return (p.tipo = "opcion multiple");
@@ -198,13 +198,13 @@ const Basic = props => {
               setIsfetching(false);
               // setFieldValue("sendProgress", 2);
             })
-            .catch(e => {
+            .catch((e) => {
               console.log(e);
               // setFieldValue("sendProgress", 3);
             });
           // setFieldValue("sendProgress", 2);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
           // setFieldValue("sendProgress", 3);
         });
@@ -230,17 +230,18 @@ const Basic = props => {
                 titulo: response.premio.nombre,
                 contenido: response.premio.mensaje,
                 fecha_vigencia: response.premio.fecha_vigencia,
-                vidas: response.premio.vidas
+                vidas: response.premio.vidas,
               },
               icono: {
                 file: null,
                 fileUrl: response.notificacion.imagenIcon,
-                filename: response.notificacion.imagenIcon || "image_cropped.png",
+                filename:
+                  response.notificacion.imagenIcon || "image_cropped.png",
                 fileUrlCropped: null,
                 fileCropped: null,
                 downloadUrl: response.notificacion.imagenIcon,
                 status: "fetched",
-                isCroppedCompleted: false
+                isCroppedCompleted: false,
               },
               iconoMiniatura: {
                 file: null,
@@ -250,7 +251,7 @@ const Basic = props => {
                 fileCropped: null,
                 downloadUrl: response.premio.imagen_icon,
                 status: "fetched",
-                isCroppedCompleted: false
+                isCroppedCompleted: false,
               },
               iconoDetalles: {
                 file: null,
@@ -260,7 +261,7 @@ const Basic = props => {
                 fileCropped: null,
                 downloadUrl: response.premio.imagen_display,
                 status: "fetched",
-                isCroppedCompleted: false
+                isCroppedCompleted: false,
               },
               encuesta: {
                 idEncuesta: response.encuesta._id,
@@ -269,7 +270,7 @@ const Basic = props => {
                 // fechaCreacion: "",
                 metrica: response.encuesta.metrica,
                 puntos: response.encuesta.puntos,
-                paginas: response.encuesta.paginas
+                paginas: response.encuesta.paginas,
               },
               textoAccionador: response.notificacion.bar_text,
               contenido: response.notificacion.mensaje,
@@ -280,35 +281,108 @@ const Basic = props => {
               indexField: 0,
               indexTipo: 0,
               indexScale: 0,
-              filtros: [{
-                res : {
-                  participantes :response.notificacion.filtros || []}
-              }],
+              filtros: [
+                {
+                  res: {
+                    participantes: response.notificacion.filtros || [],
+                  },
+                },
+              ],
               participantesFor: [],
               // link: "",
               puntos: response.premio.puntos || response.encuesta.puntos,
               notificaciones: {
-                value: response.notificacion.tipo_notificacion
+                value: response.notificacion.tipo_notificacion,
                 // value: "ninguna"
-              }
+              },
             }}
-            validationSchema={Yup.object({
-              titulo: Yup.string()
-                .min(1, "Must be 15 characters or less")
-                .required("Required")
-              // email: Yup.string()
-              //   .email("Invalid email addresss`")
-              //   .required("Required"),
-              // imagenes: Yup.array()
-              //   .min(2, "Agrega al menos dos imagenes")
-              //   .of(
-              //     Yup.object().shape({
-              //       status: Yup.string()
-              //         .matches(/(200)/)
-              //         .required()
-              //     })
-              //   )
-              // file: Yup.mixed().required("Required")
+            validationSchema={Yup.object().shape({
+              titulo: Yup.string().required("Requerido"),
+              textoAccionador: Yup.string().required("Requerido"),
+              contenido: Yup.string().required("Requerido"),
+              puntos: Yup.number()
+                .typeError("El campo puntos debe ser de tipo numérico")
+                .positive("Solo se admiten valores positivos")
+                .required("Requerido"),
+              icono: Yup.object().shape({
+                status: Yup.mixed()
+                  .notOneOf(
+                    ["loaded"],
+                    "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
+                  )
+                  .required("Campo requerido"),
+              }),
+              // Validacion segmentar
+              indexCollection: Yup.number().required(
+                "De click en <Segmentar destinatarios> y seleccione un elemento de la lista de segmentación"
+              ),
+              encuesta: Yup.object().shape({
+                titulo: Yup.string().required("Requerido"),
+                categoria: Yup.string().required("Requerido"),
+                metrica: Yup.string().required("Requerido"),
+                puntos: Yup.number()
+                  .typeError("El campo puntos debe ser de tipo numérico")
+                  .min(0, "Solo se admiten valores positivos y cero")
+                  .required("Requerido"),
+                paginas: Yup.array()
+                  .of(
+                    Yup.object().shape({
+                      titulo: Yup.string().required("Requerido"),
+                      tipo: Yup.string().required("Requerido"),
+                      metrica: Yup.string().required("Requerido"),
+                      opciones: Yup.array()
+                        .of(
+                          Yup.object().shape({
+                            icon: Yup.object()
+                              .shape({
+                                status: Yup.mixed()
+                                  .notOneOf(
+                                    ["loaded"],
+                                    "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
+                                  )
+                                  .required("Campo requerido"),
+                              })
+                              .nullable(),
+                            calificacion: Yup.string().required("Requerido"),
+                            rubrica: Yup.number()
+                              .typeError(
+                                "El campo puntos debe ser de tipo numérico"
+                              )
+                              .required("Requerido"),
+                          })
+                        )
+                        .compact(),
+                    })
+                  )
+                  .compact(),
+                calificacion: Yup.string().required(),
+                puntos: Yup.number()
+                  .typeError("El campo puntos debe ser de tipo numérico")
+                  .required("Requerido"),
+              }),
+              premio: Yup.object().shape({
+                titulo: Yup.string().required("Campo requerido"),
+                vidas: Yup.number()
+                  .typeError("El campo puntos debe ser de tipo numérico")
+                  .positive("Solo se admiten valores positivos")
+                  .required("Requerido"),
+              }),
+              iconoMiniatura: Yup.object().shape({
+                status: Yup.mixed()
+                  .notOneOf(
+                    ["loaded"],
+                    "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
+                  )
+                  .required("Campo requerido"),
+              }),
+              iconoDetalles: Yup.object().shape({
+                status: Yup.mixed()
+                  .notOneOf(
+                    ["loaded"],
+                    "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
+                  )
+                  .required("Campo requerido"),
+              }),
             })}
             onSubmit={(values, { setSubmitting }) => {
               //   setTimeout(() => {
@@ -333,7 +407,7 @@ const Basic = props => {
               handleBlur,
               handleSubmit,
               isSubmitting,
-              setFieldValue
+              setFieldValue,
               /* and other goodies */
             }) => (
               <div className={classes.layout}>
@@ -343,7 +417,7 @@ const Basic = props => {
                     {/* {props.res.data} */}
                     <FieldArray
                       name="encuesta.paginas"
-                      render={arrayHelpers => (
+                      render={(arrayHelpers) => (
                         <FormButtons
                           editar={true}
                           arrayHelpers={arrayHelpers}
