@@ -3,7 +3,7 @@ import React, { useState, withStyles } from "react";
 import Grid from "@material-ui/core/Grid";
 import ImagePreview from "../forms/ImagePreviewFormik";
 import TextField from "@material-ui/core/TextField";
-import { useFormikContext, Formik, Field, FieldArray } from "formik";
+import { useFormikContext, Formik, Field, FieldArray, getIn } from "formik";
 import * as Yup from "yup";
 import { DisplayFormikState } from "../forms/formik-helper";
 import { makeStyles } from "@material-ui/core/styles";
@@ -27,7 +27,15 @@ const useStyles = makeStyles((theme) => ({
 export default function AyudaForm() {
   const classes = useStyles();
   const [openAlert, setOpenAlert] = React.useState(false);
-  const { values, setFieldValue, resetForm } = useFormikContext();
+  const {
+    values,
+    setFieldValue,
+    resetForm,
+    errors,
+    touched,
+    handleBlur,
+    setFieldTouched,
+  } = useFormikContext();
 
   const guardarNuevoItem = async () =>
     await axios
@@ -122,7 +130,14 @@ export default function AyudaForm() {
             setFieldValue("titulo", event.target.value);
           }}
           helperText="En qué quieres ayudar al participante?, ingresa una pregunta o algo que sea relevante saber"
+          error={Boolean(errors.titulo && touched.titulo)}
+          onFocus={() => setFieldTouched("titulo")}
         />
+        {errors.titulo && touched.titulo && (
+          <div style={{ color: "red", marginTop: ".5rem" }}>
+            {errors.titulo}
+          </div>
+        )}
       </Grid>
       <Grid item xs={6}>
         <TextField
@@ -135,7 +150,14 @@ export default function AyudaForm() {
             setFieldValue("descripcion", event.target.value);
           }}
           helperText="Ingrese algún texto, si en el titulo colocaste una pregunta frecuente, aquí puedes ingresar la respuesta"
+          error={Boolean(errors.descripcion && touched.descripcion)}
+          onFocus={() => setFieldTouched("descripcion")}
         />
+        {errors.descripcion && touched.descripcion && (
+          <div style={{ color: "red", marginTop: ".5rem" }}>
+            {errors.descripcion}
+          </div>
+        )}
       </Grid>
       <Grid item xs={12}>
         <ImagePreview
@@ -145,6 +167,17 @@ export default function AyudaForm() {
           subirIconoButtonTag="Seleccionar ícono"
           iconoFormikname="icono"
         />
+        {Boolean(getIn(errors, "icono.status")) &&
+          touched.titulo &&
+          touched.descripcion && (
+            <Typography
+              variant="caption"
+              gutterBottom
+              style={{ color: "red", marginTop: ".5rem" }}
+            >
+              {getIn(errors, "icono.status")}
+            </Typography>
+          )}
       </Grid>
       {values.isEditEnabled || (
         <Grid item xs={12}>

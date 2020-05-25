@@ -6,7 +6,7 @@ import {
   format,
   formatDistance,
   formatRelative,
-  subDays
+  subDays,
 } from "date-fns"; // choose your lib
 
 // import default style
@@ -28,21 +28,28 @@ export default function DateRange(props) {
         ok: "OK",
         today: "Hoy",
         yesterday: "Ayer",
-        last7Days: "Últimos 7 días"
+        last7Days: "Últimos 7 días",
       }}
-
       // value={[props.valueStart, props.valueEnd]}
-      // ranges={[]}
-      onOk={event => {
+      ranges={[]}
+      onOk={(event) => {
+        props.onFocus();
         props.setFieldValue(`${props.field1}`, event[0]);
         props.setFieldValue(`${props.field2}`, event[1]);
         console.log(event);
       }}
-      onClean={event => {
+      onChange={(event) => {
+        props.setFieldValue(`${props.field1}`, event[0]);
+        props.setFieldValue(`${props.field2}`, event[1]);
+      }}
+      onClean={(event) => {
+        props.onFocus();
         props.setFieldValue(`${props.field1}`, new Date().toISOString);
-        props.setFieldValue(`${props.field2}`, '');
+        props.setFieldValue(`${props.field2}`, "");
         console.log(event);
       }}
+      // onClose={event => props.onFocus()}
+      // onExit={event => props.onFocus()}
       //   TODO: Agregar ranges, ver la documentación
     />
   );

@@ -63,6 +63,8 @@ export default function TitlebarGridList(props) {
           // }}
           helperText="Por favor seleccione algún tipo de promoción del punto de venta. ¿Qué transacción del sistema punto de venta corresponde a este evento, es decir, cómo entiende el PV esta transacción?"
           variant="outlined"
+          error={props.error}
+          onFocus={props.onFocus}
         >
           {notificaciones.map(tile => (
             <GridListTile key={tile._id} value={tile._id} label={tile._id}>

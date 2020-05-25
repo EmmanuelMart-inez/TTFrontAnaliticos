@@ -1,6 +1,6 @@
 import React, { useState, withStyles } from "react";
 
-import { useFormikContext, Formik, Field, FieldArray } from "formik";
+import { useFormikContext, Formik, Field, FieldArray, getIn } from "formik";
 import * as Yup from "yup";
 import { DisplayFormikState } from "../forms/formik-helper";
 
@@ -72,6 +72,7 @@ export default function SellosForm() {
   return (
     <Formik
       initialValues={{
+        // ***************Simple test INIT STATE
         // titulo: "Tarjeta de lealtad del mes de Abril",
         // descripcion: "Por cada bebida que compras acumulas una estrella, al acumular 8 bebidas te regalamos una!",
         // num_sellos: 0,
@@ -102,42 +103,108 @@ export default function SellosForm() {
         // },
         // id_promocion: "5e701fba1377db6386eb11da",
         // id_notificacion: "5ea5ee49192170cfe4045289"
-        _id: tarjetaSellos._id || "",
-        titulo: tarjetaSellos.titulo || "",
-        descripcion: tarjetaSellos.descripcion || "",
-        num_sellos: tarjetaSellos.num_sellos || 0,
-        fecha_inicio: tarjetaSellos.fecha_inicio || "",
-        fecha_fin: tarjetaSellos.fecha_fin || "",
-        trigger: tarjetaSellos.trigger || "",
-        cantidad_trigger: tarjetaSellos.cantidad_trigger || 0,
-        producto: tarjetaSellos.producto || [],
+        // ******************INIT STATE
+        // _id: tarjetaSellos._id || "",
+        // titulo: tarjetaSellos.titulo || "",
+        // descripcion: tarjetaSellos.descripcion || "",
+        // num_sellos: tarjetaSellos.num_sellos || 0,
+        // fecha_inicio: tarjetaSellos.fecha_inicio || "",
+        // fecha_fin: tarjetaSellos.fecha_fin || "",
+        // trigger: tarjetaSellos.trigger || "",
+        // cantidad_trigger: tarjetaSellos.cantidad_trigger || 0,
+        // producto: tarjetaSellos.producto || [],
+        // iconoOn: {
+        //   file: null,
+        //   fileUrl: null,
+        //   filename: tarjetaSellos.icono_on || "image_cropped",
+        //   fileUrlCropped: null,
+        //   fileCropped: null,
+        //   downloadUrl: null,
+        //   status: tarjetaSellos.icono_on ? "fetched" : "",
+        //   isCroppedCompleted: false,
+        // },
+        // iconoOff: {
+        //   file: null,
+        //   fileUrl: null,
+        //   filename: tarjetaSellos.icono_off || "image_cropped",
+        //   fileUrlCropped: null,
+        //   fileCropped: null,
+        //   downloadUrl: null,
+        //   status: tarjetaSellos.icono_off ? "fetched" : "",
+        //   isCroppedCompleted: false,
+        // },
+        //***************** */ Testing validation
+        id_promocion: "",
+        id_notificacion: "",
+        _id: "",
+        titulo: "",
+        descripcion: "",
+        num_sellos: null,
+        fecha_inicio: "",
+        fecha_fin: "",
+        trigger: "",
+        cantidad_trigger: null,
+        producto: [],
         iconoOn: {
           file: null,
           fileUrl: null,
-          filename: tarjetaSellos.icono_on || "image_cropped",
+          filename: "image_cropped",
           fileUrlCropped: null,
           fileCropped: null,
           downloadUrl: null,
-          status: tarjetaSellos.icono_on ? "fetched" : "",
+          status: "",
           isCroppedCompleted: false,
         },
         iconoOff: {
           file: null,
           fileUrl: null,
-          filename: tarjetaSellos.icono_off || "image_cropped",
+          filename: "image_cropped",
           fileUrlCropped: null,
           fileCropped: null,
           downloadUrl: null,
-          status: tarjetaSellos.icono_off ? "fetched" : "",
+          status: "",
           isCroppedCompleted: false,
         },
-        id_promocion: tarjetaSellos.id_promocion || "",
-        id_notificacion: tarjetaSellos.id_notificacion || "",
+        id_promocion: "",
+        id_notificacion: "",
       }}
       validationSchema={Yup.object({
-        titulo: Yup.string()
-          .min(1, "Must be 15 characters or less")
-          .required("Required"),
+        _id: Yup.string().required("Requerido"),
+        titulo: Yup.string().required("Requerido"),
+        descripcion: Yup.string().required("Requerido"),
+        num_sellos: Yup.number()
+          .typeError("El campo puntos debe ser de tipo numérico")
+          .min(0, "Solo se admiten valores positivos y cero")
+          .required("Requerido"),
+        fecha_inicio: Yup.string().required("Fecha de inicio requerida"),
+        fecha_fin: Yup.string().required("Fecha de fin requerida"),
+        trigger: Yup.string().required("Requerido"),
+        cantidad_trigger: Yup.number()
+          .typeError("El campo puntos debe ser de tipo numérico")
+          .positive("Solo se admiten valores positivos")
+          .required("Requerido"),
+        producto: Yup.array()
+          .ensure()
+          .min(1, "Seleccione al menos un producto"),
+        // .of(Yup.string().required("Requerido")),
+        iconoOn: Yup.object().shape({
+          status: Yup.mixed()
+            .notOneOf(
+              ["loaded"],
+              "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
+            )
+            .required("Campo requerido"),
+        }),
+        iconoOff: Yup.object().shape({
+          status: Yup.mixed()
+            .notOneOf(
+              ["loaded"],
+              "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
+            )
+            .required("Campo requerido"),
+        }),
+        id_promocion: Yup.string().required("Requerido"),
+        id_notificacion: Yup.string().required("Requerido"),
       })}
       onSubmit={(values, { setSubmitting }) => {}}
     >
@@ -150,6 +217,7 @@ export default function SellosForm() {
         handleSubmit,
         isSubmitting,
         setFieldValue,
+        setFieldTouched,
         /* and other goodies */
       }) => (
         <Grid container spacing={3}>
@@ -219,7 +287,17 @@ export default function SellosForm() {
                 setFieldValue("titulo", event.target.value);
               }}
               helperText="Ingresa un título para esta tarjeta de sellos, no aparecerá en la aplicación pero servirá de identificador"
+              onChange={(event) => {
+                setFieldValue("titulo", event.target.value);
+              }}
+              error={Boolean(errors.titulo && touched.titulo)}
+              onFocus={() => setFieldTouched("titulo")}
             />
+            {errors.titulo && touched.titulo && (
+              <div style={{ color: "red", marginTop: "3px" }}>
+                {errors.titulo}
+              </div>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -232,7 +310,14 @@ export default function SellosForm() {
                 setFieldValue("descripcion", event.target.value);
               }}
               helperText="Escribe algún texto que describa la dinámica de esta tarjeta de sellos. Incita a tus clientes a conseguir sellos."
+              error={Boolean(errors.descripcion && touched.descripcion)}
+              onFocus={() => setFieldTouched("descripcion")}
             />
+            {errors.descripcion && touched.descripcion && (
+              <div style={{ color: "red", marginTop: "3px" }}>
+                {errors.descripcion}
+              </div>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -247,6 +332,8 @@ export default function SellosForm() {
               }}
               helperText="Por favor seleccione algún número. Cúantos sellos tendrá la tarjeta de sellos, es decir, cuántos sellos deberán acumular los participantes?"
               variant="outlined"
+              error={Boolean(errors.num_sellos && touched.num_sellos)}
+              onFocus={() => setFieldTouched("num_sellos")}
             >
               {numSellos.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -254,6 +341,11 @@ export default function SellosForm() {
                 </MenuItem>
               ))}
             </TextField>
+            {errors.num_sellos && touched.num_sellos && (
+              <div style={{ color: "red", marginTop: "3px" }}>
+                {errors.num_sellos}
+              </div>
+            )}
           </Grid>
           <Grid item xs={6}>
             <Typography
@@ -268,7 +360,26 @@ export default function SellosForm() {
               valueEnd={values.fecha_fin || ""}
               field1={"fecha_inicio"}
               field2={"fecha_fin"}
+              onFocus={() => {
+                setFieldTouched("fecha_inicio");
+                setFieldTouched("fecha_fin");
+              }}
             />
+            {/* {errors.fecha_inicio && touched.fecha_inicio && ( */}
+            {/* {touched.titulo &&
+              touched.descripcion &&
+              touched.num_sellos &&
+              Boolean(errors.fecha_inicio) && (
+                <div style={{ color: "red", marginTop: "3px" }}>
+                  {`${errors.fecha_fin}  ${errors.inicio}`}
+                </div>
+              )} */}
+            {/* {errors.fecha_fin && touched.fecha_fin && 
+            {touched.titulo && touched.descripcion && touched.num_sellos && (
+              <div style={{ color: "red", marginTop: "3px" }}>
+                {errors.fecha_fin }
+              </div>
+            )} */}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -282,6 +393,8 @@ export default function SellosForm() {
               }}
               helperText="Por favor seleccione algún de disparador. ¿Dé que forma se obtendrán los sellos?"
               variant="outlined"
+              error={Boolean(errors.trigger && touched.trigger)}
+              onFocus={() => setFieldTouched("trigger")}
             >
               {trigggerSello.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -289,6 +402,11 @@ export default function SellosForm() {
                 </MenuItem>
               ))}
             </TextField>
+            {errors.trigger && touched.trigger && (
+              <div style={{ color: "red", marginTop: "3px" }}>
+                {errors.trigger}
+              </div>
+            )}
           </Grid>
           {values.trigger === "cantidad" && (
             <Grid item xs={6}>
@@ -304,7 +422,17 @@ export default function SellosForm() {
                   setFieldValue("cantidad_trigger", value);
                 }}
                 helperText="Valor en pesos ($) que debe sobrepasar el ticket de venta"
+                error={
+                  Boolean(errors.cantidad_trigger) &&
+                  Boolean(touched.cantidad_trigger)
+                }
+                onFocus={() => setFieldTouched("cantidad_trigger")}
               />
+              {errors.cantidad_trigger && touched.cantidad_trigger && (
+                <div style={{ color: "red", marginTop: "3px" }}>
+                  {errors.cantidad_trigger}
+                </div>
+              )}
             </Grid>
           )}
           {values.trigger === "producto" && (
@@ -316,7 +444,14 @@ export default function SellosForm() {
                   setFieldValue("producto", value);
                 }}
                 value={values.productos}
+                error={Boolean(errors.producto && touched.producto)}
+                onFocus={() => setFieldTouched("producto")}
               />
+              {errors.producto && touched.producto && (
+                <div style={{ color: "red", marginTop: "3px" }}>
+                  {errors.producto}
+                </div>
+              )}
             </Grid>
           )}
           <Grid item xs={6}>
@@ -327,6 +462,19 @@ export default function SellosForm() {
               subirIconoButtonTag="Seleccionar sello ON"
               iconoFormikname="iconoOn"
             />
+            {Boolean(getIn(errors, "iconoOn.status")) &&
+              touched.titulo &&
+              touched.descripcion &&
+              touched.num_sellos &&
+              touched.trigger && (
+                <Typography
+                  variant="caption"
+                  gutterBottom
+                  style={{ color: "red", marginTop: ".5rem" }}
+                >
+                  {getIn(errors, "iconoOn.status")}
+                </Typography>
+              )}
           </Grid>
           <Grid item xs={6}>
             <ImagePreview
@@ -336,8 +484,20 @@ export default function SellosForm() {
               subirIconoButtonTag="Seleccionar sello OFF"
               iconoFormikname="iconoOff"
             />
+          {Boolean(getIn(errors, "iconoOn.status")) &&
+            touched.titulo &&
+            touched.descripcion &&
+            touched.num_sellos &&
+            touched.trigger && (
+              <Typography
+                variant="caption"
+                gutterBottom
+                style={{ color: "red", marginTop: ".5rem" }}
+              >
+                {getIn(errors, "iconoOn.status")}
+              </Typography>
+            )}
           </Grid>
-
           <Grid item xs={12}>
             <Typography variant="h6" color="inherit">
               Bonificacion de la tarjeta de sellos
@@ -358,6 +518,8 @@ export default function SellosForm() {
               // }}
               helperText="Por favor, seleccione algún tipo de notificación. ¿Qué notificación de cumpleaños recibirán los participantes?. Recuerda que debes crearla previamente en la pestaña Formularios, enviándosela a 0 participantes"
               variant="outlined"
+              error={Boolean(errors.id_notificacion && touched.id_notificacion)}
+              onFocus={() => setFieldTouched("id_notificacion")}
             >
               <NotificacionListGridGallery
                 value={values.id_notificacion}
@@ -374,6 +536,11 @@ export default function SellosForm() {
                 {values.id_notificacion}
               </NotificacionListGridGallery>
             </TextField>
+            {errors.id_notificacion && touched.id_notificacion && (
+              <div style={{ color: "red", marginTop: ".5rem" }}>
+                {errors.id_notificacion}
+              </div>
+            )}
           </Grid>
           <PremioListGridGallery
             value={values.id_promocion}
@@ -382,8 +549,14 @@ export default function SellosForm() {
               // console.log(n);
               setFieldValue("id_promocion", n);
             }}
+            error={Boolean(errors.id_promocion && touched.id_promocion)}
+            onFocus={() => setFieldTouched("id_promocion")}
           />
-
+          {errors.id_promocion && touched.id_promocion && (
+            <div style={{ color: "red", marginTop: ".5rem" }}>
+              {errors.id_promocion}
+            </div>
+          )}
           <Grid item xs={12}>
             <Box p={2}>
               <Button

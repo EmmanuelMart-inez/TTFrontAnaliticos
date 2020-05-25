@@ -26,7 +26,7 @@ export default function AyudaCarrousell() {
     <div className={classes.root}>
       <Formik
         initialValues={{
-          _id : "",
+          _id: "",
           isEditEnabled: false,
           titulo: "",
           descripcion: "",
@@ -42,9 +42,16 @@ export default function AyudaCarrousell() {
           },
         }}
         validationSchema={Yup.object({
-          titulo: Yup.string()
-            .min(1, "Must be 15 characters or less")
-            .required("Required"),
+          titulo: Yup.string().required("Requerido"),
+          descripcion: Yup.string().required("Requerido"),
+          icono: Yup.object().shape({
+            status: Yup.mixed()
+              .notOneOf(
+                ["loaded"],
+                "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
+              )
+              .required("Campo requerido"),
+          }),
         })}
         onSubmit={(values, { setSubmitting }) => {}}
       >
@@ -57,7 +64,7 @@ export default function AyudaCarrousell() {
           handleSubmit,
           isSubmitting,
           setFieldValue,
-          resetForm
+          resetForm,
           /* and other goodies */
         }) => (
           <Grid container spacing={3}>

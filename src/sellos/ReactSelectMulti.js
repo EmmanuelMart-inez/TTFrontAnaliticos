@@ -74,6 +74,7 @@ export default function AnimatedMulti(props) {
         isMulti
         styles={customStyles}
         options={formatSelectInput(productos)}
+        onFocus={props.onFocus}
       />
       <h1>{props.value}</h1>
     </>
