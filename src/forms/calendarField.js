@@ -48,6 +48,8 @@ export default function CalendarTimePicker(props) {
           // console.log(date.valueOf());
           props.setFieldValue(`${props.field}`, date.toISOString());
         }}
+        onFocus={props.onFocus}
+        error={props.error}
       />
     </MuiPickersUtilsProvider>
   );

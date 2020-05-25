@@ -484,19 +484,19 @@ export default function SellosForm() {
               subirIconoButtonTag="Seleccionar sello OFF"
               iconoFormikname="iconoOff"
             />
-          {Boolean(getIn(errors, "iconoOn.status")) &&
-            touched.titulo &&
-            touched.descripcion &&
-            touched.num_sellos &&
-            touched.trigger && (
-              <Typography
-                variant="caption"
-                gutterBottom
-                style={{ color: "red", marginTop: ".5rem" }}
-              >
-                {getIn(errors, "iconoOn.status")}
-              </Typography>
-            )}
+            {Boolean(getIn(errors, "iconoOn.status")) &&
+              touched.titulo &&
+              touched.descripcion &&
+              touched.num_sellos &&
+              touched.trigger && (
+                <Typography
+                  variant="caption"
+                  gutterBottom
+                  style={{ color: "red", marginTop: ".5rem" }}
+                >
+                  {getIn(errors, "iconoOn.status")}
+                </Typography>
+              )}
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h6" color="inherit">
@@ -542,21 +542,23 @@ export default function SellosForm() {
               </div>
             )}
           </Grid>
-          <PremioListGridGallery
-            value={values.id_promocion}
-            handleChange={(n) => {
-              // setFormState((prevState) => ({ ...prevState, promocion: n }));
-              // console.log(n);
-              setFieldValue("id_promocion", n);
-            }}
-            error={Boolean(errors.id_promocion && touched.id_promocion)}
-            onFocus={() => setFieldTouched("id_promocion")}
-          />
-          {errors.id_promocion && touched.id_promocion && (
-            <div style={{ color: "red", marginTop: ".5rem" }}>
-              {errors.id_promocion}
-            </div>
-          )}
+          <Grid item xs={6}>
+            <PremioListGridGallery
+              value={values.id_promocion}
+              handleChange={(n) => {
+                // setFormState((prevState) => ({ ...prevState, promocion: n }));
+                // console.log(n);
+                setFieldValue("id_promocion", n);
+              }}
+              error={Boolean(errors.id_promocion && touched.id_promocion)}
+              onFocus={() => setFieldTouched("id_promocion")}
+            />
+            {errors.id_promocion && touched.id_promocion && (
+              <div style={{ color: "red", marginTop: ".5rem" }}>
+                {errors.id_promocion}
+              </div>
+            )}
+          </Grid>
           <Grid item xs={12}>
             <Box p={2}>
               <Button

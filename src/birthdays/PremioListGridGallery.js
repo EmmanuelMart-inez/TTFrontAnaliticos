@@ -14,30 +14,30 @@ import TextField from "@material-ui/core/TextField";
 
 import useBubbletownApi from "../helpers/useBubbletownApi";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "hidden",
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   gridList: {
     width: 500,
-    height: 450
+    height: 450,
   },
   icon: {
-    color: "rgba(255, 255, 255, 0.54)"
-  }
+    color: "rgba(255, 255, 255, 0.54)",
+  },
 }));
 
 export default function TitlebarGridList(props) {
   const classes = useStyles();
   const { data: notificaciones, loading } = useBubbletownApi({
-    path: `promociones`
+    path: `promociones`,
   });
 
-  const parseISOString = s => {
+  const parseISOString = (s) => {
     if (!s) return s;
     var b = s.split(/\D+/);
     var time = new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
@@ -49,7 +49,8 @@ export default function TitlebarGridList(props) {
     <>
       <Grid item xs={6}>
         <TextField
-          id="outlined-select-premio"
+          style={{ width: "320px" }}
+          id="outlined-select-premio_niveles"
           select
           label="Seleccionar premio/promoción"
           name="notificaciones"
@@ -66,11 +67,14 @@ export default function TitlebarGridList(props) {
           error={props.error}
           onFocus={props.onFocus}
         >
-          {notificaciones.map(tile => (
+          {notificaciones.map((tile) => (
             <GridListTile key={tile._id} value={tile._id} label={tile._id}>
               <>
                 {/* <div class="ui link cards" > */}
-                <div class="ui card link" onClick={() => props.handleChange(tile._id)}>
+                <div
+                  class="ui card link"
+                  onClick={() => props.handleChange(tile._id)}
+                >
                   <div class="image">
                     <img src={tile.imagen} style={{ "max-height": "200px" }} />
                   </div>

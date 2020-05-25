@@ -44,9 +44,10 @@ export default function NivelForm() {
         equivalencia_punto_pesos: config.equivalencia_punto_pesos || "",
       }}
       validationSchema={Yup.object({
-        titulo: Yup.string()
-          .min(1, "Must be 15 characters or less")
-          .required("Required"),
+        equivalencia_punto_pesos: Yup.number()
+          .typeError("El campo puntos debe ser de tipo numérico")
+          .min(0, "Solo se admiten valores positivos y cero")
+          .required("Requerido"),
       })}
       onSubmit={(values, { setSubmitting }) => {}}
     >
@@ -54,6 +55,7 @@ export default function NivelForm() {
         values,
         errors,
         touched,
+        setFieldTouched,
         handleChange,
         handleBlur,
         handleSubmit,
@@ -74,8 +76,7 @@ export default function NivelForm() {
                   .put(
                     `${apiUrl}/config`,
                     {
-                      equivalencia_punto_pesos:
-                        values.equivalencia_punto_pesos,
+                      equivalencia_punto_pesos: values.equivalencia_punto_pesos,
                     },
                     {
                       headers: {
@@ -122,7 +123,17 @@ export default function NivelForm() {
                 }
               }}
               helperText="1 peso en compras a cuantos puntos equivale?"
-            ></TextField>
+              error={Boolean(
+                errors.equivalencia_punto_pesos &&
+                  touched.equivalencia_punto_pesos
+              )}
+              onFocus={() => setFieldTouched("equivalencia_punto_pesos")}
+            />
+            {errors.equivalencia_punto_pesos && touched.equivalencia_punto_pesos && (
+              <div style={{ color: "red", marginTop: ".5rem" }}>
+                {errors.equivalencia_punto_pesos}
+              </div>
+            )}
           </Grid>
           <Grid item xs={12}>
             <Box p={2}>

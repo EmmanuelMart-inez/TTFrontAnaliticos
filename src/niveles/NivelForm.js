@@ -1,6 +1,6 @@
 import React, { useState, withStyles } from "react";
 
-import { useFormikContext, Formik, Field, FieldArray } from "formik";
+import { useFormikContext, Formik, Field, FieldArray, getIn } from "formik";
 import * as Yup from "yup";
 import { DisplayFormikState } from "../forms/formik-helper";
 
@@ -50,7 +50,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NivelForm() {
-  const { values, setFieldValue, resetForm } = useFormikContext();
+  const {
+    values,
+    setFieldValue,
+    resetForm,
+    errors,
+    touched,
+    setFieldTouched,
+  } = useFormikContext();
   const classes = useStyles();
   const [openGuardarAlert, setOpenGuardarAlert] = React.useState(false);
   const [openEditAlert, setOpenEditAlert] = React.useState(false);
@@ -166,10 +173,29 @@ export default function NivelForm() {
             setFieldValue("num_puntos", value);
           }}
           helperText="Por favor seleccione algún número"
-        ></TextField>
+          error={Boolean(errors.num_puntos && touched.num_puntos)}
+          onFocus={() => setFieldTouched("num_puntos")}
+        />
+        {errors.num_puntos && touched.num_puntos && (
+          <div style={{ color: "red", marginTop: "3px" }}>
+            {errors.num_puntos}
+          </div>
+        )}
       </Grid>
       <Grid item xs={6}>
-        <MaterialCalendarDatePicker label={"Fecha de vencimiento"} setFieldValue={setFieldValue} field={"fecha_vencimiento"} value={values.fecha_vencimiento}/>
+        <MaterialCalendarDatePicker
+          label={"Fecha de vencimiento"}
+          setFieldValue={setFieldValue}
+          field={"fecha_vencimiento"}
+          value={values.fecha_vencimiento}
+          error={Boolean(errors.fecha_vencimiento && touched.fecha_vencimiento)}
+          onFocus={() => setFieldTouched("fecha_vencimiento")}
+        />
+        {errors.fecha_vencimiento && touched.fecha_vencimiento && (
+          <div style={{ color: "red", marginTop: "3px" }}>
+            {errors.fecha_vencimiento}
+          </div>
+        )}
       </Grid>
       {/* REMOVED FOR fecha_vencimiento
        <Grid item xs={6}>
@@ -213,6 +239,8 @@ export default function NivelForm() {
           // }}
           helperText="Por favor seleccione algún tipo de notificación"
           variant="outlined"
+          error={Boolean(errors.id_notificacion && touched.id_notificacion)}
+          onFocus={() => setFieldTouched("id_notificacion")}
         >
           <NotificacionListGridGallery
             value={values.id_notificacion}
@@ -225,15 +253,29 @@ export default function NivelForm() {
             {values.id_notificacion}
           </NotificacionListGridGallery>
         </TextField>
+        {errors.id_notificacion && touched.id_notificacion && (
+          <div style={{ color: "red", marginTop: ".5rem" }}>
+            {errors.id_notificacion}
+          </div>
+        )}
       </Grid>
-      <PremioListGridGallery
-        value={values.id_promocion}
-        handleChange={(n) => {
-          console.log(n);
-          setFieldValue("id_promocion", n);
-        }}
-      />
-      <Grid item xs={12}>
+      <Grid item xs={6}>
+        <PremioListGridGallery
+          value={values.id_promocion}
+          handleChange={(n) => {
+            console.log(n);
+            setFieldValue("id_promocion", n);
+          }}
+          error={Boolean(errors.id_promocion && touched.id_promocion)}
+          onFocus={() => setFieldTouched("id_promocion")}
+        />
+        {errors.id_promocion && touched.id_promocion && (
+          <div style={{ color: "red", marginTop: ".5rem" }}>
+            {errors.id_promocion}
+          </div>
+        )}
+      </Grid>
+      <Grid item xs={12} >
         <Box p={2} spacing={3}>
           {!values.editar && (
             <Button

@@ -49,7 +49,8 @@ export default function TitlebarGridList(props) {
     <>
       <Grid item xs={6}>
         <TextField
-          id="outlined-select-premio"
+        style={{ width: "320px" }}
+          id="outlined-select-premio_sellos"
           select
           label="Seleccionar promoción"
           name="notificaciones"

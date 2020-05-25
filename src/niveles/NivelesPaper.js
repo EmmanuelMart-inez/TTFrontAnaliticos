@@ -8,7 +8,7 @@ import ConfigNivelForm from "./ConfigNivelForm";
 import NivelCardButton from "./AddButton/NivelCardButton";
 import NivelCardList from "./NivelCardList";
 
-import { useFormikContext, Formik, Field, FieldArray } from "formik";
+import { useFormikContext, Formik, Field, FieldArray, getIn } from "formik";
 import * as Yup from "yup";
 import { DisplayFormikState } from "../forms/formik-helper";
 
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NivelesPaper() {
   const classes = useStyles();
-  const [addForm, setAddForm] = React.useState(false);
+  const [addForm, setAddForm] = React.useState(true);
   const [editForm, setEditForm] = React.useState(false);
 
   return (
@@ -43,9 +43,17 @@ export default function NivelesPaper() {
         editar: false,
       }}
       validationSchema={Yup.object({
-        titulo: Yup.string()
-          .min(1, "Must be 15 characters or less")
-          .required("Required"),
+        _id: Yup.string().required("Requerido"),
+        id_notificacion: Yup.string().required("Requerido"),
+        // dias_vigencia: "",
+        fecha_vencimiento: Yup.string().required("Requerido").nullable(),
+        // max_canjeos: "",
+        num_puntos: Yup.number()
+              .typeError("El campo puntos debe ser de tipo numérico")
+              .min(0, "Solo se admiten valores positivos y cero")
+              .required("Requerido"),
+        id_promocion: Yup.string().required("Requerido"),
+        editar: Yup.string().required("Requerido"),
       })}
       onSubmit={(values, { setSubmitting }) => {}}
     >
