@@ -3,7 +3,7 @@ import React, { useState, withStyles } from "react";
 import Grid from "@material-ui/core/Grid";
 import ImagePreview from "../forms/ImagePreviewFormik";
 import TextField from "@material-ui/core/TextField";
-import { useFormikContext, Formik, Field, FieldArray } from "formik";
+import { useFormikContext, Formik, Field, FieldArray, getIn } from "formik";
 import * as Yup from "yup";
 import { DisplayFormikState } from "../forms/formik-helper";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import Box from "@material-ui/core/Box";
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem from "@material-ui/core/MenuItem";
 
 import DatePicker from "../forms/calendarField";
 import AlertDialogProgressResend from "../home/AlertDialogResend";
@@ -47,9 +47,18 @@ export default function CatalogoForm() {
         },
       }}
       validationSchema={Yup.object({
-        titulo: Yup.string()
-          .min(1, "Must be 15 characters or less")
-          .required("Required"),
+        titulo: Yup.string().required("Requerido"),
+        descripcion: Yup.string().required("Requerido"),
+        tipo: Yup.string().required("Requerido"),
+        vigencia: Yup.string().required("Required"),
+        icono: Yup.object().shape({
+          status: Yup.mixed()
+            .notOneOf(
+              ["loaded"],
+              "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
+            )
+            .required("Campo requerido"),
+        }),
       })}
       onSubmit={(values, { setSubmitting }) => {}}
     >
@@ -60,6 +69,7 @@ export default function CatalogoForm() {
         handleChange,
         handleBlur,
         handleSubmit,
+        setFieldTouched,
         isSubmitting,
         setFieldValue,
         /* and other goodies */
@@ -124,7 +134,14 @@ export default function CatalogoForm() {
                 setFieldValue("titulo", event.target.value);
               }}
               helperText="Ingrese el nombre del producto"
+              error={Boolean(errors.titulo && touched.titulo)}
+              onFocus={() => setFieldTouched("titulo")}
             />
+            {errors.titulo && touched.titulo && (
+              <div style={{ color: "red", marginTop: "3px" }}>
+                {errors.titulo}
+              </div>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -136,8 +153,15 @@ export default function CatalogoForm() {
               onChange={(event) => {
                 setFieldValue("descripcion", event.target.value);
               }}
-              helperText="Describe el producto. Quizá, qué es?, qué contiene?, cuál es el atractivo?"
+              helperText="Describe tu producto. Quizá, qué es?, qué contiene?, cuál es el atractivo?"
+              error={Boolean(errors.descripcion && touched.descripcion)}
+              onFocus={() => setFieldTouched("descripcion")}
             />
+            {errors.descripcion && touched.descripcion && (
+              <div style={{ color: "red", marginTop: "3px" }}>
+                {errors.descripcion}
+              </div>
+            )}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -149,6 +173,8 @@ export default function CatalogoForm() {
               onChange={(event) => {
                 setFieldValue("tipo", event.target.value);
               }}
+              error={Boolean(errors.tipo && touched.tipo)}
+              onFocus={() => setFieldTouched("tipo")}
             >
               <MenuItem value="">
                 <em>Ninguno</em>
@@ -157,10 +183,32 @@ export default function CatalogoForm() {
               <MenuItem value={"Alimentos"}>Alimento</MenuItem>
               <MenuItem value={"Otro"}>Otro</MenuItem>
             </TextField>
+            {errors.tipo && touched.tipo && (
+              <div style={{ color: "red", marginTop: "3px" }}>
+                {errors.tipo}
+              </div>
+            )}
           </Grid>
           <Grid item xs={6}>
-            <Typography style={{"height": "16px", "marginBottom": "5px", "color": "#757575"}} color="inherit">Vigencia</Typography>
-            <DatePicker setFieldValue={setFieldValue} field={"vigencia"} value={values.vigencia}/>
+            <Typography
+              style={{ height: "16px", marginBottom: "5px", color: "#757575" }}
+              color="inherit"
+            >
+              Vigencia
+            </Typography>
+            <DatePicker
+              setFieldValue={setFieldValue}
+              field={"vigencia"}
+              value={values.vigencia}
+              helperText={
+                "De click para ingresar la fecha de vencimiento de este producto en el catalogo. No desaparecerá de la aplicación móvil cuando esta caduque"
+              }
+            />
+            {errors.vigencia && touched.descripcion && touched.tipo && (
+              <div style={{ color: "red", marginTop: "3px" }}>
+                {errors.vigencia}
+              </div>
+            )}
           </Grid>
           <Grid item xs={12}>
             <ImagePreview
@@ -169,8 +217,20 @@ export default function CatalogoForm() {
               values={values}
               subirIconoButtonTag="Seleccionar imagen"
               iconoFormikname="icono"
-              aspectRatioFraction={139/144}
+              aspectRatioFraction={139 / 144}
             />
+            {Boolean(getIn(errors, "icono.status")) &&
+              touched.titulo &&
+              touched.descripcion &&
+              touched.tipo && (
+                <Typography
+                  variant="caption"
+                  gutterBottom
+                  style={{ color: "red", marginTop: ".5rem" }}
+                >
+                  {getIn(errors, "icono.status")}
+                </Typography>
+              )}
           </Grid>
           <Grid item xs={12}>
             <Box p={2}>

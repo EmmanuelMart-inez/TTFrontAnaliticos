@@ -48,6 +48,9 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    // background: "#eee",
+    // backgroundImage:
+    //   "url(" + "https://www.transparenttextures.com/patterns/cubes.png" + ")",
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -109,14 +112,14 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "center",
     // justifyContent:"center"
   },
-  timeNow: {    
+  timeNow: {
     alignSelf: "flex-start",
     position: "absolute",
     right: "30px",
     textAlign: "end",
   },
   col: {
-    backgroundColor: "#dae1e7",
+    backgroundColor: "#a8e6cf",
   },
 }));
 
