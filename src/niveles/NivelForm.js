@@ -316,7 +316,7 @@ export default function NivelForm() {
             </>
           )}
         </Box>
-        <DisplayFormikState {...values} />
+        <DisplayFormikState {...values} /> 
       </Grid>
     </Grid>
   );

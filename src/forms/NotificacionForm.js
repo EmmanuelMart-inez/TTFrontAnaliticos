@@ -166,7 +166,7 @@ const Basic = () => (
           <button type="submit" disabled={isSubmitting}>
             Enviar
           </button>
-          <DisplayFormikState {...values} />
+          <DisplayFormikState {...values} /> 
         </form>
       )}
     </Formik>

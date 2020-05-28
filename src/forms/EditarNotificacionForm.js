@@ -434,7 +434,7 @@ const Basic = (props) => {
                     />
                     {/* {values.encuesta.paginas.length} */}
                     <Grid item xs={12}>
-                      <DisplayFormikState {...values} />
+                      <DisplayFormikState {...values} /> 
                     </Grid>
                   </Grid>
                 </Paper>

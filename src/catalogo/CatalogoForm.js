@@ -245,7 +245,7 @@ export default function CatalogoForm() {
                 Guardar
               </Button>
             </Box>
-            <DisplayFormikState {...values} />
+            <DisplayFormikState {...values} /> 
           </Grid>
         </Grid>
       )}

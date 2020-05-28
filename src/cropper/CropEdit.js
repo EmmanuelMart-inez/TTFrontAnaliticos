@@ -16,7 +16,7 @@ export default function CropControls(props) {
     props.onCropAreaChange(croppedAreaPixels);
   }, []);
 
-  console.log(props.icono, props.values.icono.fileUrl);
+  // console.log(props.icono, props.values.icono.fileUrl);
   return (
     <div>
       <div className="crop-container">

@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import InfoIcon from "@material-ui/icons/Info";
-import Typography from '@material-ui/core/Typography';
+import Typography from "@material-ui/core/Typography";
 import LibraryAddCheckIcon from "@material-ui/icons/LibraryAddCheck";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
@@ -18,16 +18,17 @@ import PremioCard from "../sellos/BonificacionForm/index";
 
 export default function CurrentPromo() {
   const { data: notificaciones, loading } = useBubbletownApi({
-    path: `birthday`
+    path: `birthday`,
   });
-  const parseISOString = s => {
+  const parseISOString = (s) => {
     if (!s) return s;
     var b = s.split(/\D+/);
     var time = new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
     return <>{time.toLocaleDateString() + " " + time.toLocaleTimeString()}</>;
   };
 
-  if (loading) return <CircularProgress />;
+  if (loading ) return <CircularProgress />;
+  if (notificaciones[0] === undefined) return <></>;
   return (
     <>
       <NotificacionCard notificacionId={notificaciones[0].id_notificacion} />
@@ -42,7 +43,7 @@ export default function CurrentPromo() {
         Antiguedad requerida: {notificaciones[0].antiguedad} días
       </Typography>
       <Typography variant="body2" gutterBottom>
-        Vigencia: {notificaciones[0].vigencia} 
+        Vigencia: {notificaciones[0].vigencia}
       </Typography>
     </>
   );

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NivelesPaper() {
   const classes = useStyles();
-  const [addForm, setAddForm] = React.useState(true);
+  const [addForm, setAddForm] = React.useState(false);
   const [editForm, setEditForm] = React.useState(false);
 
   return (

@@ -198,27 +198,29 @@ export default function BirthdayForm() {
                   {formState.notificacion}
                 </NotificacionListGridGallery>
               </TextField>
-                {errors.id_notificacion && touched.id_notificacion && (
-                  <div style={{ color: "red", marginTop: ".5rem" }}>
-                    {errors.id_notificacion}
-                  </div>
-                )}
+              {errors.id_notificacion && touched.id_notificacion && (
+                <div style={{ color: "red", marginTop: ".5rem" }}>
+                  {errors.id_notificacion}
+                </div>
+              )}
             </Grid>
-            <PremioListGridGallery
-              value={formState.promocion}
-              handleChange={(n) => {
-                setFormState((prevState) => ({ ...prevState, promocion: n }));
-                console.log(n);
-                setFieldValue("id_promocion", n);
-              }}
-              error={Boolean(errors.id_promocion && touched.id_promocion)}
-              onFocus={() => setFieldTouched("id_promocion")}
-            />
-            {errors.id_promocion && touched.id_promocion && (
-              <div style={{ color: "red", marginTop: ".5rem" }}>
-                {errors.id_promocion}
-              </div>
-            )}
+            <Grid item xs={6}>
+              <PremioListGridGallery
+                value={formState.promocion}
+                handleChange={(n) => {
+                  setFormState((prevState) => ({ ...prevState, promocion: n }));
+                  console.log(n);
+                  setFieldValue("id_promocion", n);
+                }}
+                error={Boolean(errors.id_promocion && touched.id_promocion)}
+                onFocus={() => setFieldTouched("id_promocion")}
+              />
+              {errors.id_promocion && touched.id_promocion && (
+                <div style={{ color: "red", marginTop: ".5rem" }}>
+                  {errors.id_promocion}
+                </div>
+              )}
+            </Grid>
             <Grid item xs={6}>
               <TextField
                 label="Trigger (Días previos)"
@@ -318,7 +320,7 @@ export default function BirthdayForm() {
                 Vista Previa
               </Button>
             </Box>
-            <DisplayFormikState {...values} />
+            <DisplayFormikState {...values} /> 
           </Grid>
         )}
       </Formik>
