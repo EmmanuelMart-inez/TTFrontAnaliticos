@@ -51,7 +51,7 @@ export default function GalleryImages(props) {
   return (
     <>
       {/* {handleLoadisng()} */}
-      <div class="ui four cards">
+      <div class={`ui ${props.columns ? props.columns : "four"} cards`}>
         {loading
           ? data.map(img => (
               <a class="red card">

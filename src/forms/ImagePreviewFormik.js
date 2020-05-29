@@ -14,8 +14,10 @@ import Icon from "@material-ui/core/Icon";
 
 import ImageInput from "../cropper/ImageInput";
 import GalleryIcon from "./gallery.png";
+import OpenMojiIcon from "./openmoji.jpg";
 import CropperIconButton from "../cropper/AlertDialogSlider";
 import Alert from "./GalleryAlert";
+import AlertEmojies from "./GalleryAlertEmojies";
 import GalleryImagesFromServer from "./GalleryImages";
 
 import axios from "axios";
@@ -84,12 +86,28 @@ const useStyles = makeStyles((theme) => ({
     borderColor: "#56DBC9",
     marginBottom: "20px",
   },
+  cardButtonColorOpenEmoji: {
+    color: "#5B9595",
+    backgroundColor: "#FFFFFE",
+    borderStyle: "solid",
+    borderWidth: "4px",
+    borderColor: "#ff9a76",
+    marginBottom: "20px",
+  },
   cardButtonColorSelected: {
     color: "#5B9595",
     backgroundColor: "#FFFFFE",
     borderStyle: "solid",
     borderWidth: "4px",
     borderColor: "#56DBC9",
+    marginBottom: "20px",
+  },
+  cardButtonColorSelectedOpenEmoji: {
+    color: "#5B9595",
+    backgroundColor: "#FFFFFE",
+    borderStyle: "solid",
+    borderWidth: "4px",
+    borderColor: "#fcf876",
     marginBottom: "20px",
   },
   circleButtons: {
@@ -106,15 +124,22 @@ export default function CircularIntegration(props) {
   const [galleryInputIsSelected, setgalleryInputIsSelected] = React.useState(
     false
   );
+  const [galleryIconIsSelected, setgalleryIconIsSelected] = React.useState(
+    false
+  );
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const [upload, setUpload] = React.useState(false);
   const [select, setSelect] = React.useState(false);
   const [alertGallery, setAlertGallery] = React.useState(false);
+  const [alertGalleryOpenEmoji, setAlertGalleryOpenEmoji] = React.useState(
+    false
+  );
   const [
     toogleGalleryLocalToCloud,
     setToogleGalleryLocalToCloud,
   ] = React.useState(false);
+  const [toogleIconCloud, setToogleIconCloud] = React.useState(false);
   const timer = React.useRef();
 
   const buttonClassname = clsx({
@@ -225,7 +250,7 @@ export default function CircularIntegration(props) {
           selectFromGalleryComponent={
             <ImageInput
               handleButtonInputImage={handleButtonInputImage}
-              setgalleryInputIsSelected={setgalleryInputIsSelected}
+              setgalleryInputIsSelected={setgalleryIconIsSelected}
               toogleGalleryLocalToCloud={toogleGalleryLocalToCloud}
               setToogleGalleryLocalToCloud={setToogleGalleryLocalToCloud}
             >
@@ -257,6 +282,58 @@ export default function CircularIntegration(props) {
                 </div>
               </Button>
             </ImageInput>
+          }
+          selectFromOpenEmoji={
+            <>
+              <AlertEmojies
+                titulo="Escoja una imágen"
+                body=""
+                agree="Aceptar"
+                disagree="Cancelar"
+                switch={alertGalleryOpenEmoji}
+                setFieldValue={props.setFieldValue}
+                // action={}
+                close={() => setAlertGalleryOpenEmoji(false)}
+                selectFromServer={
+                  <GalleryImagesFromServer
+                    columns={"seven"}
+                    icono={props.icono}
+                    iconoFormikname={props.iconoFormikname}
+                    setAlertGallery={setAlertGallery}
+                    setFieldValue={props.setFieldValue}
+                    toogleGalleryLocalToCloud={toogleGalleryLocalToCloud}
+                    setToogleGalleryLocalToCloud={setToogleGalleryLocalToCloud}
+                  />
+                }
+              />
+              <Button
+                className={
+                  galleryInputIsSelected
+                    ? classes.cardButtonColorSelectedOpenEmoji
+                    : classes.cardButtonColorOpenEmoji
+                }
+                onClick={() => setAlertGalleryOpenEmoji(true)}
+                variant="contained"
+                // color="primary"
+                component="span"
+              >
+                <div className={classes.cardButton}>
+                  {galleryInputIsSelected && !toogleGalleryLocalToCloud && (
+                    <div class="content" style={{ backgroundColor: "#ffecc7" }}>
+                      <div class="right floated meta">Imagen Seleccionada</div>
+                      <i class="big check circle icon"></i>
+                    </div>
+                  )}
+                  <div>
+                    <img src={OpenMojiIcon} alt="Galería imagen" height="100" />
+                  </div>
+                  <div>
+                    Escoger imagen desde la galería de emojis{" "}
+                    {/* <Icon>add_photo_alternate</Icon> */}
+                  </div>
+                </div>
+              </Button>
+            </>
           }
           selectFromServer={
             <GalleryImagesFromServer

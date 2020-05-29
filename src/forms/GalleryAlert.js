@@ -5,12 +5,9 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 export default function AlertDialog(props) {
-
   const handleClose = () => {
     props.close();
   };
-
-
 
   return (
     <div>
@@ -24,10 +21,11 @@ export default function AlertDialog(props) {
         <DialogTitle id="alert-dialog-title">{props.titulo}</DialogTitle>
         <DialogContent
           style={{
-            textAlign: "center"
+            textAlign: "center",
           }}
         >
-          {props.selectFromGalleryComponent}
+          <div>{props.selectFromGalleryComponent}</div>
+          <div>{props.selectFromOpenEmoji}</div>
           <div class="ui horizontal divider">Imágenes almacenadas</div>
           {props.selectFromServer}
           <DialogContentText id="alert-dialog-description">
