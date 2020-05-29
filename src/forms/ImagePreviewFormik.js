@@ -19,6 +19,7 @@ import CropperIconButton from "../cropper/AlertDialogSlider";
 import Alert from "./GalleryAlert";
 import AlertEmojies from "./GalleryAlertEmojies";
 import GalleryImagesFromServer from "./GalleryImages";
+import GalleryImageFromFolder from "./GalleryImageFromFolder";
 
 import axios from "axios";
 import { apiUrl, apiUrlImages } from "../shared/constants";
@@ -295,7 +296,7 @@ export default function CircularIntegration(props) {
                 // action={}
                 close={() => setAlertGalleryOpenEmoji(false)}
                 selectFromServer={
-                  <GalleryImagesFromServer
+                  <GalleryImageFromFolder
                     columns={"seven"}
                     icono={props.icono}
                     iconoFormikname={props.iconoFormikname}
