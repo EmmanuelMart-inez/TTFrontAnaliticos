@@ -286,27 +286,32 @@ export default function CircularIntegration(props) {
           }
           selectFromOpenEmoji={
             <>
-              <AlertEmojies
-                titulo="Escoja una imágen"
-                body=""
-                agree="Aceptar"
-                disagree="Cancelar"
-                switch={alertGalleryOpenEmoji}
-                setFieldValue={props.setFieldValue}
-                // action={}
-                close={() => setAlertGalleryOpenEmoji(false)}
-                selectFromServer={
-                  <GalleryImageFromFolder
-                    columns={"seven"}
-                    icono={props.icono}
-                    iconoFormikname={props.iconoFormikname}
-                    setAlertGallery={setAlertGallery}
-                    setFieldValue={props.setFieldValue}
-                    toogleGalleryLocalToCloud={toogleGalleryLocalToCloud}
-                    setToogleGalleryLocalToCloud={setToogleGalleryLocalToCloud}
-                  />
-                }
-              />
+              {alertGalleryOpenEmoji && (
+                <AlertEmojies
+                  titulo="Escoja una imágen"
+                  body=""
+                  agree="Aceptar"
+                  disagree="Cancelar"
+                  switch={alertGalleryOpenEmoji}
+                  setFieldValue={props.setFieldValue}
+                  // action={}
+                  close={() => setAlertGalleryOpenEmoji(false)}
+                  selectFromServer={
+                    <GalleryImageFromFolder
+                      handleButtonInputImage={handleButtonInputImage}
+                      columns={"seven"}
+                      icono={props.icono}
+                      iconoFormikname={props.iconoFormikname}
+                      setAlertGallery={setAlertGallery}
+                      setFieldValue={props.setFieldValue}
+                      toogleGalleryLocalToCloud={toogleGalleryLocalToCloud}
+                      setToogleGalleryLocalToCloud={
+                        setToogleGalleryLocalToCloud
+                      }
+                    />
+                  }
+                />
+              )}
               <Button
                 className={
                   galleryInputIsSelected
