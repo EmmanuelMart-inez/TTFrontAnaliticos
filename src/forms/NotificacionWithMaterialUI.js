@@ -775,7 +775,7 @@ const Basic = () => {
           contenido: Yup.string().required("Requerido"),
           puntos: Yup.number()
             .typeError("El campo puntos debe ser de tipo numérico")
-            .positive("Solo se admiten valores positivos")
+            .min(0, "Solo se admiten valores positivos y cero")
             .required("Requerido"),
           icono: Yup.object().shape({
             status: Yup.mixed()
@@ -809,14 +809,16 @@ const Basic = () => {
                   opciones: Yup.array()
                     .of(
                       Yup.object().shape({
-                        icon: Yup.object().shape({
-                          status: Yup.mixed()
-                            .notOneOf(
-                              ["loaded"],
-                              "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
-                            )
-                            .required("Campo requerido"),
-                        }).nullable(),
+                        icon: Yup.object()
+                          .shape({
+                            status: Yup.mixed()
+                              .notOneOf(
+                                ["loaded"],
+                                "Requerido, Aún no ha subido su imagen, de click en SUBIR ICONO"
+                              )
+                              .required("Campo requerido"),
+                          })
+                          .nullable(),
                         calificacion: Yup.string().required("Requerido"),
                         rubrica: Yup.number()
                           .typeError(
@@ -952,7 +954,7 @@ const Basic = () => {
                 />
                 {/* {values.encuesta.paginas.length} */}
                 <Grid item xs={12}>
-                   <DisplayFormikState {...values} />  
+                  <DisplayFormikState {...values} />
                 </Grid>
               </Grid>
             </Paper>

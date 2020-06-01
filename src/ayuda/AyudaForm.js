@@ -94,7 +94,7 @@ export default function AyudaForm() {
       {openAlert && (
         <AlertDialogProgressResend
           titulo={
-            values.isEditEnabled ? "Confirmar edición" : "Confirmar eliminación"
+            values.isEditEnabled ? "Confirmar edición" : "Confirmar acción"
           }
           body={
             values.isEditEnabled

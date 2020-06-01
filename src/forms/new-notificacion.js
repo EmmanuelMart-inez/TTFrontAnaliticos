@@ -170,6 +170,7 @@ export default function NotificacionForm(props) {
             value={values.contenido}
             onChange={(event) => {
               setFieldValue("contenido", event.target.value);
+              setFieldValue("premio.contenido", event.target.value);
             }}
             helperText="Cuerpo, mensaje o descripción de la notificación. ¿Qué quieres notificar?"
             error={Boolean(errors.contenido && touched.contenido)}

@@ -217,7 +217,7 @@ export default function CatalogoForm() {
               values={values}
               subirIconoButtonTag="Seleccionar imagen"
               iconoFormikname="icono"
-              aspectRatioFraction={139 / 144}
+              aspectRatioFraction={119 / 144}
             />
             {Boolean(getIn(errors, "icono.status")) &&
               touched.titulo &&
