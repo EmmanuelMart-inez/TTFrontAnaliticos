@@ -23,6 +23,7 @@ import CakeRoundedIcon from "@material-ui/icons/CakeRounded";
 import HelpOutlineRoundedIcon from "@material-ui/icons/HelpOutlineRounded";
 import ShowChartRoundedIcon from "@material-ui/icons/ShowChartRounded";
 import EmojiFoodBeverageOutlinedIcon from "@material-ui/icons/EmojiFoodBeverageOutlined";
+import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent';
 import NotificacionForm from "../forms/NotificacionWithMaterialUI";
 
 import TableRemote from "../home/TableRemote";
@@ -33,6 +34,7 @@ import SellosPaper from "../sellos/index";
 import NivelesPaper from "../niveles/index";
 import CatalogoPaper from "../catalogo/index";
 import MetabaseIframe from "../metabase/index";
+import DemoHelpers from "../autoDemo/index";
 
 import Date from "../forms/filters/DateRange";
 import Rango from "../forms/filters/RangoPicker";
@@ -303,6 +305,21 @@ export default function MiniDrawer() {
             </ListItemIcon>
             <ListItemText primary={"Catálogo"} />
           </ListItem>
+          {/* <ListItem
+            button
+            key={8}
+            component={Link}
+            to="/demoPV"
+            className={currentPage == 8 && classes.col}
+            onClick={() => {
+              SetCurrentPage(8);
+            }}
+          >
+            <ListItemIcon>
+              <SettingsInputComponentIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Herramientas de pruebas"} />
+          </ListItem> */}
           {/* <ListItem button key={8} component={Link} to="/metabase" className={currentPage == 8 && classes.col} onClick={() => {SetCurrentPage(8);}}>
             <ListItemIcon >
               <ShowChartRoundedIcon />
@@ -344,6 +361,9 @@ export default function MiniDrawer() {
           <Route path="/points">
             <NivelesPaper />
           </Route>
+          {/* <Route path="/demoPV">
+            <DemoHelpers />
+          </Route> */}
           {/* <Route path="/metabase">
             <MetabaseIframe />
           </Route> */}
