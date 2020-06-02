@@ -1,6 +1,7 @@
 import React from "react";
 import useBubbletownApi from "../../helpers/useBubbletownApi";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { apiUrlImages } from "../../shared/constants";
 
 export default function PromoCard(props) {
   const { data: tile, loading } = useBubbletownApi({
@@ -18,7 +19,9 @@ export default function PromoCard(props) {
   return (
     <div class="ui card link">
       <div class="image">
-        <img src={tile.imagen} style={{ "max-height": "200px" }} />
+        <img src={`${apiUrlImages}/${tile.imagen}`}  style={{ "max-height": "200px" }} alt={`${apiUrlImages}/${tile.imagen}`}/>
+      </div>
+      <div>
       </div>
       <div
         class="content"

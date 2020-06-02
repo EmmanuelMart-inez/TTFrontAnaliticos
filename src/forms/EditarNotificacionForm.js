@@ -231,6 +231,7 @@ const Basic = (props) => {
                 contenido: response.premio.mensaje,
                 fecha_vigencia: response.premio.fecha_vigencia,
                 vidas: response.premio.vidas,
+                puntos: response.premio.puntos || 0,
               },
               icono: {
                 file: null,
@@ -255,8 +256,9 @@ const Basic = (props) => {
               },
               iconoDetalles: {
                 file: null,
-                fileUrl: response.premio.imagen_icon,
-                filename: response.premio.imagen_icon || "image_cropped.png",
+                fileUrl: response.premio.imagen_display,
+                filename:
+                  response.premio.imagen_display || "image_cropped2.png",
                 fileUrlCropped: null,
                 fileCropped: null,
                 downloadUrl: response.premio.imagen_display,
@@ -290,7 +292,7 @@ const Basic = (props) => {
               ],
               participantesFor: [],
               // link: "",
-              puntos: response.premio.puntos || response.encuesta.puntos,
+              puntos: response.premio.puntos || response.encuesta.puntos || 0,
               notificaciones: {
                 value: response.notificacion.tipo_notificacion,
                 // value: "ninguna"
@@ -302,7 +304,7 @@ const Basic = (props) => {
               contenido: Yup.string().required("Requerido"),
               puntos: Yup.number()
                 .typeError("El campo puntos debe ser de tipo numérico")
-                .positive("Solo se admiten valores positivos")
+                .min(0, "Solo se admiten valores positivos y cero")
                 .required("Requerido"),
               icono: Yup.object().shape({
                 status: Yup.mixed()
@@ -434,7 +436,7 @@ const Basic = (props) => {
                     />
                     {/* {values.encuesta.paginas.length} */}
                     <Grid item xs={12}>
-                      <DisplayFormikState {...values} /> 
+                      <DisplayFormikState {...values} />
                     </Grid>
                   </Grid>
                 </Paper>

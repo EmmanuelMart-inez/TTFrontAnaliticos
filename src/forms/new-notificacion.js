@@ -197,8 +197,13 @@ export default function NotificacionForm(props) {
               label="Puntos"
               value={values.encuesta.puntos}
               onFocus={() => setFieldTouched("encuesta.puntos")}
-              error={Boolean(getIn(errors, "encuesta.puntos")) && Boolean(getIn(touched, "encuesta.puntos"))}
+              error={
+                Boolean(getIn(errors, "encuesta.puntos")) &&
+                Boolean(getIn(touched, "encuesta.puntos"))
+              }
               onChange={(event) => {
+                var value = parseInt(event.target.value);
+                if (isNaN(value)) value = event.target.value;
                 setFieldValue("encuesta.puntos", event.target.value);
               }}
               helperText="Beneficio que obtiene un participante por responder tu encuesta. Recuerda que esto es un gana-gana. ¿Cuántos puntos quieres otorgar por la respuesta de esta encuesta?"
@@ -206,15 +211,16 @@ export default function NotificacionForm(props) {
               // onFocus={() => setFieldTouched("encuesta.puntos")}
             />
             {/* {`${Boolean(getIn(errors, "encuesta.puntos"))} && ${Boolean(getIn(touched, "encuesta.puntos"))}`} */}
-            {Boolean(getIn(errors, "encuesta.puntos")) && Boolean(getIn(touched, "encuesta.puntos")) && (
-              <Typography
-                variant="caption"
-                gutterBottom
-                style={{ color: "red", marginTop: "5px" }}
-              >
-                {getIn(errors, "encuesta.puntos")}
-              </Typography>
-            )}
+            {Boolean(getIn(errors, "encuesta.puntos")) &&
+              Boolean(getIn(touched, "encuesta.puntos")) && (
+                <Typography
+                  variant="caption"
+                  gutterBottom
+                  style={{ color: "red", marginTop: "5px" }}
+                >
+                  {getIn(errors, "encuesta.puntos")}
+                </Typography>
+              )}
           </Grid>
         )}
         {values.notificaciones.value == "premio" && (
@@ -225,6 +231,8 @@ export default function NotificacionForm(props) {
               onFocus={() => setFieldTouched("puntos")}
               value={values.puntos}
               onChange={(event) => {
+                var value = parseInt(event.target.value);
+                if (isNaN(value)) value = event.target.value;
                 setFieldValue("puntos", event.target.value);
               }}
               helperText="Beneficio que obtiene cada participante por este premio. Recuerda que esto es un gana-gana. ¿Cuántos puntos quieres otorgar de premio?"

@@ -315,11 +315,11 @@ export default function BirthdayForm() {
                 Enviar ahora!
               </Button>
             </Box>
-            <Box p={2}>
+            {/* <Box p={2}>
               <Button variant="outlined" color="default" disabled>
                 Vista Previa
               </Button>
-            </Box>
+            </Box> */}
             <DisplayFormikState {...values} /> 
           </Grid>
         )}

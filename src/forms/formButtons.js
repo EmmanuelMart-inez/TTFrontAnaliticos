@@ -371,7 +371,7 @@ export default function FormButtons(props) {
               cancelar
             </Button>
           </Grid>
-          <Grid item xs={2}>
+          {/* <Grid item xs={2}>
             <Button
               className={classes.buttondown}
               color="primary"
@@ -380,7 +380,7 @@ export default function FormButtons(props) {
             >
               vista previa
             </Button>
-          </Grid>
+          </Grid> */}
           <Grid item xs={2}>
             <Button
               className={classes.buttondown}
@@ -414,7 +414,7 @@ export default function FormButtons(props) {
                 </Button>
               </Grid>
 
-              <Grid item xs={2}>
+              {/* <Grid item xs={2}>
                 <Button
                   className={classes.buttondown}
                   color="primary"
@@ -423,7 +423,7 @@ export default function FormButtons(props) {
                 >
                   vista previa
                 </Button>
-              </Grid>
+              </Grid> */}
               <Grid item xs={2}>
                 <Button
                   className={classes.buttondown}
@@ -469,7 +469,7 @@ export default function FormButtons(props) {
                   Regresar
                 </Button>
               </Grid>
-              <Grid item xs={2}>
+              {/* <Grid item xs={2}>
                 <Button
                   className={classes.buttondown}
                   color="primary"
@@ -478,7 +478,7 @@ export default function FormButtons(props) {
                 >
                   vista previa
                 </Button>
-              </Grid>
+              </Grid> */}
               <Grid item xs={2}>
                 <Button
                   className={classes.buttondown}
@@ -516,7 +516,7 @@ export default function FormButtons(props) {
                 </Button>
               </Grid>
 
-              <Grid item xs={2}>
+              {/* <Grid item xs={2}>
                 <Button
                   className={classes.buttondown}
                   color="primary"
@@ -525,7 +525,7 @@ export default function FormButtons(props) {
                 >
                   vista previa
                 </Button>
-              </Grid>
+              </Grid> */}
               <Grid item xs={2}>
                 <Button
                   className={classes.buttondown}
@@ -624,7 +624,7 @@ export default function FormButtons(props) {
                   Hay más páginas?
                 </Button>
               </Grid>
-              <Grid item xs={2}>
+              {/* <Grid item xs={2}>
                 <Button
                   className={classes.buttondown}
                   color="primary"
@@ -633,7 +633,7 @@ export default function FormButtons(props) {
                 >
                   vista previa
                 </Button>
-              </Grid>
+              </Grid> */}
               <Grid item xs={2}>
                 <Button
                   className={classes.buttondown}

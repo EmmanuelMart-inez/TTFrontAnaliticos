@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import { apiUrlImages } from "../../shared/constants";
 
 import useBubbletownApi from "../../helpers/useBubbletownApi";
 
@@ -73,7 +74,7 @@ export default function TitlebarGridList(props) {
                 {/* <div class="ui link cards" > */}
                 <div class="ui card link" onClick={() => props.handleChange(tile._id)}>
                   <div class="image">
-                    <img src={tile.imagen} style={{ "max-height": "200px" }} />
+                    <img src={`${apiUrlImages}/${tile.imagen}`} style={{ "max-height": "200px" }} />
                   </div>
                   <div
                     class="content"
